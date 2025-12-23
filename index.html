@@ -1,0 +1,4602 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Shop beverages & energy drinks. Fast, clean and secure checkout.">
+<link rel="icon" href="assets/icons/favicon.png">
+<title>My Shop</title>
+<link rel="stylesheet" href="assets/css/style.css">
+<script defer src="assets/js/app.js"></script>
+
+<!-- Bootstrap + Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <!-- Snipcart -->
+  <link rel="stylesheet" href="https://cdn.snipcart.com/themes/v3.7.2/default/snipcart.css" />
+
+  <style>
+    :root {
+      --primary: #d04f27;
+      --ink: #111827;
+      --muted: #6b7280;
+      --ring: rgba(208,79,39,.25);
+      --card: #ffffff;
+      --bg: #ffffff;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      color: var(--ink);
+      background: linear-gradient(180deg, #fff 0%, #fafafa 100%);
+    }
+
+    .topbar {
+      background: #111;
+      color: #fff;
+      font-size: 13px;
+    }
+    .topbar a { color:#fff; text-decoration:none; opacity:.95; }
+    .topbar a:hover { opacity:1; }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(255,255,255,.9);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(0,0,0,.06);
+    }
+
+    .brand {
+      display:flex;
+      align-items:center;
+      gap:10px;
+      text-decoration:none;
+      color: inherit;
+      font-weight: 1000;
+      letter-spacing: .6px;
+    }
+    .brand-mark {
+      width: 36px;
+      height: 36px;
+      border-radius: 14px;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      background: radial-gradient(circle at 30% 30%, rgba(208,79,39,.45), rgba(0,0,0,.08));
+      border: 1px solid rgba(0,0,0,.08);
+    }
+    .brand-dot { color: var(--primary); }
+
+    .search-wrap {
+      position: relative;
+      width: min(560px, 100%);
+    }
+    .search-wrap i {
+      position:absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--muted);
+    }
+    .search-wrap input {
+      padding-left: 40px;
+      border-radius: 999px;
+      border-width: 2px;
+    }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      border-radius: 18px;
+      border: 1px solid rgba(0,0,0,.06);
+      background: #fff;
+      padding: 22px;
+    }
+    .hero:before {
+      content:"";
+      position:absolute;
+      inset:-40px;
+      background: radial-gradient(circle at 15% 20%, rgba(208,79,39,.16), transparent 40%),
+                  radial-gradient(circle at 80% 10%, rgba(0,0,0,.06), transparent 38%),
+                  radial-gradient(circle at 70% 80%, rgba(208,79,39,.10), transparent 45%);
+      filter: blur(2px);
+      pointer-events:none;
+    }
+    .hero > * { position: relative; }
+    .hero h1 {
+      font-weight: 1000;
+      letter-spacing: -0.02em;
+      margin: 0;
+    }
+    .hero p {
+      margin: 8px 0 0;
+      color: var(--muted);
+    }
+
+    .cat-nav {
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top: 14px;
+    }
+    .cat-btn {
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(0,0,0,.10);
+      background: #fff;
+      font-weight: 900;
+      font-size: 13px;
+      letter-spacing: .02em;
+      transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+      user-select:none;
+    }
+    .cat-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 10px 20px rgba(0,0,0,.06);
+    }
+    .cat-btn.active {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: #fff;
+    }
+    .cat-btn.cat-promo { border-style: dashed; }
+    .cat-btn.cat-promo.active { background:#111; border-color:#111; color:#fff; }
+    .cat-count { font-weight: 900; opacity: .8; margin-left: 6px; }
+
+    .tools-bar {
+      margin-top: 14px;
+      display:flex;
+      gap: 12px;
+      align-items:center;
+      justify-content:space-between;
+      flex-wrap:wrap;
+    }
+    .results-count { font-weight: 1000; }
+    .active-filters { color: var(--muted); font-size: 13px; }
+
+    #productGrid {
+      display:grid;
+      grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+      gap: 14px;
+      margin-top: 14px;
+    }
+
+    .product-card {
+      background: var(--card);
+      border: 1px solid rgba(0,0,0,.08);
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 10px 25px rgba(0,0,0,.05);
+      transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+      height: 100%;
+      display:flex;
+      flex-direction:column;
+    }
+    .product-card:hover {
+      transform: translateY(-3px);
+      border-color: rgba(208,79,39,.35);
+      box-shadow: 0 16px 35px rgba(0,0,0,.08);
+    }
+
+    .product-open { text-align:left; border:none; background:transparent; padding:0; width:100%; }
+
+    .img-wrap {
+      background: linear-gradient(180deg, #fff, #f7f7f7);
+      padding: 12px;
+      height: 168px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+    .img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      transition: transform .18s ease;
+    }
+    .product-card:hover .img-wrap img { transform: scale(1.03); }
+
+    .p-body {
+      padding: 12px 14px 10px;
+      display:flex;
+      flex-direction:column;
+      gap: 6px;
+      flex: 1;
+    }
+    .p-cat {
+      font-size: 11px;
+      font-weight: 1000;
+      letter-spacing: .12em;
+      color: var(--muted);
+      text-transform: uppercase;
+    }
+    .p-title {
+      font-size: 14px;
+      font-weight: 1000;
+      line-height: 1.15;
+      margin: 0;
+    }
+    .p-price-wrap {
+      display:flex;
+      align-items: baseline;
+      gap: 8px;
+      flex-wrap:wrap;
+    }
+    .p-price { font-weight: 1000; color: #b91c1c; font-size: 15px; }
+    .p-old-price { color: #9ca3af; text-decoration: line-through; font-weight: 900; font-size: 13px; }
+
+    .p-actions { padding: 0 14px 14px; display:flex; gap:10px; }
+    .p-actions .btn { border-radius: 999px; font-weight: 1000; }
+
+    .empty-state {
+      text-align:center;
+      padding: 32px 14px;
+      border: 1px dashed #e5e7eb;
+      border-radius: 14px;
+      background: rgba(255,255,255,.75);
+      margin-top: 14px;
+    }
+    .empty-emoji { font-size: 36px; margin-bottom: 10px; }
+
+    .site-footer {
+      border-top: 1px solid #eee;
+      padding: 28px 0 90px;
+      background: #fff;
+      border-radius: 16px 16px 0 0;
+      margin-top: 18px;
+    }
+    .footer-grid {
+      display:grid;
+      grid-template-columns: 1.2fr 1fr 1fr;
+      gap: 18px;
+    }
+    @media (max-width: 900px) { .footer-grid{ grid-template-columns:1fr; } }
+    .footer-link {
+      display:flex;
+      align-items:center;
+      gap:10px;
+      color:#111;
+      text-decoration:none;
+      font-weight: 900;
+      margin: 8px 0;
+    }
+    .footer-link:hover { color: var(--primary); }
+    .footer-h { font-weight: 1000; margin-bottom: 8px; }
+    .footer-sub { color: var(--muted); font-size: 13px; }
+    .footer-bottom {
+      display:flex;
+      justify-content:space-between;
+      gap:12px;
+      flex-wrap:wrap;
+      margin-top:18px;
+      padding-top:14px;
+      border-top:1px solid #eee;
+    }
+
+    .mobile-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(255,255,255,.92);
+      backdrop-filter: blur(10px);
+      border-top: 1px solid rgba(0,0,0,.08);
+      padding: 10px 12px;
+      z-index: 80;
+      display:flex;
+      justify-content:space-around;
+      gap: 8px;
+    }
+    .mobile-nav a {
+      text-decoration:none;
+      color: var(--ink);
+      font-weight: 1000;
+      font-size: 12px;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      gap: 4px;
+      opacity:.9;
+    }
+    .mobile-nav a:hover { opacity:1; }
+    .mobile-nav i { font-size: 16px; }
+
+    .reveal{ opacity:0; transform: translateY(10px); transition: opacity .35s ease, transform .35s ease; }
+    .reveal.in{ opacity:1; transform: translateY(0); }
+
+    .form-control:focus, .form-select:focus, .btn:focus, .cat-btn:focus {
+      box-shadow: 0 0 0 4px var(--ring) !important;
+      border-color: rgba(208,79,39,.6) !important;
+      outline: none !important;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="topbar py-2">
+    <div class="container d-flex flex-wrap gap-3 justify-content-between align-items-center">
+      <div class="d-flex gap-3 align-items-center">
+        <span class="d-none d-sm-inline"><i class="fa-solid fa-truck-fast"></i> Livraison rapide (à configurer)</span>
+        <a href="tel:+212720498110"><i class="fa-solid fa-phone"></i> +212 720 498 110</a>
+        <a href="mailto:mouaadarejdal@gmail.com"><i class="fa-solid fa-envelope"></i> mouaadarejdal@gmail.com</a>
+      </div>
+      <div class="d-flex gap-3 align-items-center">
+        <a href="https://wa.me/212720498110" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>
+        <a href="#" class="snipcart-checkout"><i class="fa-solid fa-bag-shopping"></i> Panier</a>
+      </div>
+    </div>
+  </div>
+
+  <header class="site-header">
+    <div class="container py-3 d-flex gap-3 align-items-center justify-content-between">
+      <a class="brand" href="index.html" aria-label="MECADO — Accueil">
+        <span class="brand-mark" aria-hidden="true">M</span>
+        <span>MECADO<span class="brand-dot">.</span></span>
+      </a>
+
+      <div class="search-wrap d-none d-md-block">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <input id="searchInput" type="text" class="form-control" placeholder="Rechercher un produit… (appuie sur /)">
+      </div>
+
+      <div class="d-flex gap-2 align-items-center">
+        <button class="btn btn-outline-dark rounded-pill fw-bold d-none d-md-inline-flex snipcart-checkout">
+          <i class="fa-solid fa-cart-shopping me-2"></i>
+          <span class="snipcart-items-count">0</span>
+        </button>
+
+        <button class="btn btn-dark rounded-pill fw-bold snipcart-checkout">
+          <i class="fa-solid fa-bag-shopping me-2"></i> Checkout
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container my-3">
+
+    <section class="hero">
+      <div class="row align-items-center g-3">
+        <div class="col-lg-7">
+          <h1>Une boutique simple, rapide, et <span style="color:var(--primary)">propre</span>.</h1>
+          <p>Chocolat, snacks, boissons et courses. Recherche, tri, filtres et fiches produits — tout fonctionne.</p>
+
+          <div class="d-md-none mt-3">
+            <div class="search-wrap">
+              <i class="fa-solid fa-magnifying-glass"></i>
+              <input id="searchMobile" type="text" class="form-control" placeholder="Rechercher un produit…">
+            </div>
+          </div>
+
+          <div class="cat-nav" role="tablist" aria-label="Catégories">
+            <button class="cat-btn active" type="button" data-cat="all">TOUT <span class="cat-count" data-count-for="all"></span></button>
+            <button class="cat-btn" type="button" data-cat="Sucrées">SUCRÉES <span class="cat-count" data-count-for="Sucrées"></span></button>
+            <button class="cat-btn" type="button" data-cat="Salées">SALÉES <span class="cat-count" data-count-for="Salées"></span></button>
+            <button class="cat-btn" type="button" data-cat="Boissons">BOISSONS <span class="cat-count" data-count-for="Boissons"></span></button>
+            <button class="cat-btn" type="button" data-cat="Courses">COURSES <span class="cat-count" data-count-for="Courses"></span></button>
+
+            <button class="cat-btn cat-promo" id="promoToggle" type="button" aria-pressed="false" title="Afficher uniquement les promotions">
+              <i class="fa-solid fa-tag"></i> PROMOS
+            </button>
+          </div>
+
+          <div class="tools-bar">
+            <div>
+              <div id="resultsCount" class="results-count">0 produit</div>
+              <div id="activeFilters" class="active-filters" aria-live="polite"></div>
+            </div>
+
+            <div class="d-flex gap-2 align-items-center">
+              <select id="sortSelect" class="form-select form-select-sm rounded-pill">
+                <option value="featured" selected>Recommandé</option>
+                <option value="price-asc">Prix : croissant</option>
+                <option value="price-desc">Prix : décroissant</option>
+                <option value="name-asc">Nom : A → Z</option>
+                <option value="name-desc">Nom : Z → A</option>
+              </select>
+              <button id="clearFilters" class="btn btn-sm btn-outline-dark fw-bold rounded-pill">Réinitialiser</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-5">
+          <div class="p-3 p-md-4 bg-white border rounded-4 shadow-sm">
+            <div class="d-flex align-items-center gap-3">
+              <span class="badge rounded-pill text-bg-light border"><i class="fa-solid fa-shield"></i> Paiement sécurisé</span>
+              <span class="badge rounded-pill text-bg-light border"><i class="fa-solid fa-bolt"></i> Ajout rapide</span>
+            </div>
+            <div class="footer-sub mt-3">Clique sur un produit pour voir sa fiche, puis ajoute au panier.</div>
+            <div class="footer-sub mt-2">Filtre PROMOS pour afficher uniquement les réductions.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="my-4">
+      <div id="productGrid">
+        <!-- PRODUCTS:START -->
+<div class="product-item" data-cat="Courses" data-title="beebad boisson nergisante originale 250ml" data-promo="0">
+  <article class="product-card">
+    
+    <button class="product-open" type="button"
+      data-name="Beebad Boisson Nergisante Originale 250Ml"
+      data-desc="Beebad Boisson Nergisante Originale 250Ml — délicieux produit de la catégorie Courses. À savourer à tout moment !"
+      data-image="images/beebad-boisson-nergisante-originale-250ml.png"
+      data-stock="1">
+      <div class="img-wrap">
+        <img src="assets/images/beebad-boisson-nergisante-originale-250ml.png" alt="Beebad Boisson Nergisante Originale 250Ml" loading="lazy" width="320" height="320">
+      </div>
+      <div class="p-body">
+        <div class="p-cat">Courses</div>
+        <div class="p-title">Beebad Boisson Nergisante Originale 250Ml</div>
+        <div class="p-price-wrap">
+          <div class="p-price">11.30 DH</div>
+        </div>
+      </div>
+    </button>
+    <div class="p-actions">
+      <button class="btn btn-dark w-100 snipcart-add-item"
+        data-item-id="MEC-0001"
+        data-item-price="11.30"
+        data-item-url="/"
+        data-item-name="Beebad Boisson Nergisante Originale 250Ml"
+        data-item-image="images/beebad-boisson-nergisante-originale-250ml.png">
+        Ajouter
+      </button>
+    </div>
+  </article>
+</div>
+<div class="product-item" data-cat="Courses" data-title="boisson aloe vera king premium la fraise 500ml" data-promo="0">
+  <article class="product-card">
+    
+    <button class="product-open" type="button"
+      data-name="Boisson Aloe Vera King Premium La Fraise 500Ml"
+      data-desc="Boisson Aloe Vera King Premium La Fraise 500Ml — délicieux produit de la catégorie Courses. À savourer à tout moment !"
+      data-image="images/boisson-aloe-vera-king-premium-la-fraise-500ml.png"
+      data-stock="1">
+      <div class="img-wrap">
+        <img src="assets/images/boisson-aloe-vera-king-premium-la-fraise-500ml.png" alt="Boisson Aloe Vera King Premium La Fraise 500Ml" loading="lazy" width="320" height="320">
+      </div>
+      <div class="p-body">
+        <div class="p-cat">Courses</div>
+        <div class="p-title">Boisson Aloe Vera King Premium La Fraise 500Ml</div>
+        <div class="p-price-wrap">
+          <div class="p-price">12.60 DH</div>
+        </div>
+      </div>
+    </button>
+    <div class="p-actions">
+      <button class="btn btn-dark w-100 snipcart-add-item"
+        data-item-id="MEC-0002"
+        data-item-price="12.60"
+        data-item-url="/"
+        data-item-name="Boisson Aloe Vera King Premium La Fraise 500Ml"
+        data-item-image="images/boisson-aloe-vera-king-premium-la-fraise-500ml.png">
+        Ajouter
+      </button>
+    </div>
+  </article>
+</div>
+<div class="product-item" data-cat="Courses" data-title="boisson aloe vera king premium la pche 500ml" data-promo="0">
+  <article class="product-card">
+    
+    <button class="product-open" type="button"
+      data-name="Boisson Aloe Vera King Premium La Pche 500Ml"
+      data-desc="Boisson Aloe Vera King Premium La Pche 500Ml — délicieux produit de la catégorie Courses. À savourer à tout moment !"
+      data-image="images/boisson-aloe-vera-king-premium-la-pche-500ml.png"
+      data-stock="1">
+      <div class="img-wrap">
+        <img src="assets/images/boisson-aloe-vera-king-premium-la-pche-500ml.png" alt="Boisson Aloe Vera King Premium La Pche 500Ml" loading="lazy" width="320" height="320">
+      </div>
+      <div class="p-body">
+        <div class="p-cat">Courses</div>
+        <div class="p-title">Boisson Aloe Vera King Premium La Pche 500Ml</div>
+        <div class="p-price-wrap">
+          <div class="p-price">13.90 DH</div>
+        </div>
+      </div>
+    </button>
+    <div class="p-actions">
+      <button class="btn btn-dark w-100 snipcart-add-item"
+        data-item-id="MEC-0003"
+        data-item-price="13.90"
+        data-item-url="/"
+        data-item-name="Boisson Aloe Vera King Premium La Pche 500Ml"
+        data-item-image="images/boisson-aloe-vera-king-premium-la-pche-500ml.png">
+        Ajouter
+      </button>
+    </div>
+  </article>
+</div>
+<div class="product-item" data-cat="Courses" data-title="boisson aloe vera king premium au kiwi dor 500ml" data-promo="0">
+  <article class="product-card">
+    
+    <button class="product-open" type="button"
+      data-name="Boisson Aloe Vera King Premium Au Kiwi Dor 500Ml"
+      data-desc="Boisson Aloe Vera King Premium Au Kiwi Dor 500Ml — délicieux produit de la catégorie Courses. À savourer à tout moment !"
+      data-image="images/boisson-aloe-vera-king-premium-au-kiwi-dor-500ml.png"
+      data-stock="1">
+      <div class="img-wrap">
+        <img src="assets/images/boisson-aloe-vera-king-premium-au-kiwi-dor-500ml.png" alt="Boisson Aloe Vera King Premium Au Kiwi Dor 500Ml" loading="lazy" width="320" height="320">
+      </div>
+      <div class="p-body">
+        <div class="p-cat">Courses</div>
+        <div class="p-title">Boisson Aloe Vera King Premium Au Kiwi Dor 500Ml</div>
+        <div class="p-price-wrap">
+          <div class="p-price">15.20 DH</div>
+        </div>
+      </div>
+    </button>
+    <div class="p-actions">
+      <button class="btn btn-dark w-100 snipcart-add-item"
+        data-item-id="MEC-0004"
+        data-item-price="15.20"
+        data-item-url="/"
+        data-item-name="Boisson Aloe Vera King Premium Au Kiwi Dor 500Ml"
+        data-item-image="images/boisson-aloe-vera-king-premium-au-kiwi-dor-500ml.png">
+        Ajouter
+      </button>
+    </div>
+  </article>
+</div>
+<div class="product-item" data-cat="Courses" data-title="boisson aloe vera king premium au litchi 500ml" data-promo="1">
+  <article class="product-card">
+    <span class="badge-promo">-20%</span>
+    <button class="product-open" type="button"
+      data-name="Boisson Aloe Vera King Premium Au Litchi 500Ml"
+      data-desc="Boisson Aloe Vera King Premium Au Litchi 500Ml — délicieux produit de la catégorie Courses. À savourer à tout moment !"
+      data-image="images/boisson-aloe-vera-king-premium-au-litchi-500ml.png"
+      data-stock="1">
+      <div class="img-wrap">
+        <img src="assets/images/boisson-aloe-vera-king-premium-au-litchi-500ml.png" alt="Boisson Aloe Vera King Premium Au Litchi 500Ml" loading="lazy" width="320" height="320">
+      </div>
+      <div class="p-body">
+        <div class="p-cat">Courses</div>
+        <div class="p-title">Boisson Aloe Vera King Premium Au Litchi 500Ml</div>
+        <div class="p-price-wrap">
+          <span class="p-old-price">20.50 DH</span><div class="p-price">16.50 DH</div>
+        </div>
+      </div>
+    </button>
+    <div class="p-actions">
+      <button class="btn btn-dark w-100 snipcart-add-item"
+        data-item-id="MEC-0005"
+        data-item-price="16.50"
+        data-item-url="/"
+        data-item-name="Boisson Aloe Vera King Premium Au Litchi 500Ml"
+        data-item-image="images/boisson-aloe-vera-king-premium-au-litchi-500ml.png">
+        Ajouter
+      </button>
+    </div>
+  </article>
+</div>
+<div class="product-item" data-cat="Courses" data-title="boisson aloe vera king premium original 500ml" data-promo="0">
+  <article class="product-card">
+    
+    <button class="product-open" type="button"
+      data-name="Boisson Aloe Vera King Premium Original 500Ml"
+      data-desc="Boisson Aloe Vera King Premium Original 500Ml — délicieux produit de la catégorie Courses. À savourer à tout moment !"
+      data-image="images/boisson-aloe-vera-king-premium-original-500ml.png"
+      data-stock="1">
+      <div class="img-wrap">
+        <img src="assets/images/boisson-aloe-vera-king-premium-original-500ml.png" alt="Boisson Aloe Vera King Premium Original 500Ml" loading="lazy" width="320" height="320">
+      </div>
+      <div class="p-body">
+        <div class="p-cat">Courses</div>
+        <div class="p-title">Boisson Aloe Vera King Premium Original 500Ml</div>
+        <div class="p-price-wrap">
+          <div class="p-price">17.80 DH</div>
+        </div>
+      </div>
+    </button>
+    <div class="p-actions">
+      <button class="btn btn-dark w-100 snipcart-add-item"
+        data-item-id="MEC-0006"
+        data-item-price="17.80"
+        data-item-url="/"
+        data-item-name="Boisson Aloe Vera King Premium Original 500Ml"
+        data-item-image="images/boisson-aloe-vera-king-premium-original-500ml.png">
+        Ajouter
+      </button>
+    </div>
+  </article>
+</div>
+<div class="product-item" data-cat="Courses" data-title="boisson lacte mars milk drink 350ml" data-promo="0">
+  <article class="product-card">
+    
+    <button class="product-open" type="button"
+      data-name="Boisson Lacte Mars Milk Drink 350Ml"
+      data-desc="Boisson Lacte Mars Milk Drink 350Ml — délicieux produit de la catégorie Courses. À savourer à tout moment !"
+      data-image="images/boisson-lacte-mars-milk-drink-350ml.png"
+      data-stock="1">
+      <div class="img-wrap">
+        <img src="assets/images/boisson-lacte-mars-milk-drink-350ml.png" alt="Boisson Lacte Mars Milk Drink 350Ml" loading="lazy" width="320" height="320">
+      </div>
+      <div class="p-body">
+        <div class="p-cat">Courses</div>
+        <div class="p-title">Boisson Lacte Mars Milk Drink 350Ml</div>
+        <div class="p-price-wrap">
+          <div class="p-price">19.10 DH</div>
+        </div>
+      </div>
+    </button>
+    <div class="p-actions">
+      <button class="btn btn-dark w-100 snipcart-add-item"
+        data-item-id="MEC-0007"
+        data-item-price="19.10"
+        data-item-url="/"
+        data-item-name="Boisson Lacte Mars Milk Drink 350Ml"
+        data-item-image="images/boisson-lacte-mars-milk-drink-350ml.png">
+        Ajouter
+      </button>
+    </div>
+  </article>
+</div>
+<div class="product-item" data-cat="Courses" data-title="boisson nergisante red bull kratingdaeng 150ml avec 1000mg de taurine" data-promo="0">
+  <article class="product-card">
+    
+    <button class="product-open" type="button"
+      data-name="Boisson Nergisante Red Bull Kratingdaeng 150Ml Avec 1000Mg De Taurine"
+      data-desc="Boisson Nergisante Red Bull Kratingdaeng 150Ml Avec 1000Mg De Taurine — délicieux produit de la catégorie Courses. À savourer à tout moment !"
+      data-image="images/boisson-nergisante-red-bull-kratingdaeng-150ml-avec-1000mg-de-taurine.png"
+      data-stock="1">
+      <div class="img-wrap">
+        <img src="assets/images/boisson-nergisante-red-bull-kratingdaeng-150ml-avec-1000mg-de-taurine.png" alt="Boisson Nergisante Red Bull Kratingdaeng 150Ml Avec 1000Mg De Taurine" loading="lazy" width="320" height="320">
+      </div>
+      <div class="p-body">
+        <div class="p-cat">Courses</div>
+        <div class="p-title">Boisson Nergisante Red Bull Kratingdaeng 150Ml Avec 1000Mg De Taurine</div>
+        <div class="p-price-wrap">
+          <div class="p-price">20.40 DH</div>
+        </div>
+      </div>
+    </button>
+    <div class="p-actions">
+      <button class="btn btn-dark w-100 snipcart-add-item"
+        data-item-id="MEC-0008"
+        data-item-price="20.40"
+        data-item-url="/"
+        data-item-name="Boisson Nergisante Red Bull Kratingdaeng 150Ml Avec 1000Mg De Taurine"
+        data-item-image="images/boisson-nergisante-red-bull-kratingdaeng-150ml-avec-1000mg-de-taurine.png">
+        Ajouter
+      </button>
+    </div>
+  </article>
+</div>
+<div class="product-item" data-cat="Courses" data-title="caf starbucks doubleshot espresso latte 220ml" data-promo="0">
+  <article class="product-card">
+    
+    <button class="product-open" type="button"
+      data-name="Caf Starbucks Doubleshot Espresso Latte 220Ml"
+      data-desc="Caf Starbucks Doubleshot Espresso Latte 220Ml — délicieux produit de la catégorie Courses. À savourer à tout moment !"
+      data-image="images/caf-starbucks-doubleshot-espresso-latte-220ml.png"
+      data-stock="1">
+      <div class="img-wrap">
+        <img src="assets/images/caf-starbucks-doubleshot-espresso-latte-220ml.png" alt="Caf Starbucks Doubleshot Espresso Latte 220Ml" loading="lazy" width="320" height="320">
+      </div>
+      <div class="p-body">
+        <div class="p-cat">Courses</div>
+        <div class="p-title">Caf Starbucks Doubleshot Espresso Latte 220Ml</div>
+        <div class="p-price-wrap">
+          <div class="p-price">21.70 DH</div>
+        </div>
+      </div>
+    </button>
+    <div class="p-actions">
+      <button class="btn btn-dark w-100 snipcart-add-item"
+        data-item-id="MEC-0009"
+        data-item-price="21.70"
+        data-item-url="/"
+        data-item-name="Caf Starbucks Doubleshot Espresso Latte 220Ml"
+        data-item-image="images/caf-starbucks-doubleshot-espresso-latte-220ml.png">
+        Ajouter
+      </button>
+    </div>
+  </article>
+</div>
+<div class="product-item" data-cat="Courses" data-title="capri sun boisson cerise 10x200ml" data-promo="1">
+  <article class="product-card">
+    <span class="badge-promo">-20%</span>
+    <button class="product-open" type="button"
+      data-name="Capri Sun Boisson Cerise 10X200Ml"
+      data-desc="Capri Sun Boisson Cerise 10X200Ml — délicieux produit de la catégorie Courses. À savourer à tout moment !"
+      data-image="images/capri-sun-boisson-cerise-10x200ml.png"
+      data-stock="1">
+      <div class="img-wrap">
+        <img src="assets/images/capri-sun-boisson-cerise-10x200ml.png" alt="Capri Sun Boisson Cerise 10X200Ml" loading="lazy" width="320" height="320">
+      </div>
+      <div class="p-body">
+        <div class="p-cat">Courses</div>
+        <div class="p-title">Capri Sun Boisson Cerise 10X200Ml</div>
+        <div class="p-price-wrap">
+          <span class="p-old-price">27.00 DH</span><div class="p-price">23.00 DH</div>
+        </div>
+      </div>
+    </button>
+    <div class="p-actions">
+      <button class="btn btn-dark w-100 snipcart-add-item"
+        data-item-id="MEC-0010"
+        data-item-price="23.00"
+        data-item-url="/"
+        data-item-name="Capri Sun Boisson Cerise 10X200Ml"
+        data-item-image="images/capri-sun-boisson-cerise-10x200ml.png">
+        Ajouter
+      </button>
+    </div>
+  </article>
+</div>
+<div class="product-item" data-cat="Courses" data-title="capri sun jungle drink 10x200ml" data-promo="0">
+  <article class="product-card">
+    
+    <button class="product-open" type="button"
+      data-name="Capri Sun Jungle Drink 10X200Ml"
+      data-desc="Capri Sun Jungle Drink 10X200Ml — délicieux produit de la catégorie Courses. À savourer à tout moment !"
+      data-image="images/capri-sun-jungle-drink-10x200ml.png"
+      data-stock="1">
+      <div class="img-wrap">
+        <img src="assets/images/capri-sun-jungle-drink-10x200ml.png" alt="Capri Sun Jungle Drink 10X200Ml" loading="lazy" width="320" height="320">
+      </div>
+      <div class="p-body">
+        <div class="p-cat">Courses</div>
+        <div class="p-title">Capri Sun Jungle Drink 10X200Ml</div>
+        <div class="p-price-wrap">
+          <div class="p-price">24.30 DH</div>
+        </div>
+      </div>
+    </button>
+    <div class="p-actions">
+      <button class="btn btn-dark w-100 snipcart-add-item"
+        data-item-id="MEC-0011"
+        data-item-price="24.30"
+        data-item-url="/"
+        data-item-name="Capri Sun Jungle Drink 10X200Ml"
+        data-item-image="images/capri-sun-jungle-drink-10x200ml.png">
+        Ajouter
+      </button>
+    </div>
+  </article>
+</div>
+<div class="product-item" data-cat="Courses" data-title="capri sun safari fruits 10x200ml" data-promo="0">
+  <article class="product-card">
+    
+    <button class="product-open" type="button"
+      data-name="Capri Sun Safari Fruits 10X200Ml"
+      data-desc="Capri Sun Safari Fruits 10X200Ml — délicieux produit de la catégorie Courses. À savourer à tout moment !"
+      data-image="images/capri-sun-safari-fruits-10x200ml.png"
+      data-stock="1">
+      <div class="img-wrap">
+        <img src="assets/images/capri-sun-safari-fruits-10x200ml.png" alt="Capri Sun Safari Fruits 10X200Ml" loading="lazy" width="320" height="320">
+      </div>
+      <div class="p-body">
+        <div class="p-cat">Courses</div>
+        <div class="p-title">Capri Sun Safari Fruits 10X200Ml</div>
+        <div class="p-price-wrap">
+          <div class="p-price">25.60 DH</div>
+        </div>
+      </div>
+    </button>
+    <div class="p-actions">
+      <button class="btn btn-dark w-100 snipcart-add-item"
+        data-item-id="MEC-0012"
+        data-item-price="25.60"
+        data-item-url="/"
+        data-item-name="Capri Sun Safari Fruits 10X200Ml"
+        data-item-image="images/capri-sun-safari-fruits-10x200ml.png">
+        Ajouter
+      </button>
+    </div>
+  </article>
+</div>
+<div class="product-item" data-cat="Courses" data-title="capri sun multivitamin 10x 200ml" data-promo="0">
+  <article class="product-card">
+    
+    <button class="product-open" type="button"
+      data-name="Capri Sun Multivitamin 10X 200Ml"
+      data-desc="Capri Sun Multivitamin 10X 200Ml — délicieux produit de la catégorie Courses. À savourer à tout moment !"
+      data-image="images/capri-sun-multivitamin-10x-200ml.png"
+      data-stock="1">
+      <div class="img-wrap">
+        <img src="assets/images/capri-sun-multivitamin-10x-200ml.png" alt="Capri Sun Multivitamin 10X 200Ml" loading="lazy" width="320" height="320">
+      </div>
+      <div class="p-body">
+        <div class="p-cat">Courses</div>
+        <div class="p-title">Capri Sun Multivitamin 10X 200Ml</div>
+        <div class="p-price-wrap">
+          <div class="p-price">26.90 DH</div>
+        </div>
+      </div>
+    </button>
+    <div class="p-actions">
+      <button class="btn btn-dark w-100 snipcart-add-item"
+        data-item-id="MEC-0013"
+        data-item-price="26.90"
+        data-item-url="/"
+        data-item-name="Capri Sun Multivitamin 10X 200Ml"
+        data-item-image="images/capri-sun-multivitamin-10x-200ml.png">
+        Ajouter
+      </button>
+    </div>
+  </article>
+</div>
+<div class="product-item" data-cat="Courses" data-title="capri sun orange 10x200ml" data-promo="0">
+  <article class="product-card">
+    
+    <button class="product-open" type="button"
+      data-name="Capri Sun Orange 10X200Ml"
+      data-desc="Capri Sun Orange 10X200Ml — délicieux produit de la catégorie Courses. À savourer à tout moment !"
+      data-image="images/capri-sun-orange-10x200ml.png"
+      data-stock="1">
+      <div class="img-wrap">
+        <img src="assets/images/capri-sun-orange-10x200ml.png" alt="Capri Sun Orange 10X200Ml" loading="lazy" width="320" height="320">
+      </div>
+      <div class="p-body">
+        <div class="p-cat">Courses</div>
+        <div class="p-title">Capri Sun Orange 10X200Ml</div>
+        <div class="p-price-wrap">
+          <div class="p-price">28.20 DH</div>
+        </div>
+      </div>
+    </button>
+    <div class="p-actions">
+      <button class="btn btn-dark w-100 snipcart-add-item"
+        data-item-id="MEC-0014"
+        data-item-price="28.20"
+        data-item-url="/"
+        data-item-name="Capri Sun Orange 10X200Ml"
+        data-item-image="images/capri-sun-orange-10x200ml.png">
+        Ajouter
+      </button>
+    </div>
+  </article>
+</div>
+<div class="product-item" data-cat="Courses" data-title="cheetos gustosines 96g" data-promo="1">
+  <article class="product-card">
+    <span class="badge-promo">-20%</span>
+    <button class="product-open" type="button"
+      data-name="Cheetos Gustosines 96G"
+      data-desc="Cheetos Gustosines 96G — délicieux produit de la catégorie Courses. À savourer à tout moment !"
+      data-image="images/cheetos-gustosines-96g.png"
+      data-stock="1">
+      <div class="img-wrap">
+        <img src="assets/images/cheetos-gustosines-96g.png" alt="Cheetos Gustosines 96G" loading="lazy" width="320" height="320">
+      </div>
+      <div class="p-body">
+        <div class="p-cat">Courses</div>
+        <div class="p-title">Cheetos Gustosines 96G</div>
+        <div class="p-price-wrap">
+          <span class="p-old-price">33.50 DH</span><div class="p-price">29.50 DH</div>
+        </div>
+      </div>
+    </button>
+    <div class="p-actions">
+      <button class="btn btn-dark w-100 snipcart-add-item"
+        data-item-id="MEC-0015"
+        data-item-price="29.50"
+        data-item-url="/"
+        data-item-name="Cheetos Gustosines 96G"
+        data-item-image="images/cheetos-gustosines-96g.png">
+        Ajouter
+      </button>
+    </div>
+  </article>
+</div>
+<div class="product-item" data-cat="Courses" data-title="cheetos pelotazos 130g" data-promo="0">
+  <article class="product-card">
+    
+    <button class="product-open" type="button"
+      data-name="Cheetos Pelotazos 130G"
+      data-desc="Cheetos Pelotazos 130G — délicieux produit de la catégorie Courses. À savourer à tout moment !"
+      data-image="images/cheetos-pelotazos-130g.png"
+      data-stock="1">
+      <div class="img-wrap">
+        <img src="assets/images/cheetos-pelotazos-130g.png" alt="Cheetos Pelotazos 130G" loading="lazy" width="320" height="320">
+      </div>
+      <div class="p-body">
+        <div class="p-cat">Courses</div>
+        <div class="p-title">Cheetos Pelotazos 130G</div>
+        <div class="p-price-wrap">
+          <div class="p-price">30.80 DH</div>
+        </div>
+      </div>
+    </button>
+    <div class="p-actions">
+      <button class="btn btn-dark w-100 snipcart-add-item"
+        data-item-id="MEC-0016"
+        data-item-price="30.80"
+        data-item-url="/"
+        data-item-name="Cheetos Pelotazos 130G"
+        data-item-image="images/cheetos-pelotazos-130g.png">
+        Ajouter
+      </button>
+    </div>
+  </article>
+</div>
+<div class="product-item" data-cat="Courses" data-title="cheetos pelotazos au fromage 32g" data-promo="0">
+  <article class="product-card">
+    
+    <button class="product-open" type="button"
+      data-name="Cheetos Pelotazos Au Fromage 32G"
+      data-desc="Cheetos Pelotazos Au Fromage 32G — délicieux produit de la catégorie Courses. À savourer à tout moment !"
+      data-image="images/cheetos-pelotazos-au-fromage-32g.png"
+      data-stock="1">
+      <div class="img-wrap">
+        <img src="assets/images/cheetos-pelotazos-au-fromage-32g.png" alt="Cheetos Pelotazos Au Fromage 32G" loading="lazy" width="320" height="320">
+      </div>
+      <div class="p-body">
+        <div class="p-cat">Courses</div>
+        <div class="p-title">Cheetos Pelotazos Au Fromage 32G</div>
+        <div class="p-price-wrap">
+          <div class="p-price">32.10 DH</div>
+        </div>
+      </div>
+    </button>
+    <div class="p-actions">
+      <button class="btn btn-dark w-100 snipcart-add-item"
+        data-item-id="MEC-0017"
+        data-item-price="32.10"
+        data-item-url="/"
+        data-item-name="Cheetos Pelotazos Au Fromage 32G"
+        data-item-image="images/cheetos-pelotazos-au-fromage-32g.png">
+        Ajouter
+      </button>
+    </div>
+  </article>
+</div>
+<div class="product-item" data-cat="Salées" data-title="chips lays originales 125g" data-promo="0">
+  <article class="product-card">
+    
+    <button class="product-open" type="button"
+      data-name="Chips Lays Originales 125G"
+      data-desc="Chips Lays Originales 125G — délicieux produit de la catégorie Salées. À savourer à tout moment !"
+      data-image="images/chips-lays-originales-125g.png"
+      data-stock="1">
+      <div class="img-wrap">
+        <img src="assets/images/chips-lays-originales-125g.png" alt="Chips Lays Originales 125G" loading="lazy" width="320" height="320">
+      </div>
+      <div class="p-body">
+        <div class="p-cat">Salées</div>
+        <div class="p-title">Chips Lays Originales 125G</div>
+        <div class="p-price-wrap">
+          <div class="p-price">33.40 DH</div>
+        </div>
+      </div>
+    </button>
+    <div class="p-actions">
+      <button class="btn btn-dark w-100 snipcart-add-item"
+        data-item-id="MEC-0018"
+        data-item-price="33.40"
+        data-item-url="/"
+        data-item-name="Chips Lays Originales 125G"
+        data-item-image="images/chips-lays-originales-125g.png">
+        Ajouter
+      </button>
+    </div>
+  </article>
+</div>
+<div class="product-item" data-cat="Salées" data-title="chips lays saveur concombre 104g" data-promo="0">
+  <article class="product-card">
+    
+    <button class="product-open" type="button"
+      data-name="Chips Lays Saveur Concombre 104G"
+      data-desc="Chips Lays Saveur Concombre 104G — délicieux produit de la catégorie Salées. À savourer à tout moment !"
+      data-image="images/chips-lays-saveur-concombre-104g.png"
+      data-stock="1">
+      <div class="img-wrap">
+        <img src="assets/images/chips-lays-saveur-concombre-104g.png" alt="Chips Lays Saveur Concombre 104G" loading="lazy" width="320" height="320">
+      </div>
+      <div class="p-body">
+        <div class="p-cat">Salées</div>
+        <div class="p-title">Chips Lays Saveur Concombre 104G</div>
+        <div class="p-price-wrap">
+          <div class="p-price">34.70 DH</div>
+        </div>
+      </div>
+    </button>
+    <div class="p-actions">
+      <button class="btn btn-dark w-100 snipcart-add-item"
+        data-item-id="MEC-0019"
+        data-item-price="34.70"
+        data-item-url="/"
+        data-item-name="Chips Lays Saveur Concombre 104G"
+        data-item-image="images/chips-lays-saveur-concombre-104g.png">
+        Ajouter
+      </button>
+    </div>
+  </article>
+</div>
+<div class="product-item" data-cat="Salées" data-title="chips lays saveur originale 104g" data-promo="1">
+  <article class="product-card">
+    <span class="badge-promo">-20%</span>
+    <button class="product-open" type="button"
+      data-name="Chips Lays Saveur Originale 104G"
+      data-desc="Chips Lays Saveur Originale 104G — délicieux produit de la catégorie Salées. À savourer à tout moment !"
+      data-image="images/chips-lays-saveur-originale-104g.png"
+      data-stock="1">
+      <div class="img-wrap">
+        <img src="assets/images/chips-lays-saveur-originale-104g.png" alt="Chips Lays Saveur Originale 104G" loading="lazy" width="320" height="320">
+      </div>
+      <div class="p-body">
+        <div class="p-cat">Salées</div>
+        <div class="p-title">Chips Lays Saveur Originale 104G</div>
+        <div class="p-price-wrap">
+          <span class="p-old-price">40.00 DH</span><div class="p-price">36.00 DH</div>
+        </div>
+      </div>
+    </button>
+    <div class="p-actions">
+      <button class="btn btn-dark w-100 snipcart-add-item"
+        data-item-id="MEC-0020"
+        data-item-price="36.00"
+        data-item-url="/"
+        data-item-name="Chips Lays Saveur Originale 104G"
+        data-item-image="images/chips-lays-saveur-originale-104g.png">
+        Ajouter
+      </button>
+    </div>
+  </article>
+</div>
+<div class="product-item" data-cat="Boissons" data-title="cinnabon international delight iced coffee 443ml" data-promo="0">
+  <article class="product-card">
+    
+    <button class="product-open" type="button"
+      data-name="Cinnabon International Delight Iced Coffee 443Ml"
+      data-desc="Cinnabon International Delight Iced Coffee 443Ml — délicieux produit de la catégorie Boissons. À savourer à tout moment !"
+      data-image="images/cinnabon-international-delight-iced-coffee-443ml.png"
+      data-stock="1">
+      <div class="img-wrap">
+        <img src="assets/images/cinnabon-international-delight-iced-coffee-443ml.png" alt="Cinnabon International Delight Iced Coffee 443Ml" loading="lazy" width="320" height="320">
+      </div>
+      <div class="p-body">
+        <div class="p-cat">Boissons</div>
+        <div class="p-title">Cinnabon International Delight Iced Coffee 443Ml</div>
+        <div class="p-price-wrap">
+          <div class="p-price">37.30 DH</div>
+        </div>
+      </div>
+    </button>
+    <div class="p-actions">
+      <button class="btn btn-dark w-100 snipcart-add-item"
+        data-item-id="MEC-0021"
+        data-item-price="37.30"
+        data-item-url="/"
+        data-item-name="Cinnabon International Delight Iced Coffee 443Ml"
+        data-item-image="images/cinnabon-international-delight-iced-coffee-443ml.png">
+        Ajouter
+      </button>
+    </div>
+  </article>
+</div>
+<div class="product-item" data-cat="Boissons" data-title="coca cola cerise 330ml" data-promo="0">
+  <article class="product-card">
+    
+    <button class="product-open" type="button"
+      data-name="Coca Cola Cerise 330Ml"
+      data-desc="Coca Cola Cerise 330Ml — délicieux produit de la catégorie Boissons. À savourer à tout moment !"
+      data-image="images/coca-cola-cerise-330ml.png"
+      data-stock="1">
+      <div class="img-wrap">
+        <img src="assets/images/coca-cola-cerise-330ml.png" alt="Coca Cola Cerise 330Ml" loading="lazy" width="320" height="320">
+      </div>
+      <div class="p-body">
+        <div class="p-cat">Boissons</div>
+        <div class="p-title">Coca Cola Cerise 330Ml</div>
+        <div class="p-price-wrap">
+          <div class="p-price">38.60 DH</div>
+        </div>
+      </div>
+    </button>
+    <div class="p-actions">
+      <button class="btn btn-dark w-100 snipcart-add-item"
+        data-item-id="MEC-0022"
+        data-item-price="38.60"
+        data-item-url="/"
+        data-item-name="Coca Cola Cerise 330Ml"
+        data-item-image="images/coca-cola-cerise-330ml.png">
+        Ajouter
+      </button>
+    </div>
+  </article>
+</div>
+<div class="product-item" data-cat="Boissons" data-title="coca cola vanille 330ml" data-promo="0">
+  <article class="product-card">
+    
+    <button class="product-open" type="button"
+      data-name="Coca Cola Vanille 330Ml"
+      data-desc="Coca Cola Vanille 330Ml — délicieux produit de la catégorie Boissons. À savourer à tout moment !"
+      data-image="images/coca-cola-vanille-330ml.png"
+      data-stock="1">
+      <div class="img-wrap">
+        <img src="assets/images/coca-cola-vanille-330ml.png" alt="Coca Cola Vanille 330Ml" loading="lazy" width="320" height="320">
+      </div>
+      <div class="p-body">
+        <div class="p-cat">Boissons</div>
+        <div class="p-title">Coca Cola Vanille 330Ml</div>
+        <div class="p-price-wrap">
+          <div class="p-price">39.90 DH</div>
+        </div>
+      </div>
+    </button>
+    <div class="p-actions">
+      <button class="btn btn-dark w-100 snipcart-add-item"
+        data-item-id="MEC-0023"
+        data-item-price="39.90"
+        data-item-url="/"
+        data-item-name="Coca Cola Vanille 330Ml"
+        data-item-image="images/coca-cola-vanille-330ml.png">
+        Ajouter
+      </button>
+    </div>
+  </article>
+</div>
+<div class="product-item" data-cat="Salées" data-title="doritos chilli 140g" data-promo="0">
+  <article class="product-card">
+    
+    <button class="product-open" type="button"
+      data-name="Doritos Chilli 140G"
+      data-desc="Doritos Chilli 140G — délicieux produit de la catégorie Salées. À savourer à tout moment !"
+      data-image="images/doritos-chilli-140g.png"
+      data-stock="1">
+      <div class="img-wrap">
+        <img src="assets/images/doritos-chilli-140g.png" alt="Doritos Chilli 140G" loading="lazy" width="320" height="320">
+      </div>
+      <div class="p-body">
+        <div class="p-cat">Salées</div>
+        <div class="p-title">Doritos Chilli 140G</div>
+        <div class="p-price-wrap">
+          <div class="p-price">41.20 DH</div>
+        </div>
+      </div>
+    </button>
+    <div class="p-actions">
+      <button class="btn btn-dark w-100 snipcart-add-item"
+        data-item-id="MEC-0024"
+        data-item-price="41.20"
+        data-item-url="/"
+        data-item-name="Doritos Chilli 140G"
+        data-item-image="images/doritos-chilli-140g.png">
+        Ajouter
+      </button>
+    </div>
+  </article>
+</div>
+<div class="product-item" data-cat="Salées" data-title="doritos tex mex 120g" data-promo="1">
+  <article class="product-card">
+    <span class="badge-promo">-20%</span>
+    <button class="product-open" type="button"
+      data-name="Doritos Tex Mex 120G"
+      data-desc="Doritos Tex Mex 120G — délicieux produit de la catégorie Salées. À savourer à tout moment !"
+      data-image="images/doritos-tex-mex-120g.png"
+      data-stock="1">
+      <div class="img-wrap">
+        <img src="assets/images/doritos-tex-mex-120g.png" alt="Doritos Tex Mex 120G" loading="lazy" width="320" height="320">
+      </div>
+      <div class="p-body">
+        <div class="p-cat">Salées</div>
+        <div class="p-title">Doritos Tex Mex 120G</div>
+        <div class="p-price-wrap">
+          <span class="p-old-price">46.50 DH</span><div class="p-price">42.50 DH</div>
+        </div>
+      </div>
+    </button>
+    <div class="p-actions">
+      <button class="btn btn-dark w-100 snipcart-add-item"
+        data-item-id="MEC-0025"
+        data-item-price="42.50"
+        data-item-url="/"
+        data-item-name="Doritos Tex Mex 120G"
+        data-item-image="images/doritos-tex-mex-120g.png">
+        Ajouter
+      </button>
+    </div>
+  </article>
+</div>
+<div class="product-item" data-cat="Salées" data-title="doritos tex mex 44g" data-promo="0">
+  <article class="product-card">
+    
+    <button class="product-open" type="button"
+      data-name="Doritos Tex Mex 44G"
+      data-desc="Doritos Tex Mex 44G — délicieux produit de la catégorie Salées. À savourer à tout moment !"
+      data-image="images/doritos-tex-mex-44g.png"
+      data-stock="1">
+      <div class="img-wrap">
+        <img src="assets/images/doritos-tex-mex-44g.png" alt="Doritos Tex Mex 44G" loading="lazy" width="320" height="320">
+      </div>
+      <div class="p-body">
+        <div class="p-cat">Salées</div>
+        <div class="p-title">Doritos Tex Mex 44G</div>
+        <div class="p-price-wrap">
+          <div class="p-price">43.80 DH</div>
+        </div>
+      </div>
+    </button>
+    <div class="p-actions">
+      <button class="btn btn-dark w-100 snipcart-add-item"
+        data-item-id="MEC-0026"
+        data-item-price="43.80"
+        data-item-url="/"
+        data-item-name="Doritos Tex Mex 44G"
+        data-item-image="images/doritos-tex-mex-44g.png">
+        Ajouter
+      </button>
+    </div>
+  </article>
+</div>
+<div class="product-item" data-cat="Boissons" data-title="fanta fraise kiwi 330ml" data-promo="0">
+  <article class="product-card">
+    
+    <button class="product-open" type="button"
+      data-name="Fanta Fraise Kiwi 330Ml"
+      data-desc="Fanta Fraise Kiwi 330Ml — délicieux produit de la catégorie Boissons. À savourer à tout moment !"
+      data-image="images/fanta-fraise-kiwi-330ml.png"
+      data-stock="1">
+      <div class="img-wrap">
+        <img src="assets/images/fanta-fraise-kiwi-330ml.png" alt="Fanta Fraise Kiwi 330Ml" loading="lazy" width="320" height="320">
+      </div>
+      <div class="p-body">
+        <div class="p-cat">Boissons</div>
+        <div class="p-title">Fanta Fraise Kiwi 330Ml</div>
+        <div class="p-price-wrap">
+          <div class="p-price">45.10 DH</div>
+        </div>
+      </div>
+    </button>
+    <div class="p-actions">
+      <button class="btn btn-dark w-100 snipcart-add-item"
+        data-item-id="MEC-0027"
+        data-item-price="45.10"
+        data-item-url="/"
+        data-item-name="Fanta Fraise Kiwi 330Ml"
+        data-item-image="images/fanta-fraise-kiwi-330ml.png">
+        Ajouter
+      </button>
+    </div>
+  </article>
+</div>
+<div class="product-item" data-cat="Boissons" data-title="fanta mangue fruit du dragon 330ml" data-promo="0">
+  <article class="product-card">
+    
+    <button class="product-open" type="button"
+      data-name="Fanta Mangue Fruit Du Dragon 330Ml"
+      data-desc="Fanta Mangue Fruit Du Dragon 330Ml — délicieux produit de la catégorie Boissons. À savourer à tout moment !"
+      data-image="images/fanta-mangue-fruit-du-dragon-330ml.png"
+      data-stock="1">
+      <div class="img-wrap">
+        <img src="assets/images/fanta-mangue-fruit-du-dragon-330ml.png" alt="Fanta Mangue Fruit Du Dragon 330Ml" loading="lazy" width="320" height="320">
+      </div>
+      <div class="p-body">
+        <div class="p-cat">Boissons</div>
+        <div class="p-title">Fanta Mangue Fruit Du Dragon 330Ml</div>
+        <div class="p-price-wrap">
+          <div class="p-price">46.40 DH</div>
+        </div>
+      </div>
+    </button>
+    <div class="p-actions">
+      <button class="btn btn-dark w-100 snipcart-add-item"
+        data-item-id="MEC-0028"
+        data-item-price="46.40"
+        data-item-url="/"
+        data-item-name="Fanta Mangue Fruit Du Dragon 330Ml"
+        data-item-image="images/fanta-mangue-fruit-du-dragon-330ml.png">
+        Ajouter
+      </button>
+    </div>
+  </article>
+</div>
+<div class="product-item" data-cat="Courses" data-title="ja comprims dulcorants sans lactose 1200 units (72g)" data-promo="0">
+  <article class="product-card">
+    
+    <button class="product-open" type="button"
+      data-name="Ja Comprims Dulcorants Sans Lactose 1200 Units (72G)"
+      data-desc="Ja Comprims Dulcorants Sans Lactose 1200 Units (72G) — délicieux produit de la catégorie Courses. À savourer à tout moment !"
+      data-image="images/ja-comprims-dulcorants-sans-lactose-1200-units-72g.png"
+      data-stock="1">
+      <div class="img-wrap">
+        <img src="assets/images/ja-comprims-dulcorants-sans-lactose-1200-units-72g.png" alt="Ja Comprims Dulcorants Sans Lactose 1200 Units (72G)" loading="lazy" width="320" height="320">
+      </div>
+      <div class="p-body">
+        <div class="p-cat">Courses</div>
+        <div class="p-title">Ja Comprims Dulcorants Sans Lactose 1200 Units (72G)</div>
+        <div class="p-price-wrap">
+          <div class="p-price">47.70 DH</div>
+        </div>
+      </div>
+    </button>
+    <div class="p-actions">
+      <button class="btn btn-dark w-100 snipcart-add-item"
+        data-item-id="MEC-0029"
+        data-item-price="47.70"
+        data-item-url="/"
+        data-item-name="Ja Comprims Dulcorants Sans Lactose 1200 Units (72G)"
+        data-item-image="images/ja-comprims-dulcorants-sans-lactose-1200-units-72g.png">
+        Ajouter
+      </button>
+    </div>
+  </article>
+</div>
+<div class="product-item" data-cat="Courses" data-title="ja boisson au th au citron 400g" data-promo="1">
+  <article class="product-card">
+    <span class="badge-promo">-20%</span>
+    <button class="product-open" type="button"
+      data-name="Ja Boisson Au Th Au Citron 400G"
+      data-desc="Ja Boisson Au Th Au Citron 400G — délicieux produit de la catégorie Courses. À savourer à tout moment !"
+      data-image="images/ja-boisson-au-th-au-citron-400g.png"
+      data-stock="1">
+      <div class="img-wrap">
+        <img src="assets/images/ja-boisson-au-th-au-citron-400g.png" alt="Ja Boisson Au Th Au Citron 400G" loading="lazy" width="320" height="320">
+      </div>
+      <div class="p-body">
+        <div class="p-cat">Courses</div>
+        <div class="p-title">Ja Boisson Au Th Au Citron 400G</div>
+        <div class="p-price-wrap">
+          <span class="p-old-price">53.00 DH</span><div class="p-price">49.00 DH</div>
+        </div>
+      </div>
+    </button>
+    <div class="p-actions">
+      <button class="btn btn-dark w-100 snipcart-add-item"
+        data-item-id="MEC-0030"
+        data-item-price="49.00"
+        data-item-url="/"
+        data-item-name="Ja Boisson Au Th Au Citron 400G"
+        data-item-image="images/ja-boisson-au-th-au-citron-400g.png">
+        Ajouter
+      </button>
+    </div>
+  </article>
+</div>
+<div class="product-item" data-cat="Courses" data-title="ja cacahutes assaisonnes pices 150g" data-promo="0">
+  <article class="product-card">
+    
+    <button class="product-open" type="button"
+      data-name="Ja Cacahutes Assaisonnes Pices 150G"
+      data-desc="Ja Cacahutes Assaisonnes Pices 150G — délicieux produit de la catégorie Courses. À savourer à tout moment !"
+      data-image="images/ja-cacahutes-assaisonnes-pices-150g.png"
+      data-stock="1">
+      <div class="img-wrap">
+        <img src="assets/images/ja-cacahutes-assaisonnes-pices-150g.png" alt="Ja Cacahutes Assaisonnes Pices 150G" loading="lazy" width="320" height="320">
+      </div>
+      <div class="p-body">
+        <div class="p-cat">Courses</div>
+        <div class="p-title">Ja Cacahutes Assaisonnes Pices 150G</div>
+        <div class="p-price-wrap">
+          <div class="p-price">50.30 DH</div>
+        </div>
+      </div>
+    </button>
+    <div class="p-actions">
+      <button class="btn btn-dark w-100 snipcart-add-item"
+        data-item-id="MEC-0031"
+        data-item-price="50.30"
+        data-item-url="/"
+        data-item-name="Ja Cacahutes Assaisonnes Pices 150G"
+        data-item-image="images/ja-cacahutes-assaisonnes-pices-150g.png">
+        Ajouter
+      </button>
+    </div>
+  </article>
+</div>
+<div class="product-item" data-cat="Courses" data-title="ja cacahutes enrobes got de paprika 200g" data-promo="0">
+  <article class="product-card">
+    
+    <button class="product-open" type="button"
+      data-name="Ja Cacahutes Enrobes Got De Paprika 200G"
+      data-desc="Ja Cacahutes Enrobes Got De Paprika 200G — délicieux produit de la catégorie Courses. À savourer à tout moment !"
+      data-image="images/ja-cacahutes-enrobes-got-de-paprika-200g.png"
+      data-stock="1">
+      <div class="img-wrap">
+        <img src="assets/images/ja-cacahutes-enrobes-got-de-paprika-200g.png" alt="Ja Cacahutes Enrobes Got De Paprika 200G" loading="lazy" width="320" height="320">
+      </div>
+      <div class="p-body">
+        <div class="p-cat">Courses</div>
+        <div class="p-title">Ja Cacahutes Enrobes Got De Paprika 200G</div>
+        <div class="p-price-wrap">
+          <div class="p-price">51.60 DH</div>
+        </div>
+      </div>
+    </button>
+    <div class="p-actions">
+      <button class="btn btn-dark w-100 snipcart-add-item"
+        data-item-id="MEC-0032"
+        data-item-price="51.60"
+        data-item-url="/"
+        data-item-name="Ja Cacahutes Enrobes Got De Paprika 200G"
+        data-item-image="images/ja-cacahutes-enrobes-got-de-paprika-200g.png">
+        Ajouter
+      </button>
+    </div>
+  </article>
+</div>
+<div class="product-item" data-cat="Sucrées" data-title="ja knabberbox mlange de biscuits sals 300g" data-promo="0">
+  <article class="product-card">
+    
+    <button class="product-open" type="button"
+      data-name="Ja Knabberbox Mlange De Biscuits Sals 300G"
+      data-desc="Ja Knabberbox Mlange De Biscuits Sals 300G — délicieux produit de la catégorie Sucrées. À savourer à tout moment !"
+      data-image="images/ja-knabberbox-mlange-de-biscuits-sals-300g.png"
+      data-stock="1">
+      <div class="img-wrap">
+        <img src="assets/images/ja-knabberbox-mlange-de-biscuits-sals-300g.png" alt="Ja Knabberbox Mlange De Biscuits Sals 300G" loading="lazy" width="320" height="320">
+      </div>
+      <div class="p-body">
+        <div class="p-cat">Sucrées</div>
+        <div class="p-title">Ja Knabberbox Mlange De Biscuits Sals 300G</div>
+        <div class="p-price-wrap">
+          <div class="p-price">52.90 DH</div>
+        </div>
+      </div>
+    </button>
+    <div class="p-actions">
+      <button class="btn btn-dark w-100 snipcart-add-item"
+        data-item-id="MEC-0033"
+        data-item-price="52.90"
+        data-item-url="/"
+        data-item-name="Ja Knabberbox Mlange De Biscuits Sals 300G"
+        data-item-image="images/ja-knabberbox-mlange-de-biscuits-sals-300g.png">
+        Ajouter
+      </button>
+    </div>
+  </article>
+</div>
+<div class="product-item" data-cat="Courses" data-title="ja mini bretzels 250g" data-promo="0">
+  <article class="product-card">
+    
+    <button class="product-open" type="button"
+      data-name="Ja Mini Bretzels 250G"
+      data-desc="Ja Mini Bretzels 250G — délicieux produit de la catégorie Courses. À savourer à tout moment !"
+      data-image="images/ja-mini-bretzels-250g.png"
+      data-stock="1">
+      <div class="img-wrap">
+        <img src="assets/images/ja-mini-bretzels-250g.png" alt="Ja Mini Bretzels 250G" loading="lazy" width="320" height="320">
+      </div>
+      <div class="p-body">
+        <div class="p-cat">Courses</div>
+        <div class="p-title">Ja Mini Bretzels 250G</div>
+        <div class="p-price-wrap">
+          <div class="p-price">54.20 DH</div>
+        </div>
+      </div>
+    </button>
+    <div class="p-actions">
+      <button class="btn btn-dark w-100 snipcart-add-item"
+        data-item-id="MEC-0034"
+        data-item-price="54.20"
+        data-item-url="/"
+        data-item-name="Ja Mini Bretzels 250G"
+        data-item-image="images/ja-mini-bretzels-250g.png">
+        Ajouter
+      </button>
+    </div>
+  </article>
+</div>
+<div class="product-item" data-cat="Courses" data-title="ja mlange de fruits coque 200g" data-promo="1">
+  <article class="product-card">
+    <span class="badge-promo">-20%</span>
+    <button class="product-open" type="button"
+      data-name="Ja Mlange De Fruits Coque 200G"
+      data-desc="Ja Mlange De Fruits Coque 200G — délicieux produit de la catégorie Courses. À savourer à tout moment !"
+      data-image="images/ja-mlange-de-fruits-coque-200g.png"
+      data-stock="1">
+      <div class="img-wrap">
+        <img src="assets/images/ja-mlange-de-fruits-coque-200g.png" alt="Ja Mlange De Fruits Coque 200G" loading="lazy" width="320" height="320">
+      </div>
+      <div class="p-body">
+        <div class="p-cat">Courses</div>
+        <div class="p-title">Ja Mlange De Fruits Coque 200G</div>
+        <div class="p-price-wrap">
+          <span class="p-old-price">59.50 DH</span><div class="p-price">55.50 DH</div>
+        </div>
+      </div>
+    </button>
+    <div class="p-actions">
+      <button class="btn btn-dark w-100 snipcart-add-item"
+        data-item-id="MEC-0035"
+        data-item-price="55.50"
+        data-item-url="/"
+        data-item-name="Ja Mlange De Fruits Coque 200G"
+        data-item-image="images/ja-mlange-de-fruits-coque-200g.png">
+        Ajouter
+      </button>
+    </div>
+  </article>
+</div>
+<div class="product-item" data-cat="Courses" data-title="ja noix de cajou grilles et sales 150g" data-promo="0">
+  <article class="product-card">
+    
+    <button class="product-open" type="button"
+      data-name="Ja Noix De Cajou Grilles Et Sales 150G"
+      data-desc="Ja Noix De Cajou Grilles Et Sales 150G — délicieux produit de la catégorie Courses. À savourer à tout moment !"
+      data-image="images/ja-noix-de-cajou-grilles-et-sales-150g.png"
+      data-stock="1">
+      <div class="img-wrap">
+        <img src="assets/images/ja-noix-de-cajou-grilles-et-sales-150g.png" alt="Ja Noix De Cajou Grilles Et Sales 150G" loading="lazy" width="320" height="320">
+      </div>
+      <div class="p-body">
+        <div class="p-cat">Courses</div>
+        <div class="p-title">Ja Noix De Cajou Grilles Et Sales 150G</div>
+        <div class="p-price-wrap">
+          <div class="p-price">56.80 DH</div>
+        </div>
+      </div>
+    </button>
+    <div class="p-actions">
+      <button class="btn btn-dark w-100 snipcart-add-item"
+        data-item-id="MEC-0036"
+        data-item-price="56.80"
+        data-item-url="/"
+        data-item-name="Ja Noix De Cajou Grilles Et Sales 150G"
+        data-item-image="images/ja-noix-de-cajou-grilles-et-sales-150g.png">
+        Ajouter
+      </button>
+    </div>
+  </article>
+</div>
+<div class="product-item" data-cat="Courses" data-title="ja pistaches de californie grilles et sales 250g" data-promo="0">
+  <article class="product-card">
+    
+    <button class="product-open" type="button"
+      data-name="Ja Pistaches De Californie Grilles Et Sales 250G"
+      data-desc="Ja Pistaches De Californie Grilles Et Sales 250G — délicieux produit de la catégorie Courses. À savourer à tout moment !"
+      data-image="images/ja-pistaches-de-californie-grilles-et-sales-250g.png"
+      data-stock="1">
+      <div class="img-wrap">
+        <img src="assets/images/ja-pistaches-de-californie-grilles-et-sales-250g.png" alt="Ja Pistaches De Californie Grilles Et Sales 250G" loading="lazy" width="320" height="320">
+      </div>
+      <div class="p-body">
+        <div class="p-cat">Courses</div>
+        <div class="p-title">Ja Pistaches De Californie Grilles Et Sales 250G</div>
+        <div class="p-price-wrap">
+          <div class="p-price">58.10 DH</div>
+        </div>
+      </div>
+    </button>
+    <div class="p-actions">
+      <button class="btn btn-dark w-100 snipcart-add-item"
+        data-item-id="MEC-0037"
+        data-item-price="58.10"
+        data-item-url="/"
+        data-item-name="Ja Pistaches De Californie Grilles Et Sales 250G"
+        data-item-image="images/ja-pistaches-de-californie-grilles-et-sales-250g.png">
+        Ajouter
+      </button>
+    </div>
+  </article>
+</div>
+<div class="product-item" data-cat="Courses" data-title="ja pistaches grilles non sales 250g" data-promo="0">
+  <article class="product-card">
+    
+    <button class="product-open" type="button"
+      data-name="Ja Pistaches Grilles Non Sales 250G"
+      data-desc="Ja Pistaches Grilles Non Sales 250G — délicieux produit de la catégorie Courses. À savourer à tout moment !"
+      data-image="images/ja-pistaches-grilles-non-sales-250g.png"
+      data-stock="1">
+      <div class="img-wrap">
+        <img src="assets/images/ja-pistaches-grilles-non-sales-250g.png" alt="Ja Pistaches Grilles Non Sales 250G" loading="lazy" width="320" height="320">
+      </div>
+      <div class="p-body">
+        <div class="p-cat">Courses</div>
+        <div class="p-title">Ja Pistaches Grilles Non Sales 250G</div>
+        <div class="p-price-wrap">
+          <div class="p-price">59.40 DH</div>
+        </div>
+      </div>
+    </button>
+    <div class="p-actions">
+      <button class="btn btn-dark w-100 snipcart-add-item"
+        data-item-id="MEC-0038"
+        data-item-price="59.40"
+        data-item-url="/"
+        data-item-name="Ja Pistaches Grilles Non Sales 250G"
+        data-item-image="images/ja-pistaches-grilles-non-sales-250g.png">
+        Ajouter
+      </button>
+    </div>
+  </article>
+</div>
+<div class="product-item" data-cat="Courses" data-title="lays saveur camponesas 115g" data-promo="0">
+  <article class="product-card">
+    
+    <button class="product-open" type="button"
+      data-name="Lays Saveur Camponesas 115G"
+      data-desc="Lays Saveur Camponesas 115G — délicieux produit de la catégorie Courses. À savourer à tout moment !"
+      data-image="images/lays-saveur-camponesas-115g.png"
+      data-stock="1">
+      <div class="img-wrap">
+        <img src="assets/images/lays-saveur-camponesas-115g.png" alt="Lays Saveur Camponesas 115G" loading="lazy" width="320" height="320">
+      </div>
+      <div class="p-body">
+        <div class="p-cat">Courses</div>
+        <div class="p-title">Lays Saveur Camponesas 115G</div>
+        <div class="p-price-wrap">
+          <div class="p-price">60.70 DH</div>
+        </div>
+      </div>
+    </button>
+    <div class="p-actions">
+      <button class="btn btn-dark w-100 snipcart-add-item"
+        data-item-id="MEC-0039"
+        data-item-price="60.70"
+        data-item-url="/"
+        data-item-name="Lays Saveur Camponesas 115G"
+        data-item-image="images/lays-saveur-camponesas-115g.png">
+        Ajouter
+      </button>
+    </div>
+  </article>
+</div>
+<div class="product-item" data-cat="Salées" data-title="lorenz crunchips sel vinaigre 100g" data-promo="1">
+  <article class="product-card">
+    <span class="badge-promo">-20%</span>
+    <button class="product-open" type="button"
+      data-name="Lorenz Crunchips Sel Vinaigre 100G"
+      data-desc="Lorenz Crunchips Sel Vinaigre 100G — délicieux produit de la catégorie Salées. À savourer à tout moment !"
+      data-image="images/lorenz-crunchips-sel-vinaigre-100g.png"
+      data-stock="1">
+      <div class="img-wrap">
+        <img src="assets/images/lorenz-crunchips-sel-vinaigre-100g.png" alt="Lorenz Crunchips Sel Vinaigre 100G" loading="lazy" width="320" height="320">
+      </div>
+      <div class="p-body">
+        <div class="p-cat">Salées</div>
+        <div class="p-title">Lorenz Crunchips Sel Vinaigre 100G</div>
+        <div class="p-price-wrap">
+          <span class="p-old-price">66.00 DH</span><div class="p-price">62.00 DH</div>
+        </div>
+      </div>
+    </button>
+    <div class="p-actions">
+      <button class="btn btn-dark w-100 snipcart-add-item"
+        data-item-id="MEC-0040"
+        data-item-price="62.00"
+        data-item-url="/"
+        data-item-name="Lorenz Crunchips Sel Vinaigre 100G"
+        data-item-image="images/lorenz-crunchips-sel-vinaigre-100g.png">
+        Ajouter
+      </button>
+    </div>
+  </article>
+</div>
+<div class="product-item" data-cat="Courses" data-title="mms boisson lait cacahute 350ml" data-promo="0">
+  <article class="product-card">
+    
+    <button class="product-open" type="button"
+      data-name="Mms Boisson Lait Cacahute 350Ml"
+      data-desc="Mms Boisson Lait Cacahute 350Ml — délicieux produit de la catégorie Courses. À savourer à tout moment !"
+      data-image="images/mms-boisson-lait-cacahute-350ml.png"
+      data-stock="1">
+      <div class="img-wrap">
+        <img src="assets/images/mms-boisson-lait-cacahute-350ml.png" alt="Mms Boisson Lait Cacahute 350Ml" loading="lazy" width="320" height="320">
+      </div>
+      <div class="p-body">
+        <div class="p-cat">Courses</div>
+        <div class="p-title">Mms Boisson Lait Cacahute 350Ml</div>
+        <div class="p-price-wrap">
+          <div class="p-price">63.30 DH</div>
+        </div>
+      </div>
+    </button>
+    <div class="p-actions">
+      <button class="btn btn-dark w-100 snipcart-add-item"
+        data-item-id="MEC-0041"
+        data-item-price="63.30"
+        data-item-url="/"
+        data-item-name="Mms Boisson Lait Cacahute 350Ml"
+        data-item-image="images/mms-boisson-lait-cacahute-350ml.png">
+        Ajouter
+      </button>
+    </div>
+  </article>
+</div>
+<div class="product-item" data-cat="Boissons" data-title="monster energy japon m3 extra strength 150ml" data-promo="0">
+  <article class="product-card">
+    
+    <button class="product-open" type="button"
+      data-name="Monster Energy Japon M3 Extra Strength 150Ml"
+      data-desc="Monster Energy Japon M3 Extra Strength 150Ml — délicieux produit de la catégorie Boissons. À savourer à tout moment !"
+      data-image="images/monster-energy-japon-m3-extra-strength-150ml.png"
+      data-stock="1">
+      <div class="img-wrap">
+        <img src="assets/images/monster-energy-japon-m3-extra-strength-150ml.png" alt="Monster Energy Japon M3 Extra Strength 150Ml" loading="lazy" width="320" height="320">
+      </div>
+      <div class="p-body">
+        <div class="p-cat">Boissons</div>
+        <div class="p-title">Monster Energy Japon M3 Extra Strength 150Ml</div>
+        <div class="p-price-wrap">
+          <div class="p-price">64.60 DH</div>
+        </div>
+      </div>
+    </button>
+    <div class="p-actions">
+      <button class="btn btn-dark w-100 snipcart-add-item"
+        data-item-id="MEC-0042"
+        data-item-price="64.60"
+        data-item-url="/"
+        data-item-name="Monster Energy Japon M3 Extra Strength 150Ml"
+        data-item-image="images/monster-energy-japon-m3-extra-strength-150ml.png">
+        Ajouter
+      </button>
+    </div>
+  </article>
+</div>
+<div class="product-item" data-cat="Boissons" data-title="monster energy nitro cosmic peach 500ml" data-promo="0">
+  <article class="product-card">
+    
+    <button class="product-open" type="button"
+      data-name="Monster Energy Nitro Cosmic Peach 500Ml"
+      data-desc="Monster Energy Nitro Cosmic Peach 500Ml — délicieux produit de la catégorie Boissons. À savourer à tout moment !"
+      data-image="images/monster-energy-nitro-cosmic-peach-500ml.png"
+      data-stock="1">
+      <div class="img-wrap">
+        <img src="assets/images/monster-energy-nitro-cosmic-peach-500ml.png" alt="Monster Energy Nitro Cosmic Peach 500Ml" loading="lazy" width="320" height="320">
+      </div>
+      <div class="p-body">
+        <div class="p-cat">Boissons</div>
+        <div class="p-title">Monster Energy Nitro Cosmic Peach 500Ml</div>
+        <div class="p-price-wrap">
+          <div class="p-price">65.90 DH</div>
+        </div>
+      </div>
+    </button>
+    <div class="p-actions">
+      <button class="btn btn-dark w-100 snipcart-add-item"
+        data-item-id="MEC-0043"
+        data-item-price="65.90"
+        data-item-url="/"
+        data-item-name="Monster Energy Nitro Cosmic Peach 500Ml"
+        data-item-image="images/monster-energy-nitro-cosmic-peach-500ml.png">
+        Ajouter
+      </button>
+    </div>
+  </article>
+</div>
+<div class="product-item" data-cat="Boissons" data-title="monster energy original 500ml" data-promo="0">
+  <article class="product-card">
+    
+    <button class="product-open" type="button"
+      data-name="Monster Energy Original 500Ml"
+      data-desc="Monster Energy Original 500Ml — délicieux produit de la catégorie Boissons. À savourer à tout moment !"
+      data-image="images/monster-energy-original-500ml.png"
+      data-stock="1">
+      <div class="img-wrap">
+        <img src="assets/images/monster-energy-original-500ml.png" alt="Monster Energy Original 500Ml" loading="lazy" width="320" height="320">
+      </div>
+      <div class="p-body">
+        <div class="p-cat">Boissons</div>
+        <div class="p-title">Monster Energy Original 500Ml</div>
+        <div class="p-price-wrap">
+          <div class="p-price">67.20 DH</div>
+        </div>
+      </div>
+    </button>
+    <div class="p-actions">
+      <button class="btn btn-dark w-100 snipcart-add-item"
+        data-item-id="MEC-0044"
+        data-item-price="67.20"
+        data-item-url="/"
+        data-item-name="Monster Energy Original 500Ml"
+        data-item-image="images/monster-energy-original-500ml.png">
+        Ajouter
+      </button>
+    </div>
+  </article>
+</div>
+<div class="product-item" data-cat="Boissons" data-title="monster energy ultra white sans sucre 500ml" data-promo="1">
+  <article class="product-card">
+    <span class="badge-promo">-20%</span>
+    <button class="product-open" type="button"
+      data-name="Monster Energy Ultra White Sans Sucre 500Ml"
+      data-desc="Monster Energy Ultra White Sans Sucre 500Ml — délicieux produit de la catégorie Boissons. À savourer à tout moment !"
+      data-image="images/monster-energy-ultra-white-sans-sucre-500ml.png"
+      data-stock="1">
+      <div class="img-wrap">
+        <img src="assets/images/monster-energy-ultra-white-sans-sucre-500ml.png" alt="Monster Energy Ultra White Sans Sucre 500Ml" loading="lazy" width="320" height="320">
+      </div>
+      <div class="p-body">
+        <div class="p-cat">Boissons</div>
+        <div class="p-title">Monster Energy Ultra White Sans Sucre 500Ml</div>
+        <div class="p-price-wrap">
+          <span class="p-old-price">72.50 DH</span><div class="p-price">68.50 DH</div>
+        </div>
+      </div>
+    </button>
+    <div class="p-actions">
+      <button class="btn btn-dark w-100 snipcart-add-item"
+        data-item-id="MEC-0045"
+        data-item-price="68.50"
+        data-item-url="/"
+        data-item-name="Monster Energy Ultra White Sans Sucre 500Ml"
+        data-item-image="images/monster-energy-ultra-white-sans-sucre-500ml.png">
+        Ajouter
+      </button>
+    </div>
+  </article>
+</div>
+<div class="product-item" data-cat="Boissons" data-title="nestl caja roja assortiment dlicieux de 11 varits de chocolats 103g" data-promo="0">
+  <article class="product-card">
+    
+    <button class="product-open" type="button"
+      data-name="Nestl Caja Roja Assortiment Dlicieux De 11 Varits De Chocolats 103G"
+      data-desc="Nestl Caja Roja Assortiment Dlicieux De 11 Varits De Chocolats 103G — délicieux produit de la catégorie Boissons. À savourer à tout moment !"
+      data-image="images/nestl-caja-roja-assortiment-dlicieux-de-11-varits-de-chocolats-103g.png"
+      data-stock="1">
+      <div class="img-wrap">
+        <img src="assets/images/nestl-caja-roja-assortiment-dlicieux-de-11-varits-de-chocolats-103g.png" alt="Nestl Caja Roja Assortiment Dlicieux De 11 Varits De Chocolats 103G" loading="lazy" width="320" height="320">
+      </div>
+      <div class="p-body">
+        <div class="p-cat">Boissons</div>
+        <div class="p-title">Nestl Caja Roja Assortiment Dlicieux De 11 Varits De Chocolats 103G</div>
+        <div class="p-price-wrap">
+          <div class="p-price">69.80 DH</div>
+        </div>
+      </div>
+    </button>
+    <div class="p-actions">
+      <button class="btn btn-dark w-100 snipcart-add-item"
+        data-item-id="MEC-0046"
+        data-item-price="69.80"
+        data-item-url="/"
+        data-item-name="Nestl Caja Roja Assortiment Dlicieux De 11 Varits De Chocolats 103G"
+        data-item-image="images/nestl-caja-roja-assortiment-dlicieux-de-11-varits-de-chocolats-103g.png">
+        Ajouter
+      </button>
+    </div>
+  </article>
+</div>
+<div class="product-item" data-cat="Boissons" data-title="nestl chocolat au lait sans sucre 115g" data-promo="0">
+  <article class="product-card">
+    
+    <button class="product-open" type="button"
+      data-name="Nestl Chocolat Au Lait Sans Sucre 115G"
+      data-desc="Nestl Chocolat Au Lait Sans Sucre 115G — délicieux produit de la catégorie Boissons. À savourer à tout moment !"
+      data-image="images/nestl-chocolat-au-lait-sans-sucre-115g.png"
+      data-stock="1">
+      <div class="img-wrap">
+        <img src="assets/images/nestl-chocolat-au-lait-sans-sucre-115g.png" alt="Nestl Chocolat Au Lait Sans Sucre 115G" loading="lazy" width="320" height="320">
+      </div>
+      <div class="p-body">
+        <div class="p-cat">Boissons</div>
+        <div class="p-title">Nestl Chocolat Au Lait Sans Sucre 115G</div>
+        <div class="p-price-wrap">
+          <div class="p-price">71.10 DH</div>
+        </div>
+      </div>
+    </button>
+    <div class="p-actions">
+      <button class="btn btn-dark w-100 snipcart-add-item"
+        data-item-id="MEC-0047"
+        data-item-price="71.10"
+        data-item-url="/"
+        data-item-name="Nestl Chocolat Au Lait Sans Sucre 115G"
+        data-item-image="images/nestl-chocolat-au-lait-sans-sucre-115g.png">
+        Ajouter
+      </button>
+    </div>
+  </article>
+</div>
+<div class="product-item" data-cat="Courses" data-title="nestl extrafino dinosaurus 84g" data-promo="0">
+  <article class="product-card">
+    
+    <button class="product-open" type="button"
+      data-name="Nestl Extrafino Dinosaurus 84G"
+      data-desc="Nestl Extrafino Dinosaurus 84G — délicieux produit de la catégorie Courses. À savourer à tout moment !"
+      data-image="images/nestl-extrafino-dinosaurus-84g.png"
+      data-stock="1">
+      <div class="img-wrap">
+        <img src="assets/images/nestl-extrafino-dinosaurus-84g.png" alt="Nestl Extrafino Dinosaurus 84G" loading="lazy" width="320" height="320">
+      </div>
+      <div class="p-body">
+        <div class="p-cat">Courses</div>
+        <div class="p-title">Nestl Extrafino Dinosaurus 84G</div>
+        <div class="p-price-wrap">
+          <div class="p-price">72.40 DH</div>
+        </div>
+      </div>
+    </button>
+    <div class="p-actions">
+      <button class="btn btn-dark w-100 snipcart-add-item"
+        data-item-id="MEC-0048"
+        data-item-price="72.40"
+        data-item-url="/"
+        data-item-name="Nestl Extrafino Dinosaurus 84G"
+        data-item-image="images/nestl-extrafino-dinosaurus-84g.png">
+        Ajouter
+      </button>
+    </div>
+  </article>
+</div>
+<div class="product-item" data-cat="Courses" data-title="nestl extrafino dulce de leche 83g" data-promo="0">
+  <article class="product-card">
+    
+    <button class="product-open" type="button"
+      data-name="Nestl Extrafino Dulce De Leche 83G"
+      data-desc="Nestl Extrafino Dulce De Leche 83G — délicieux produit de la catégorie Courses. À savourer à tout moment !"
+      data-image="images/nestl-extrafino-dulce-de-leche-83g.png"
+      data-stock="1">
+      <div class="img-wrap">
+        <img src="assets/images/nestl-extrafino-dulce-de-leche-83g.png" alt="Nestl Extrafino Dulce De Leche 83G" loading="lazy" width="320" height="320">
+      </div>
+      <div class="p-body">
+        <div class="p-cat">Courses</div>
+        <div class="p-title">Nestl Extrafino Dulce De Leche 83G</div>
+        <div class="p-price-wrap">
+          <div class="p-price">73.70 DH</div>
+        </div>
+      </div>
+    </button>
+    <div class="p-actions">
+      <button class="btn btn-dark w-100 snipcart-add-item"
+        data-item-id="MEC-0049"
+        data-item-price="73.70"
+        data-item-url="/"
+        data-item-name="Nestl Extrafino Dulce De Leche 83G"
+        data-item-image="images/nestl-extrafino-dulce-de-leche-83g.png">
+        Ajouter
+      </button>
+    </div>
+  </article>
+</div>
+<div class="product-item" data-cat="Courses" data-title="nestl extrafino tosta rica 84g" data-promo="1">
+  <article class="product-card">
+    <span class="badge-promo">-20%</span>
+    <button class="product-open" type="button"
+      data-name="Nestl Extrafino Tosta Rica 84G"
+      data-desc="Nestl Extrafino Tosta Rica 84G — délicieux produit de la catégorie Courses. À savourer à tout moment !"
+      data-image="images/nestl-extrafino-tosta-rica-84g.png"
+      data-stock="1">
+      <div class="img-wrap">
+        <img src="assets/images/nestl-extrafino-tosta-rica-84g.png" alt="Nestl Extrafino Tosta Rica 84G" loading="lazy" width="320" height="320">
+      </div>
+      <div class="p-body">
+        <div class="p-cat">Courses</div>
+        <div class="p-title">Nestl Extrafino Tosta Rica 84G</div>
+        <div class="p-price-wrap">
+          <span class="p-old-price">79.00 DH</span><div class="p-price">75.00 DH</div>
+        </div>
+      </div>
+    </button>
+    <div class="p-actions">
+      <button class="btn btn-dark w-100 snipcart-add-item"
+        data-item-id="MEC-0050"
+        data-item-price="75.00"
+        data-item-url="/"
+        data-item-name="Nestl Extrafino Tosta Rica 84G"
+        data-item-image="images/nestl-extrafino-tosta-rica-84g.png">
+        Ajouter
+      </button>
+    </div>
+  </article>
+</div>
+<div class="product-item" data-cat="Courses" data-title="nutella go 52g" data-promo="0">
+  <article class="product-card">
+    
+    <button class="product-open" type="button"
+      data-name="Nutella Go 52G"
+      data-desc="Nutella Go 52G — délicieux produit de la catégorie Courses. À savourer à tout moment !"
+      data-image="images/nutella-go-52g.png"
+      data-stock="1">
+      <div class="img-wrap">
+        <img src="assets/images/nutella-go-52g.png" alt="Nutella Go 52G" loading="lazy" width="320" height="320">
+      </div>
+      <div class="p-body">
+        <div class="p-cat">Courses</div>
+        <div class="p-title">Nutella Go 52G</div>
+        <div class="p-price-wrap">
+          <div class="p-price">76.30 DH</div>
+        </div>
+      </div>
+    </button>
+    <div class="p-actions">
+      <button class="btn btn-dark w-100 snipcart-add-item"
+        data-item-id="MEC-0051"
+        data-item-price="76.30"
+        data-item-url="/"
+        data-item-name="Nutella Go 52G"
+        data-item-image="images/nutella-go-52g.png">
+        Ajouter
+      </button>
+    </div>
+  </article>
+</div>
+<div class="product-item" data-cat="Courses" data-title="oasis fraise framboise 330ml" data-promo="0">
+  <article class="product-card">
+    
+    <button class="product-open" type="button"
+      data-name="Oasis Fraise Framboise 330Ml"
+      data-desc="Oasis Fraise Framboise 330Ml — délicieux produit de la catégorie Courses. À savourer à tout moment !"
+      data-image="images/oasis-fraise-framboise-330ml.png"
+      data-stock="1">
+      <div class="img-wrap">
+        <img src="assets/images/oasis-fraise-framboise-330ml.png" alt="Oasis Fraise Framboise 330Ml" loading="lazy" width="320" height="320">
+      </div>
+      <div class="p-body">
+        <div class="p-cat">Courses</div>
+        <div class="p-title">Oasis Fraise Framboise 330Ml</div>
+        <div class="p-price-wrap">
+          <div class="p-price">77.60 DH</div>
+        </div>
+      </div>
+    </button>
+    <div class="p-actions">
+      <button class="btn btn-dark w-100 snipcart-add-item"
+        data-item-id="MEC-0052"
+        data-item-price="77.60"
+        data-item-url="/"
+        data-item-name="Oasis Fraise Framboise 330Ml"
+        data-item-image="images/oasis-fraise-framboise-330ml.png">
+        Ajouter
+      </button>
+    </div>
+  </article>
+</div>
+<div class="product-item" data-cat="Courses" data-title="oasis pomme poire 330ml" data-promo="0">
+  <article class="product-card">
+    
+    <button class="product-open" type="button"
+      data-name="Oasis Pomme Poire 330Ml"
+      data-desc="Oasis Pomme Poire 330Ml — délicieux produit de la catégorie Courses. À savourer à tout moment !"
+      data-image="images/oasis-pomme-poire-330ml.png"
+      data-stock="1">
+      <div class="img-wrap">
+        <img src="assets/images/oasis-pomme-poire-330ml.png" alt="Oasis Pomme Poire 330Ml" loading="lazy" width="320" height="320">
+      </div>
+      <div class="p-body">
+        <div class="p-cat">Courses</div>
+        <div class="p-title">Oasis Pomme Poire 330Ml</div>
+        <div class="p-price-wrap">
+          <div class="p-price">78.90 DH</div>
+        </div>
+      </div>
+    </button>
+    <div class="p-actions">
+      <button class="btn btn-dark w-100 snipcart-add-item"
+        data-item-id="MEC-0053"
+        data-item-price="78.90"
+        data-item-url="/"
+        data-item-name="Oasis Pomme Poire 330Ml"
+        data-item-image="images/oasis-pomme-poire-330ml.png">
+        Ajouter
+      </button>
+    </div>
+  </article>
+</div>
+<div class="product-item" data-cat="Courses" data-title="ocean bomb goku black pche 330ml" data-promo="0">
+  <article class="product-card">
+    
+    <button class="product-open" type="button"
+      data-name="Ocean Bomb Goku Black Pche 330Ml"
+      data-desc="Ocean Bomb Goku Black Pche 330Ml — délicieux produit de la catégorie Courses. À savourer à tout moment !"
+      data-image="images/ocean-bomb-goku-black-pche-330ml.png"
+      data-stock="1">
+      <div class="img-wrap">
+        <img src="assets/images/ocean-bomb-goku-black-pche-330ml.png" alt="Ocean Bomb Goku Black Pche 330Ml" loading="lazy" width="320" height="320">
+      </div>
+      <div class="p-body">
+        <div class="p-cat">Courses</div>
+        <div class="p-title">Ocean Bomb Goku Black Pche 330Ml</div>
+        <div class="p-price-wrap">
+          <div class="p-price">80.20 DH</div>
+        </div>
+      </div>
+    </button>
+    <div class="p-actions">
+      <button class="btn btn-dark w-100 snipcart-add-item"
+        data-item-id="MEC-0054"
+        data-item-price="80.20"
+        data-item-url="/"
+        data-item-name="Ocean Bomb Goku Black Pche 330Ml"
+        data-item-image="images/ocean-bomb-goku-black-pche-330ml.png">
+        Ajouter
+      </button>
+    </div>
+  </article>
+</div>
+<div class="product-item" data-cat="Courses" data-title="ocean bomb piccolo citron 330ml" data-promo="1">
+  <article class="product-card">
+    <span class="badge-promo">-20%</span>
+    <button class="product-open" type="button"
+      data-name="Ocean Bomb Piccolo Citron 330Ml"
+      data-desc="Ocean Bomb Piccolo Citron 330Ml — délicieux produit de la catégorie Courses. À savourer à tout moment !"
+      data-image="images/ocean-bomb-piccolo-citron-330ml.png"
+      data-stock="1">
+      <div class="img-wrap">
+        <img src="assets/images/ocean-bomb-piccolo-citron-330ml.png" alt="Ocean Bomb Piccolo Citron 330Ml" loading="lazy" width="320" height="320">
+      </div>
+      <div class="p-body">
+        <div class="p-cat">Courses</div>
+        <div class="p-title">Ocean Bomb Piccolo Citron 330Ml</div>
+        <div class="p-price-wrap">
+          <span class="p-old-price">85.50 DH</span><div class="p-price">81.50 DH</div>
+        </div>
+      </div>
+    </button>
+    <div class="p-actions">
+      <button class="btn btn-dark w-100 snipcart-add-item"
+        data-item-id="MEC-0055"
+        data-item-price="81.50"
+        data-item-url="/"
+        data-item-name="Ocean Bomb Piccolo Citron 330Ml"
+        data-item-image="images/ocean-bomb-piccolo-citron-330ml.png">
+        Ajouter
+      </button>
+    </div>
+  </article>
+</div>
+<div class="product-item" data-cat="Courses" data-title="ocean bomb shenron orange 330ml" data-promo="0">
+  <article class="product-card">
+    
+    <button class="product-open" type="button"
+      data-name="Ocean Bomb Shenron Orange 330Ml"
+      data-desc="Ocean Bomb Shenron Orange 330Ml — délicieux produit de la catégorie Courses. À savourer à tout moment !"
+      data-image="images/ocean-bomb-shenron-orange-330ml.png"
+      data-stock="1">
+      <div class="img-wrap">
+        <img src="assets/images/ocean-bomb-shenron-orange-330ml.png" alt="Ocean Bomb Shenron Orange 330Ml" loading="lazy" width="320" height="320">
+      </div>
+      <div class="p-body">
+        <div class="p-cat">Courses</div>
+        <div class="p-title">Ocean Bomb Shenron Orange 330Ml</div>
+        <div class="p-price-wrap">
+          <div class="p-price">82.80 DH</div>
+        </div>
+      </div>
+    </button>
+    <div class="p-actions">
+      <button class="btn btn-dark w-100 snipcart-add-item"
+        data-item-id="MEC-0056"
+        data-item-price="82.80"
+        data-item-url="/"
+        data-item-name="Ocean Bomb Shenron Orange 330Ml"
+        data-item-image="images/ocean-bomb-shenron-orange-330ml.png">
+        Ajouter
+      </button>
+    </div>
+  </article>
+</div>
+<div class="product-item" data-cat="Courses" data-title="ocean bomb super saiyan 3 goku raisin blanc 330ml" data-promo="0">
+  <article class="product-card">
+    
+    <button class="product-open" type="button"
+      data-name="Ocean Bomb Super Saiyan 3 Goku Raisin Blanc 330Ml"
+      data-desc="Ocean Bomb Super Saiyan 3 Goku Raisin Blanc 330Ml — délicieux produit de la catégorie Courses. À savourer à tout moment !"
+      data-image="images/ocean-bomb-super-saiyan-3-goku-raisin-blanc-330ml.png"
+      data-stock="1">
+      <div class="img-wrap">
+        <img src="assets/images/ocean-bomb-super-saiyan-3-goku-raisin-blanc-330ml.png" alt="Ocean Bomb Super Saiyan 3 Goku Raisin Blanc 330Ml" loading="lazy" width="320" height="320">
+      </div>
+      <div class="p-body">
+        <div class="p-cat">Courses</div>
+        <div class="p-title">Ocean Bomb Super Saiyan 3 Goku Raisin Blanc 330Ml</div>
+        <div class="p-price-wrap">
+          <div class="p-price">84.10 DH</div>
+        </div>
+      </div>
+    </button>
+    <div class="p-actions">
+      <button class="btn btn-dark w-100 snipcart-add-item"
+        data-item-id="MEC-0057"
+        data-item-price="84.10"
+        data-item-url="/"
+        data-item-name="Ocean Bomb Super Saiyan 3 Goku Raisin Blanc 330Ml"
+        data-item-image="images/ocean-bomb-super-saiyan-3-goku-raisin-blanc-330ml.png">
+        Ajouter
+      </button>
+    </div>
+  </article>
+</div>
+<div class="product-item" data-cat="Courses" data-title="ocean bomb super saiyan rose melon 330ml" data-promo="0">
+  <article class="product-card">
+    
+    <button class="product-open" type="button"
+      data-name="Ocean Bomb Super Saiyan Rose Melon 330Ml"
+      data-desc="Ocean Bomb Super Saiyan Rose Melon 330Ml — délicieux produit de la catégorie Courses. À savourer à tout moment !"
+      data-image="images/ocean-bomb-super-saiyan-rose-melon-330ml.png"
+      data-stock="1">
+      <div class="img-wrap">
+        <img src="assets/images/ocean-bomb-super-saiyan-rose-melon-330ml.png" alt="Ocean Bomb Super Saiyan Rose Melon 330Ml" loading="lazy" width="320" height="320">
+      </div>
+      <div class="p-body">
+        <div class="p-cat">Courses</div>
+        <div class="p-title">Ocean Bomb Super Saiyan Rose Melon 330Ml</div>
+        <div class="p-price-wrap">
+          <div class="p-price">85.40 DH</div>
+        </div>
+      </div>
+    </button>
+    <div class="p-actions">
+      <button class="btn btn-dark w-100 snipcart-add-item"
+        data-item-id="MEC-0058"
+        data-item-price="85.40"
+        data-item-url="/"
+        data-item-name="Ocean Bomb Super Saiyan Rose Melon 330Ml"
+        data-item-image="images/ocean-bomb-super-saiyan-rose-melon-330ml.png">
+        Ajouter
+      </button>
+    </div>
+  </article>
+</div>
+<div class="product-item" data-cat="Courses" data-title="ocean bomb vegito pomme 330ml" data-promo="0">
+  <article class="product-card">
+    
+    <button class="product-open" type="button"
+      data-name="Ocean Bomb Vegito Pomme 330Ml"
+      data-desc="Ocean Bomb Vegito Pomme 330Ml — délicieux produit de la catégorie Courses. À savourer à tout moment !"
+      data-image="images/ocean-bomb-vegito-pomme-330ml.png"
+      data-stock="1">
+      <div class="img-wrap">
+        <img src="assets/images/ocean-bomb-vegito-pomme-330ml.png" alt="Ocean Bomb Vegito Pomme 330Ml" loading="lazy" width="320" height="320">
+      </div>
+      <div class="p-body">
+        <div class="p-cat">Courses</div>
+        <div class="p-title">Ocean Bomb Vegito Pomme 330Ml</div>
+        <div class="p-price-wrap">
+          <div class="p-price">86.70 DH</div>
+        </div>
+      </div>
+    </button>
+    <div class="p-actions">
+      <button class="btn btn-dark w-100 snipcart-add-item"
+        data-item-id="MEC-0059"
+        data-item-price="86.70"
+        data-item-url="/"
+        data-item-name="Ocean Bomb Vegito Pomme 330Ml"
+        data-item-image="images/ocean-bomb-vegito-pomme-330ml.png">
+        Ajouter
+      </button>
+    </div>
+  </article>
+</div>
+<div class="product-item" data-cat="Courses" data-title="oglo nuts pipas el toro gigantes aguasal 200g" data-promo="1">
+  <article class="product-card">
+    <span class="badge-promo">-20%</span>
+    <button class="product-open" type="button"
+      data-name="Oglo Nuts Pipas El Toro Gigantes Aguasal 200G"
+      data-desc="Oglo Nuts Pipas El Toro Gigantes Aguasal 200G — délicieux produit de la catégorie Courses. À savourer à tout moment !"
+      data-image="images/oglo-nuts-pipas-el-toro-gigantes-aguasal-200g.png"
+      data-stock="1">
+      <div class="img-wrap">
+        <img src="assets/images/oglo-nuts-pipas-el-toro-gigantes-aguasal-200g.png" alt="Oglo Nuts Pipas El Toro Gigantes Aguasal 200G" loading="lazy" width="320" height="320">
+      </div>
+      <div class="p-body">
+        <div class="p-cat">Courses</div>
+        <div class="p-title">Oglo Nuts Pipas El Toro Gigantes Aguasal 200G</div>
+        <div class="p-price-wrap">
+          <span class="p-old-price">92.00 DH</span><div class="p-price">88.00 DH</div>
+        </div>
+      </div>
+    </button>
+    <div class="p-actions">
+      <button class="btn btn-dark w-100 snipcart-add-item"
+        data-item-id="MEC-0060"
+        data-item-price="88.00"
+        data-item-url="/"
+        data-item-name="Oglo Nuts Pipas El Toro Gigantes Aguasal 200G"
+        data-item-image="images/oglo-nuts-pipas-el-toro-gigantes-aguasal-200g.png">
+        Ajouter
+      </button>
+    </div>
+  </article>
+</div>
+<div class="product-item" data-cat="Courses" data-title="okf boisson ptillante la grenade lite 350ml" data-promo="0">
+  <article class="product-card">
+    
+    <button class="product-open" type="button"
+      data-name="Okf Boisson Ptillante La Grenade Lite 350Ml"
+      data-desc="Okf Boisson Ptillante La Grenade Lite 350Ml — délicieux produit de la catégorie Courses. À savourer à tout moment !"
+      data-image="images/okf-boisson-ptillante-la-grenade-lite-350ml.png"
+      data-stock="1">
+      <div class="img-wrap">
+        <img src="assets/images/okf-boisson-ptillante-la-grenade-lite-350ml.png" alt="Okf Boisson Ptillante La Grenade Lite 350Ml" loading="lazy" width="320" height="320">
+      </div>
+      <div class="p-body">
+        <div class="p-cat">Courses</div>
+        <div class="p-title">Okf Boisson Ptillante La Grenade Lite 350Ml</div>
+        <div class="p-price-wrap">
+          <div class="p-price">89.30 DH</div>
+        </div>
+      </div>
+    </button>
+    <div class="p-actions">
+      <button class="btn btn-dark w-100 snipcart-add-item"
+        data-item-id="MEC-0061"
+        data-item-price="89.30"
+        data-item-url="/"
+        data-item-name="Okf Boisson Ptillante La Grenade Lite 350Ml"
+        data-item-image="images/okf-boisson-ptillante-la-grenade-lite-350ml.png">
+        Ajouter
+      </button>
+    </div>
+  </article>
+</div>
+<div class="product-item" data-cat="Courses" data-title="okf boisson ptillante lorange lite 350ml" data-promo="0">
+  <article class="product-card">
+    
+    <button class="product-open" type="button"
+      data-name="Okf Boisson Ptillante Lorange Lite 350Ml"
+      data-desc="Okf Boisson Ptillante Lorange Lite 350Ml — délicieux produit de la catégorie Courses. À savourer à tout moment !"
+      data-image="images/okf-boisson-ptillante-lorange-lite-350ml.png"
+      data-stock="1">
+      <div class="img-wrap">
+        <img src="assets/images/okf-boisson-ptillante-lorange-lite-350ml.png" alt="Okf Boisson Ptillante Lorange Lite 350Ml" loading="lazy" width="320" height="320">
+      </div>
+      <div class="p-body">
+        <div class="p-cat">Courses</div>
+        <div class="p-title">Okf Boisson Ptillante Lorange Lite 350Ml</div>
+        <div class="p-price-wrap">
+          <div class="p-price">90.60 DH</div>
+        </div>
+      </div>
+    </button>
+    <div class="p-actions">
+      <button class="btn btn-dark w-100 snipcart-add-item"
+        data-item-id="MEC-0062"
+        data-item-price="90.60"
+        data-item-url="/"
+        data-item-name="Okf Boisson Ptillante Lorange Lite 350Ml"
+        data-item-image="images/okf-boisson-ptillante-lorange-lite-350ml.png">
+        Ajouter
+      </button>
+    </div>
+  </article>
+</div>
+<div class="product-item" data-cat="Courses" data-title="okf boisson ptillante au citron lite 350ml" data-promo="0">
+  <article class="product-card">
+    
+    <button class="product-open" type="button"
+      data-name="Okf Boisson Ptillante Au Citron Lite 350Ml"
+      data-desc="Okf Boisson Ptillante Au Citron Lite 350Ml — délicieux produit de la catégorie Courses. À savourer à tout moment !"
+      data-image="images/okf-boisson-ptillante-au-citron-lite-350ml.png"
+      data-stock="1">
+      <div class="img-wrap">
+        <img src="assets/images/okf-boisson-ptillante-au-citron-lite-350ml.png" alt="Okf Boisson Ptillante Au Citron Lite 350Ml" loading="lazy" width="320" height="320">
+      </div>
+      <div class="p-body">
+        <div class="p-cat">Courses</div>
+        <div class="p-title">Okf Boisson Ptillante Au Citron Lite 350Ml</div>
+        <div class="p-price-wrap">
+          <div class="p-price">91.90 DH</div>
+        </div>
+      </div>
+    </button>
+    <div class="p-actions">
+      <button class="btn btn-dark w-100 snipcart-add-item"
+        data-item-id="MEC-0063"
+        data-item-price="91.90"
+        data-item-url="/"
+        data-item-name="Okf Boisson Ptillante Au Citron Lite 350Ml"
+        data-item-image="images/okf-boisson-ptillante-au-citron-lite-350ml.png">
+        Ajouter
+      </button>
+    </div>
+  </article>
+</div>
+<div class="product-item" data-cat="Courses" data-title="okf boisson ptillante fleur de cerisier 350ml" data-promo="0">
+  <article class="product-card">
+    
+    <button class="product-open" type="button"
+      data-name="Okf Boisson Ptillante Fleur De Cerisier 350Ml"
+      data-desc="Okf Boisson Ptillante Fleur De Cerisier 350Ml — délicieux produit de la catégorie Courses. À savourer à tout moment !"
+      data-image="images/okf-boisson-ptillante-fleur-de-cerisier-350ml.png"
+      data-stock="1">
+      <div class="img-wrap">
+        <img src="assets/images/okf-boisson-ptillante-fleur-de-cerisier-350ml.png" alt="Okf Boisson Ptillante Fleur De Cerisier 350Ml" loading="lazy" width="320" height="320">
+      </div>
+      <div class="p-body">
+        <div class="p-cat">Courses</div>
+        <div class="p-title">Okf Boisson Ptillante Fleur De Cerisier 350Ml</div>
+        <div class="p-price-wrap">
+          <div class="p-price">93.20 DH</div>
+        </div>
+      </div>
+    </button>
+    <div class="p-actions">
+      <button class="btn btn-dark w-100 snipcart-add-item"
+        data-item-id="MEC-0064"
+        data-item-price="93.20"
+        data-item-url="/"
+        data-item-name="Okf Boisson Ptillante Fleur De Cerisier 350Ml"
+        data-item-image="images/okf-boisson-ptillante-fleur-de-cerisier-350ml.png">
+        Ajouter
+      </button>
+    </div>
+  </article>
+</div>
+<div class="product-item" data-cat="Courses" data-title="okf boisson ptillante fraise lite 350ml" data-promo="1">
+  <article class="product-card">
+    <span class="badge-promo">-20%</span>
+    <button class="product-open" type="button"
+      data-name="Okf Boisson Ptillante Fraise Lite 350Ml"
+      data-desc="Okf Boisson Ptillante Fraise Lite 350Ml — délicieux produit de la catégorie Courses. À savourer à tout moment !"
+      data-image="images/okf-boisson-ptillante-fraise-lite-350ml.png"
+      data-stock="1">
+      <div class="img-wrap">
+        <img src="assets/images/okf-boisson-ptillante-fraise-lite-350ml.png" alt="Okf Boisson Ptillante Fraise Lite 350Ml" loading="lazy" width="320" height="320">
+      </div>
+      <div class="p-body">
+        <div class="p-cat">Courses</div>
+        <div class="p-title">Okf Boisson Ptillante Fraise Lite 350Ml</div>
+        <div class="p-price-wrap">
+          <span class="p-old-price">98.50 DH</span><div class="p-price">94.50 DH</div>
+        </div>
+      </div>
+    </button>
+    <div class="p-actions">
+      <button class="btn btn-dark w-100 snipcart-add-item"
+        data-item-id="MEC-0065"
+        data-item-price="94.50"
+        data-item-url="/"
+        data-item-name="Okf Boisson Ptillante Fraise Lite 350Ml"
+        data-item-image="images/okf-boisson-ptillante-fraise-lite-350ml.png">
+        Ajouter
+      </button>
+    </div>
+  </article>
+</div>
+<div class="product-item" data-cat="Courses" data-title="okf boisson ptillante kiwi lite 350ml" data-promo="0">
+  <article class="product-card">
+    
+    <button class="product-open" type="button"
+      data-name="Okf Boisson Ptillante Kiwi Lite 350Ml"
+      data-desc="Okf Boisson Ptillante Kiwi Lite 350Ml — délicieux produit de la catégorie Courses. À savourer à tout moment !"
+      data-image="images/okf-boisson-ptillante-kiwi-lite-350ml.png"
+      data-stock="1">
+      <div class="img-wrap">
+        <img src="assets/images/okf-boisson-ptillante-kiwi-lite-350ml.png" alt="Okf Boisson Ptillante Kiwi Lite 350Ml" loading="lazy" width="320" height="320">
+      </div>
+      <div class="p-body">
+        <div class="p-cat">Courses</div>
+        <div class="p-title">Okf Boisson Ptillante Kiwi Lite 350Ml</div>
+        <div class="p-price-wrap">
+          <div class="p-price">95.80 DH</div>
+        </div>
+      </div>
+    </button>
+    <div class="p-actions">
+      <button class="btn btn-dark w-100 snipcart-add-item"
+        data-item-id="MEC-0066"
+        data-item-price="95.80"
+        data-item-url="/"
+        data-item-name="Okf Boisson Ptillante Kiwi Lite 350Ml"
+        data-item-image="images/okf-boisson-ptillante-kiwi-lite-350ml.png">
+        Ajouter
+      </button>
+    </div>
+  </article>
+</div>
+<div class="product-item" data-cat="Courses" data-title="okf boisson ptillante litchi lite 350ml" data-promo="0">
+  <article class="product-card">
+    
+    <button class="product-open" type="button"
+      data-name="Okf Boisson Ptillante Litchi Lite 350Ml"
+      data-desc="Okf Boisson Ptillante Litchi Lite 350Ml — délicieux produit de la catégorie Courses. À savourer à tout moment !"
+      data-image="images/okf-boisson-ptillante-litchi-lite-350ml.png"
+      data-stock="1">
+      <div class="img-wrap">
+        <img src="assets/images/okf-boisson-ptillante-litchi-lite-350ml.png" alt="Okf Boisson Ptillante Litchi Lite 350Ml" loading="lazy" width="320" height="320">
+      </div>
+      <div class="p-body">
+        <div class="p-cat">Courses</div>
+        <div class="p-title">Okf Boisson Ptillante Litchi Lite 350Ml</div>
+        <div class="p-price-wrap">
+          <div class="p-price">97.10 DH</div>
+        </div>
+      </div>
+    </button>
+    <div class="p-actions">
+      <button class="btn btn-dark w-100 snipcart-add-item"
+        data-item-id="MEC-0067"
+        data-item-price="97.10"
+        data-item-url="/"
+        data-item-name="Okf Boisson Ptillante Litchi Lite 350Ml"
+        data-item-image="images/okf-boisson-ptillante-litchi-lite-350ml.png">
+        Ajouter
+      </button>
+    </div>
+  </article>
+</div>
+<div class="product-item" data-cat="Courses" data-title="okf boisson ptillante melon lite 350ml" data-promo="0">
+  <article class="product-card">
+    
+    <button class="product-open" type="button"
+      data-name="Okf Boisson Ptillante Melon Lite 350Ml"
+      data-desc="Okf Boisson Ptillante Melon Lite 350Ml — délicieux produit de la catégorie Courses. À savourer à tout moment !"
+      data-image="images/okf-boisson-ptillante-melon-lite-350ml.png"
+      data-stock="1">
+      <div class="img-wrap">
+        <img src="assets/images/okf-boisson-ptillante-melon-lite-350ml.png" alt="Okf Boisson Ptillante Melon Lite 350Ml" loading="lazy" width="320" height="320">
+      </div>
+      <div class="p-body">
+        <div class="p-cat">Courses</div>
+        <div class="p-title">Okf Boisson Ptillante Melon Lite 350Ml</div>
+        <div class="p-price-wrap">
+          <div class="p-price">98.40 DH</div>
+        </div>
+      </div>
+    </button>
+    <div class="p-actions">
+      <button class="btn btn-dark w-100 snipcart-add-item"
+        data-item-id="MEC-0068"
+        data-item-price="98.40"
+        data-item-url="/"
+        data-item-name="Okf Boisson Ptillante Melon Lite 350Ml"
+        data-item-image="images/okf-boisson-ptillante-melon-lite-350ml.png">
+        Ajouter
+      </button>
+    </div>
+  </article>
+</div>
+<div class="product-item" data-cat="Courses" data-title="okf boisson ptillante myrtille lite 350ml" data-promo="0">
+  <article class="product-card">
+    
+    <button class="product-open" type="button"
+      data-name="Okf Boisson Ptillante Myrtille Lite 350Ml"
+      data-desc="Okf Boisson Ptillante Myrtille Lite 350Ml — délicieux produit de la catégorie Courses. À savourer à tout moment !"
+      data-image="images/okf-boisson-ptillante-myrtille-lite-350ml.png"
+      data-stock="1">
+      <div class="img-wrap">
+        <img src="assets/images/okf-boisson-ptillante-myrtille-lite-350ml.png" alt="Okf Boisson Ptillante Myrtille Lite 350Ml" loading="lazy" width="320" height="320">
+      </div>
+      <div class="p-body">
+        <div class="p-cat">Courses</div>
+        <div class="p-title">Okf Boisson Ptillante Myrtille Lite 350Ml</div>
+        <div class="p-price-wrap">
+          <div class="p-price">99.70 DH</div>
+        </div>
+      </div>
+    </button>
+    <div class="p-actions">
+      <button class="btn btn-dark w-100 snipcart-add-item"
+        data-item-id="MEC-0069"
+        data-item-price="99.70"
+        data-item-url="/"
+        data-item-name="Okf Boisson Ptillante Myrtille Lite 350Ml"
+        data-item-image="images/okf-boisson-ptillante-myrtille-lite-350ml.png">
+        Ajouter
+      </button>
+    </div>
+  </article>
+</div>
+<div class="product-item" data-cat="Courses" data-title="okf boisson ptillante raisin lite 350ml" data-promo="1">
+  <article class="product-card">
+    <span class="badge-promo">-20%</span>
+    <button class="product-open" type="button"
+      data-name="Okf Boisson Ptillante Raisin Lite 350Ml"
+      data-desc="Okf Boisson Ptillante Raisin Lite 350Ml — délicieux produit de la catégorie Courses. À savourer à tout moment !"
+      data-image="images/okf-boisson-ptillante-raisin-lite-350ml.png"
+      data-stock="1">
+      <div class="img-wrap">
+        <img src="assets/images/okf-boisson-ptillante-raisin-lite-350ml.png" alt="Okf Boisson Ptillante Raisin Lite 350Ml" loading="lazy" width="320" height="320">
+      </div>
+      <div class="p-body">
+        <div class="p-cat">Courses</div>
+        <div class="p-title">Okf Boisson Ptillante Raisin Lite 350Ml</div>
+        <div class="p-price-wrap">
+          <span class="p-old-price">105.00 DH</span><div class="p-price">101.00 DH</div>
+        </div>
+      </div>
+    </button>
+    <div class="p-actions">
+      <button class="btn btn-dark w-100 snipcart-add-item"
+        data-item-id="MEC-0070"
+        data-item-price="101.00"
+        data-item-url="/"
+        data-item-name="Okf Boisson Ptillante Raisin Lite 350Ml"
+        data-item-image="images/okf-boisson-ptillante-raisin-lite-350ml.png">
+        Ajouter
+      </button>
+    </div>
+  </article>
+</div>
+<div class="product-item" data-cat="Courses" data-title="okf farmers boisson aloe vera et mangue lite 500ml" data-promo="0">
+  <article class="product-card">
+    
+    <button class="product-open" type="button"
+      data-name="Okf Farmers Boisson Aloe Vera Et Mangue Lite 500Ml"
+      data-desc="Okf Farmers Boisson Aloe Vera Et Mangue Lite 500Ml — délicieux produit de la catégorie Courses. À savourer à tout moment !"
+      data-image="images/okf-farmers-boisson-aloe-vera-et-mangue-lite-500ml.png"
+      data-stock="1">
+      <div class="img-wrap">
+        <img src="assets/images/okf-farmers-boisson-aloe-vera-et-mangue-lite-500ml.png" alt="Okf Farmers Boisson Aloe Vera Et Mangue Lite 500Ml" loading="lazy" width="320" height="320">
+      </div>
+      <div class="p-body">
+        <div class="p-cat">Courses</div>
+        <div class="p-title">Okf Farmers Boisson Aloe Vera Et Mangue Lite 500Ml</div>
+        <div class="p-price-wrap">
+          <div class="p-price">102.30 DH</div>
+        </div>
+      </div>
+    </button>
+    <div class="p-actions">
+      <button class="btn btn-dark w-100 snipcart-add-item"
+        data-item-id="MEC-0071"
+        data-item-price="102.30"
+        data-item-url="/"
+        data-item-name="Okf Farmers Boisson Aloe Vera Et Mangue Lite 500Ml"
+        data-item-image="images/okf-farmers-boisson-aloe-vera-et-mangue-lite-500ml.png">
+        Ajouter
+      </button>
+    </div>
+  </article>
+</div>
+<div class="product-item" data-cat="Boissons" data-title="oreo international delight iced coffee 443ml" data-promo="0">
+  <article class="product-card">
+    
+    <button class="product-open" type="button"
+      data-name="Oreo International Delight Iced Coffee 443Ml"
+      data-desc="Oreo International Delight Iced Coffee 443Ml — délicieux produit de la catégorie Boissons. À savourer à tout moment !"
+      data-image="images/oreo-international-delight-iced-coffee-443ml.png"
+      data-stock="1">
+      <div class="img-wrap">
+        <img src="assets/images/oreo-international-delight-iced-coffee-443ml.png" alt="Oreo International Delight Iced Coffee 443Ml" loading="lazy" width="320" height="320">
+      </div>
+      <div class="p-body">
+        <div class="p-cat">Boissons</div>
+        <div class="p-title">Oreo International Delight Iced Coffee 443Ml</div>
+        <div class="p-price-wrap">
+          <div class="p-price">103.60 DH</div>
+        </div>
+      </div>
+    </button>
+    <div class="p-actions">
+      <button class="btn btn-dark w-100 snipcart-add-item"
+        data-item-id="MEC-0072"
+        data-item-price="103.60"
+        data-item-url="/"
+        data-item-name="Oreo International Delight Iced Coffee 443Ml"
+        data-item-image="images/oreo-international-delight-iced-coffee-443ml.png">
+        Ajouter
+      </button>
+    </div>
+  </article>
+</div>
+<div class="product-item" data-cat="Sucrées" data-title="oreo mini cocoa crisp roll fraise 50g" data-promo="0">
+  <article class="product-card">
+    
+    <button class="product-open" type="button"
+      data-name="Oreo Mini Cocoa Crisp Roll Fraise 50G"
+      data-desc="Oreo Mini Cocoa Crisp Roll Fraise 50G — délicieux produit de la catégorie Sucrées. À savourer à tout moment !"
+      data-image="images/oreo-mini-cocoa-crisp-roll-fraise-50g.png"
+      data-stock="1">
+      <div class="img-wrap">
+        <img src="assets/images/oreo-mini-cocoa-crisp-roll-fraise-50g.png" alt="Oreo Mini Cocoa Crisp Roll Fraise 50G" loading="lazy" width="320" height="320">
+      </div>
+      <div class="p-body">
+        <div class="p-cat">Sucrées</div>
+        <div class="p-title">Oreo Mini Cocoa Crisp Roll Fraise 50G</div>
+        <div class="p-price-wrap">
+          <div class="p-price">104.90 DH</div>
+        </div>
+      </div>
+    </button>
+    <div class="p-actions">
+      <button class="btn btn-dark w-100 snipcart-add-item"
+        data-item-id="MEC-0073"
+        data-item-price="104.90"
+        data-item-url="/"
+        data-item-name="Oreo Mini Cocoa Crisp Roll Fraise 50G"
+        data-item-image="images/oreo-mini-cocoa-crisp-roll-fraise-50g.png">
+        Ajouter
+      </button>
+    </div>
+  </article>
+</div>
+<div class="product-item" data-cat="Sucrées" data-title="oreo mini pot 115g" data-promo="0">
+  <article class="product-card">
+    
+    <button class="product-open" type="button"
+      data-name="Oreo Mini Pot 115G"
+      data-desc="Oreo Mini Pot 115G — délicieux produit de la catégorie Sucrées. À savourer à tout moment !"
+      data-image="images/oreo-mini-pot-115g.png"
+      data-stock="1">
+      <div class="img-wrap">
+        <img src="assets/images/oreo-mini-pot-115g.png" alt="Oreo Mini Pot 115G" loading="lazy" width="320" height="320">
+      </div>
+      <div class="p-body">
+        <div class="p-cat">Sucrées</div>
+        <div class="p-title">Oreo Mini Pot 115G</div>
+        <div class="p-price-wrap">
+          <div class="p-price">106.20 DH</div>
+        </div>
+      </div>
+    </button>
+    <div class="p-actions">
+      <button class="btn btn-dark w-100 snipcart-add-item"
+        data-item-id="MEC-0074"
+        data-item-price="106.20"
+        data-item-url="/"
+        data-item-name="Oreo Mini Pot 115G"
+        data-item-image="images/oreo-mini-pot-115g.png">
+        Ajouter
+      </button>
+    </div>
+  </article>
+</div>
+<div class="product-item" data-cat="Boissons" data-title="oreo mini rouleaux croustillants cacao vanille 50g" data-promo="1">
+  <article class="product-card">
+    <span class="badge-promo">-20%</span>
+    <button class="product-open" type="button"
+      data-name="Oreo Mini Rouleaux Croustillants Cacao Vanille 50G"
+      data-desc="Oreo Mini Rouleaux Croustillants Cacao Vanille 50G — délicieux produit de la catégorie Boissons. À savourer à tout moment !"
+      data-image="images/oreo-mini-rouleaux-croustillants-cacao-vanille-50g.png"
+      data-stock="1">
+      <div class="img-wrap">
+        <img src="assets/images/oreo-mini-rouleaux-croustillants-cacao-vanille-50g.png" alt="Oreo Mini Rouleaux Croustillants Cacao Vanille 50G" loading="lazy" width="320" height="320">
+      </div>
+      <div class="p-body">
+        <div class="p-cat">Boissons</div>
+        <div class="p-title">Oreo Mini Rouleaux Croustillants Cacao Vanille 50G</div>
+        <div class="p-price-wrap">
+          <span class="p-old-price">111.50 DH</span><div class="p-price">107.50 DH</div>
+        </div>
+      </div>
+    </button>
+    <div class="p-actions">
+      <button class="btn btn-dark w-100 snipcart-add-item"
+        data-item-id="MEC-0075"
+        data-item-price="107.50"
+        data-item-url="/"
+        data-item-name="Oreo Mini Rouleaux Croustillants Cacao Vanille 50G"
+        data-item-image="images/oreo-mini-rouleaux-croustillants-cacao-vanille-50g.png">
+        Ajouter
+      </button>
+    </div>
+  </article>
+</div>
+<div class="product-item" data-cat="Sucrées" data-title="pack prime triple chill 3x500ml sans sucres" data-promo="0">
+  <article class="product-card">
+    
+    <button class="product-open" type="button"
+      data-name="Pack Prime Triple Chill 3X500Ml Sans Sucres"
+      data-desc="Pack Prime Triple Chill 3X500Ml Sans Sucres — délicieux produit de la catégorie Sucrées. À savourer à tout moment !"
+      data-image="images/pack-prime-triple-chill-3x500ml-sans-sucres.png"
+      data-stock="1">
+      <div class="img-wrap">
+        <img src="assets/images/pack-prime-triple-chill-3x500ml-sans-sucres.png" alt="Pack Prime Triple Chill 3X500Ml Sans Sucres" loading="lazy" width="320" height="320">
+      </div>
+      <div class="p-body">
+        <div class="p-cat">Sucrées</div>
+        <div class="p-title">Pack Prime Triple Chill 3X500Ml Sans Sucres</div>
+        <div class="p-price-wrap">
+          <div class="p-price">108.80 DH</div>
+        </div>
+      </div>
+    </button>
+    <div class="p-actions">
+      <button class="btn btn-dark w-100 snipcart-add-item"
+        data-item-id="MEC-0076"
+        data-item-price="108.80"
+        data-item-url="/"
+        data-item-name="Pack Prime Triple Chill 3X500Ml Sans Sucres"
+        data-item-image="images/pack-prime-triple-chill-3x500ml-sans-sucres.png">
+        Ajouter
+      </button>
+    </div>
+  </article>
+</div>
+<div class="product-item" data-cat="Courses" data-title="pipabuela graines de tournesol grilles et sales 70g" data-promo="0">
+  <article class="product-card">
+    
+    <button class="product-open" type="button"
+      data-name="Pipabuela Graines De Tournesol Grilles Et Sales 70G"
+      data-desc="Pipabuela Graines De Tournesol Grilles Et Sales 70G — délicieux produit de la catégorie Courses. À savourer à tout moment !"
+      data-image="images/pipabuela-graines-de-tournesol-grilles-et-sales-70g.png"
+      data-stock="1">
+      <div class="img-wrap">
+        <img src="assets/images/pipabuela-graines-de-tournesol-grilles-et-sales-70g.png" alt="Pipabuela Graines De Tournesol Grilles Et Sales 70G" loading="lazy" width="320" height="320">
+      </div>
+      <div class="p-body">
+        <div class="p-cat">Courses</div>
+        <div class="p-title">Pipabuela Graines De Tournesol Grilles Et Sales 70G</div>
+        <div class="p-price-wrap">
+          <div class="p-price">110.10 DH</div>
+        </div>
+      </div>
+    </button>
+    <div class="p-actions">
+      <button class="btn btn-dark w-100 snipcart-add-item"
+        data-item-id="MEC-0077"
+        data-item-price="110.10"
+        data-item-url="/"
+        data-item-name="Pipabuela Graines De Tournesol Grilles Et Sales 70G"
+        data-item-image="images/pipabuela-graines-de-tournesol-grilles-et-sales-70g.png">
+        Ajouter
+      </button>
+    </div>
+  </article>
+</div>
+<div class="product-item" data-cat="Courses" data-title="prime hydration boisson hydratante lemonade 500ml" data-promo="0">
+  <article class="product-card">
+    
+    <button class="product-open" type="button"
+      data-name="Prime Hydration Boisson Hydratante Lemonade 500Ml"
+      data-desc="Prime Hydration Boisson Hydratante Lemonade 500Ml — délicieux produit de la catégorie Courses. À savourer à tout moment !"
+      data-image="images/prime-hydration-boisson-hydratante-lemonade-500ml.png"
+      data-stock="1">
+      <div class="img-wrap">
+        <img src="assets/images/prime-hydration-boisson-hydratante-lemonade-500ml.png" alt="Prime Hydration Boisson Hydratante Lemonade 500Ml" loading="lazy" width="320" height="320">
+      </div>
+      <div class="p-body">
+        <div class="p-cat">Courses</div>
+        <div class="p-title">Prime Hydration Boisson Hydratante Lemonade 500Ml</div>
+        <div class="p-price-wrap">
+          <div class="p-price">111.40 DH</div>
+        </div>
+      </div>
+    </button>
+    <div class="p-actions">
+      <button class="btn btn-dark w-100 snipcart-add-item"
+        data-item-id="MEC-0078"
+        data-item-price="111.40"
+        data-item-url="/"
+        data-item-name="Prime Hydration Boisson Hydratante Lemonade 500Ml"
+        data-item-image="images/prime-hydration-boisson-hydratante-lemonade-500ml.png">
+        Ajouter
+      </button>
+    </div>
+  </article>
+</div>
+<div class="product-item" data-cat="Sucrées" data-title="prime hydration ice blue chill sans sucre 500ml" data-promo="0">
+  <article class="product-card">
+    
+    <button class="product-open" type="button"
+      data-name="Prime Hydration Ice Blue Chill Sans Sucre 500Ml"
+      data-desc="Prime Hydration Ice Blue Chill Sans Sucre 500Ml — délicieux produit de la catégorie Sucrées. À savourer à tout moment !"
+      data-image="images/prime-hydration-ice-blue-chill-sans-sucre-500ml.png"
+      data-stock="1">
+      <div class="img-wrap">
+        <img src="assets/images/prime-hydration-ice-blue-chill-sans-sucre-500ml.png" alt="Prime Hydration Ice Blue Chill Sans Sucre 500Ml" loading="lazy" width="320" height="320">
+      </div>
+      <div class="p-body">
+        <div class="p-cat">Sucrées</div>
+        <div class="p-title">Prime Hydration Ice Blue Chill Sans Sucre 500Ml</div>
+        <div class="p-price-wrap">
+          <div class="p-price">112.70 DH</div>
+        </div>
+      </div>
+    </button>
+    <div class="p-actions">
+      <button class="btn btn-dark w-100 snipcart-add-item"
+        data-item-id="MEC-0079"
+        data-item-price="112.70"
+        data-item-url="/"
+        data-item-name="Prime Hydration Ice Blue Chill Sans Sucre 500Ml"
+        data-item-image="images/prime-hydration-ice-blue-chill-sans-sucre-500ml.png">
+        Ajouter
+      </button>
+    </div>
+  </article>
+</div>
+<div class="product-item" data-cat="Sucrées" data-title="prime hydration ice orange sans sucre 500ml" data-promo="1">
+  <article class="product-card">
+    <span class="badge-promo">-20%</span>
+    <button class="product-open" type="button"
+      data-name="Prime Hydration Ice Orange Sans Sucre 500Ml"
+      data-desc="Prime Hydration Ice Orange Sans Sucre 500Ml — délicieux produit de la catégorie Sucrées. À savourer à tout moment !"
+      data-image="images/prime-hydration-ice-orange-sans-sucre-500ml.png"
+      data-stock="1">
+      <div class="img-wrap">
+        <img src="assets/images/prime-hydration-ice-orange-sans-sucre-500ml.png" alt="Prime Hydration Ice Orange Sans Sucre 500Ml" loading="lazy" width="320" height="320">
+      </div>
+      <div class="p-body">
+        <div class="p-cat">Sucrées</div>
+        <div class="p-title">Prime Hydration Ice Orange Sans Sucre 500Ml</div>
+        <div class="p-price-wrap">
+          <span class="p-old-price">118.00 DH</span><div class="p-price">114.00 DH</div>
+        </div>
+      </div>
+    </button>
+    <div class="p-actions">
+      <button class="btn btn-dark w-100 snipcart-add-item"
+        data-item-id="MEC-0080"
+        data-item-price="114.00"
+        data-item-url="/"
+        data-item-name="Prime Hydration Ice Orange Sans Sucre 500Ml"
+        data-item-image="images/prime-hydration-ice-orange-sans-sucre-500ml.png">
+        Ajouter
+      </button>
+    </div>
+  </article>
+</div>
+<div class="product-item" data-cat="Sucrées" data-title="prime hydration ice red chill sans sucre 500ml" data-promo="0">
+  <article class="product-card">
+    
+    <button class="product-open" type="button"
+      data-name="Prime Hydration Ice Red Chill Sans Sucre 500Ml"
+      data-desc="Prime Hydration Ice Red Chill Sans Sucre 500Ml — délicieux produit de la catégorie Sucrées. À savourer à tout moment !"
+      data-image="images/prime-hydration-ice-red-chill-sans-sucre-500ml.png"
+      data-stock="1">
+      <div class="img-wrap">
+        <img src="assets/images/prime-hydration-ice-red-chill-sans-sucre-500ml.png" alt="Prime Hydration Ice Red Chill Sans Sucre 500Ml" loading="lazy" width="320" height="320">
+      </div>
+      <div class="p-body">
+        <div class="p-cat">Sucrées</div>
+        <div class="p-title">Prime Hydration Ice Red Chill Sans Sucre 500Ml</div>
+        <div class="p-price-wrap">
+          <div class="p-price">115.30 DH</div>
+        </div>
+      </div>
+    </button>
+    <div class="p-actions">
+      <button class="btn btn-dark w-100 snipcart-add-item"
+        data-item-id="MEC-0081"
+        data-item-price="115.30"
+        data-item-url="/"
+        data-item-name="Prime Hydration Ice Red Chill Sans Sucre 500Ml"
+        data-item-image="images/prime-hydration-ice-red-chill-sans-sucre-500ml.png">
+        Ajouter
+      </button>
+    </div>
+  </article>
+</div>
+<div class="product-item" data-cat="Courses" data-title="prime hydration lemon lime 500ml" data-promo="0">
+  <article class="product-card">
+    
+    <button class="product-open" type="button"
+      data-name="Prime Hydration Lemon Lime 500Ml"
+      data-desc="Prime Hydration Lemon Lime 500Ml — délicieux produit de la catégorie Courses. À savourer à tout moment !"
+      data-image="images/prime-hydration-lemon-lime-500ml.png"
+      data-stock="1">
+      <div class="img-wrap">
+        <img src="assets/images/prime-hydration-lemon-lime-500ml.png" alt="Prime Hydration Lemon Lime 500Ml" loading="lazy" width="320" height="320">
+      </div>
+      <div class="p-body">
+        <div class="p-cat">Courses</div>
+        <div class="p-title">Prime Hydration Lemon Lime 500Ml</div>
+        <div class="p-price-wrap">
+          <div class="p-price">116.60 DH</div>
+        </div>
+      </div>
+    </button>
+    <div class="p-actions">
+      <button class="btn btn-dark w-100 snipcart-add-item"
+        data-item-id="MEC-0082"
+        data-item-price="116.60"
+        data-item-url="/"
+        data-item-name="Prime Hydration Lemon Lime 500Ml"
+        data-item-image="images/prime-hydration-lemon-lime-500ml.png">
+        Ajouter
+      </button>
+    </div>
+  </article>
+</div>
+<div class="product-item" data-cat="Salées" data-title="pringles hot spicy 165g" data-promo="0">
+  <article class="product-card">
+    
+    <button class="product-open" type="button"
+      data-name="Pringles Hot Spicy 165G"
+      data-desc="Pringles Hot Spicy 165G — délicieux produit de la catégorie Salées. À savourer à tout moment !"
+      data-image="images/pringles-hot-spicy-165g.png"
+      data-stock="1">
+      <div class="img-wrap">
+        <img src="assets/images/pringles-hot-spicy-165g.png" alt="Pringles Hot Spicy 165G" loading="lazy" width="320" height="320">
+      </div>
+      <div class="p-body">
+        <div class="p-cat">Salées</div>
+        <div class="p-title">Pringles Hot Spicy 165G</div>
+        <div class="p-price-wrap">
+          <div class="p-price">117.90 DH</div>
+        </div>
+      </div>
+    </button>
+    <div class="p-actions">
+      <button class="btn btn-dark w-100 snipcart-add-item"
+        data-item-id="MEC-0083"
+        data-item-price="117.90"
+        data-item-url="/"
+        data-item-name="Pringles Hot Spicy 165G"
+        data-item-image="images/pringles-hot-spicy-165g.png">
+        Ajouter
+      </button>
+    </div>
+  </article>
+</div>
+<div class="product-item" data-cat="Salées" data-title="pringles saveur ketchup 165g" data-promo="0">
+  <article class="product-card">
+    
+    <button class="product-open" type="button"
+      data-name="Pringles Saveur Ketchup 165G"
+      data-desc="Pringles Saveur Ketchup 165G — délicieux produit de la catégorie Salées. À savourer à tout moment !"
+      data-image="images/pringles-saveur-ketchup-165g.png"
+      data-stock="1">
+      <div class="img-wrap">
+        <img src="assets/images/pringles-saveur-ketchup-165g.png" alt="Pringles Saveur Ketchup 165G" loading="lazy" width="320" height="320">
+      </div>
+      <div class="p-body">
+        <div class="p-cat">Salées</div>
+        <div class="p-title">Pringles Saveur Ketchup 165G</div>
+        <div class="p-price-wrap">
+          <div class="p-price">119.20 DH</div>
+        </div>
+      </div>
+    </button>
+    <div class="p-actions">
+      <button class="btn btn-dark w-100 snipcart-add-item"
+        data-item-id="MEC-0084"
+        data-item-price="119.20"
+        data-item-url="/"
+        data-item-name="Pringles Saveur Ketchup 165G"
+        data-item-image="images/pringles-saveur-ketchup-165g.png">
+        Ajouter
+      </button>
+    </div>
+  </article>
+</div>
+<div class="product-item" data-cat="Boissons" data-title="qdol pokmon eau ptillante saveur agrumes 330ml" data-promo="1">
+  <article class="product-card">
+    <span class="badge-promo">-20%</span>
+    <button class="product-open" type="button"
+      data-name="Qdol Pokmon Eau Ptillante Saveur Agrumes 330Ml"
+      data-desc="Qdol Pokmon Eau Ptillante Saveur Agrumes 330Ml — délicieux produit de la catégorie Boissons. À savourer à tout moment !"
+      data-image="images/qdol-pokmon-eau-ptillante-saveur-agrumes-330ml.png"
+      data-stock="1">
+      <div class="img-wrap">
+        <img src="assets/images/qdol-pokmon-eau-ptillante-saveur-agrumes-330ml.png" alt="Qdol Pokmon Eau Ptillante Saveur Agrumes 330Ml" loading="lazy" width="320" height="320">
+      </div>
+      <div class="p-body">
+        <div class="p-cat">Boissons</div>
+        <div class="p-title">Qdol Pokmon Eau Ptillante Saveur Agrumes 330Ml</div>
+        <div class="p-price-wrap">
+          <span class="p-old-price">124.50 DH</span><div class="p-price">120.50 DH</div>
+        </div>
+      </div>
+    </button>
+    <div class="p-actions">
+      <button class="btn btn-dark w-100 snipcart-add-item"
+        data-item-id="MEC-0085"
+        data-item-price="120.50"
+        data-item-url="/"
+        data-item-name="Qdol Pokmon Eau Ptillante Saveur Agrumes 330Ml"
+        data-item-image="images/qdol-pokmon-eau-ptillante-saveur-agrumes-330ml.png">
+        Ajouter
+      </button>
+    </div>
+  </article>
+</div>
+<div class="product-item" data-cat="Boissons" data-title="qdol pokmon eau ptillante saveur citron vert 330ml" data-promo="0">
+  <article class="product-card">
+    
+    <button class="product-open" type="button"
+      data-name="Qdol Pokmon Eau Ptillante Saveur Citron Vert 330Ml"
+      data-desc="Qdol Pokmon Eau Ptillante Saveur Citron Vert 330Ml — délicieux produit de la catégorie Boissons. À savourer à tout moment !"
+      data-image="images/qdol-pokmon-eau-ptillante-saveur-citron-vert-330ml.png"
+      data-stock="1">
+      <div class="img-wrap">
+        <img src="assets/images/qdol-pokmon-eau-ptillante-saveur-citron-vert-330ml.png" alt="Qdol Pokmon Eau Ptillante Saveur Citron Vert 330Ml" loading="lazy" width="320" height="320">
+      </div>
+      <div class="p-body">
+        <div class="p-cat">Boissons</div>
+        <div class="p-title">Qdol Pokmon Eau Ptillante Saveur Citron Vert 330Ml</div>
+        <div class="p-price-wrap">
+          <div class="p-price">121.80 DH</div>
+        </div>
+      </div>
+    </button>
+    <div class="p-actions">
+      <button class="btn btn-dark w-100 snipcart-add-item"
+        data-item-id="MEC-0086"
+        data-item-price="121.80"
+        data-item-url="/"
+        data-item-name="Qdol Pokmon Eau Ptillante Saveur Citron Vert 330Ml"
+        data-item-image="images/qdol-pokmon-eau-ptillante-saveur-citron-vert-330ml.png">
+        Ajouter
+      </button>
+    </div>
+  </article>
+</div>
+<div class="product-item" data-cat="Boissons" data-title="qdol pokmon eau ptillante saveur fraise 330ml" data-promo="0">
+  <article class="product-card">
+    
+    <button class="product-open" type="button"
+      data-name="Qdol Pokmon Eau Ptillante Saveur Fraise 330Ml"
+      data-desc="Qdol Pokmon Eau Ptillante Saveur Fraise 330Ml — délicieux produit de la catégorie Boissons. À savourer à tout moment !"
+      data-image="images/qdol-pokmon-eau-ptillante-saveur-fraise-330ml.png"
+      data-stock="1">
+      <div class="img-wrap">
+        <img src="assets/images/qdol-pokmon-eau-ptillante-saveur-fraise-330ml.png" alt="Qdol Pokmon Eau Ptillante Saveur Fraise 330Ml" loading="lazy" width="320" height="320">
+      </div>
+      <div class="p-body">
+        <div class="p-cat">Boissons</div>
+        <div class="p-title">Qdol Pokmon Eau Ptillante Saveur Fraise 330Ml</div>
+        <div class="p-price-wrap">
+          <div class="p-price">123.10 DH</div>
+        </div>
+      </div>
+    </button>
+    <div class="p-actions">
+      <button class="btn btn-dark w-100 snipcart-add-item"
+        data-item-id="MEC-0087"
+        data-item-price="123.10"
+        data-item-url="/"
+        data-item-name="Qdol Pokmon Eau Ptillante Saveur Fraise 330Ml"
+        data-item-image="images/qdol-pokmon-eau-ptillante-saveur-fraise-330ml.png">
+        Ajouter
+      </button>
+    </div>
+  </article>
+</div>
+<div class="product-item" data-cat="Boissons" data-title="qdol pokmon eau ptillante saveur litchi 330ml" data-promo="0">
+  <article class="product-card">
+    
+    <button class="product-open" type="button"
+      data-name="Qdol Pokmon Eau Ptillante Saveur Litchi 330Ml"
+      data-desc="Qdol Pokmon Eau Ptillante Saveur Litchi 330Ml — délicieux produit de la catégorie Boissons. À savourer à tout moment !"
+      data-image="images/qdol-pokmon-eau-ptillante-saveur-litchi-330ml.png"
+      data-stock="1">
+      <div class="img-wrap">
+        <img src="assets/images/qdol-pokmon-eau-ptillante-saveur-litchi-330ml.png" alt="Qdol Pokmon Eau Ptillante Saveur Litchi 330Ml" loading="lazy" width="320" height="320">
+      </div>
+      <div class="p-body">
+        <div class="p-cat">Boissons</div>
+        <div class="p-title">Qdol Pokmon Eau Ptillante Saveur Litchi 330Ml</div>
+        <div class="p-price-wrap">
+          <div class="p-price">124.40 DH</div>
+        </div>
+      </div>
+    </button>
+    <div class="p-actions">
+      <button class="btn btn-dark w-100 snipcart-add-item"
+        data-item-id="MEC-0088"
+        data-item-price="124.40"
+        data-item-url="/"
+        data-item-name="Qdol Pokmon Eau Ptillante Saveur Litchi 330Ml"
+        data-item-image="images/qdol-pokmon-eau-ptillante-saveur-litchi-330ml.png">
+        Ajouter
+      </button>
+    </div>
+  </article>
+</div>
+<div class="product-item" data-cat="Boissons" data-title="qdol pokmon eau ptillante saveur originale 330ml" data-promo="0">
+  <article class="product-card">
+    
+    <button class="product-open" type="button"
+      data-name="Qdol Pokmon Eau Ptillante Saveur Originale 330Ml"
+      data-desc="Qdol Pokmon Eau Ptillante Saveur Originale 330Ml — délicieux produit de la catégorie Boissons. À savourer à tout moment !"
+      data-image="images/qdol-pokmon-eau-ptillante-saveur-originale-330ml.png"
+      data-stock="1">
+      <div class="img-wrap">
+        <img src="assets/images/qdol-pokmon-eau-ptillante-saveur-originale-330ml.png" alt="Qdol Pokmon Eau Ptillante Saveur Originale 330Ml" loading="lazy" width="320" height="320">
+      </div>
+      <div class="p-body">
+        <div class="p-cat">Boissons</div>
+        <div class="p-title">Qdol Pokmon Eau Ptillante Saveur Originale 330Ml</div>
+        <div class="p-price-wrap">
+          <div class="p-price">125.70 DH</div>
+        </div>
+      </div>
+    </button>
+    <div class="p-actions">
+      <button class="btn btn-dark w-100 snipcart-add-item"
+        data-item-id="MEC-0089"
+        data-item-price="125.70"
+        data-item-url="/"
+        data-item-name="Qdol Pokmon Eau Ptillante Saveur Originale 330Ml"
+        data-item-image="images/qdol-pokmon-eau-ptillante-saveur-originale-330ml.png">
+        Ajouter
+      </button>
+    </div>
+  </article>
+</div>
+<div class="product-item" data-cat="Boissons" data-title="qdol pokmon eau ptillante saveur pche 330ml" data-promo="1">
+  <article class="product-card">
+    <span class="badge-promo">-20%</span>
+    <button class="product-open" type="button"
+      data-name="Qdol Pokmon Eau Ptillante Saveur Pche 330Ml"
+      data-desc="Qdol Pokmon Eau Ptillante Saveur Pche 330Ml — délicieux produit de la catégorie Boissons. À savourer à tout moment !"
+      data-image="images/qdol-pokmon-eau-ptillante-saveur-pche-330ml.png"
+      data-stock="1">
+      <div class="img-wrap">
+        <img src="assets/images/qdol-pokmon-eau-ptillante-saveur-pche-330ml.png" alt="Qdol Pokmon Eau Ptillante Saveur Pche 330Ml" loading="lazy" width="320" height="320">
+      </div>
+      <div class="p-body">
+        <div class="p-cat">Boissons</div>
+        <div class="p-title">Qdol Pokmon Eau Ptillante Saveur Pche 330Ml</div>
+        <div class="p-price-wrap">
+          <span class="p-old-price">131.00 DH</span><div class="p-price">127.00 DH</div>
+        </div>
+      </div>
+    </button>
+    <div class="p-actions">
+      <button class="btn btn-dark w-100 snipcart-add-item"
+        data-item-id="MEC-0090"
+        data-item-price="127.00"
+        data-item-url="/"
+        data-item-name="Qdol Pokmon Eau Ptillante Saveur Pche 330Ml"
+        data-item-image="images/qdol-pokmon-eau-ptillante-saveur-pche-330ml.png">
+        Ajouter
+      </button>
+    </div>
+  </article>
+</div>
+<div class="product-item" data-cat="Boissons" data-title="qdol pokmon eau ptillante saveur raisin 330ml" data-promo="0">
+  <article class="product-card">
+    
+    <button class="product-open" type="button"
+      data-name="Qdol Pokmon Eau Ptillante Saveur Raisin 330Ml"
+      data-desc="Qdol Pokmon Eau Ptillante Saveur Raisin 330Ml — délicieux produit de la catégorie Boissons. À savourer à tout moment !"
+      data-image="images/qdol-pokmon-eau-ptillante-saveur-raisin-330ml.png"
+      data-stock="1">
+      <div class="img-wrap">
+        <img src="assets/images/qdol-pokmon-eau-ptillante-saveur-raisin-330ml.png" alt="Qdol Pokmon Eau Ptillante Saveur Raisin 330Ml" loading="lazy" width="320" height="320">
+      </div>
+      <div class="p-body">
+        <div class="p-cat">Boissons</div>
+        <div class="p-title">Qdol Pokmon Eau Ptillante Saveur Raisin 330Ml</div>
+        <div class="p-price-wrap">
+          <div class="p-price">128.30 DH</div>
+        </div>
+      </div>
+    </button>
+    <div class="p-actions">
+      <button class="btn btn-dark w-100 snipcart-add-item"
+        data-item-id="MEC-0091"
+        data-item-price="128.30"
+        data-item-url="/"
+        data-item-name="Qdol Pokmon Eau Ptillante Saveur Raisin 330Ml"
+        data-item-image="images/qdol-pokmon-eau-ptillante-saveur-raisin-330ml.png">
+        Ajouter
+      </button>
+    </div>
+  </article>
+</div>
+<div class="product-item" data-cat="Courses" data-title="raffaello 4 pices 40g" data-promo="0">
+  <article class="product-card">
+    
+    <button class="product-open" type="button"
+      data-name="Raffaello 4 Pices 40G"
+      data-desc="Raffaello 4 Pices 40G — délicieux produit de la catégorie Courses. À savourer à tout moment !"
+      data-image="images/raffaello-4-pices-40g.png"
+      data-stock="1">
+      <div class="img-wrap">
+        <img src="assets/images/raffaello-4-pices-40g.png" alt="Raffaello 4 Pices 40G" loading="lazy" width="320" height="320">
+      </div>
+      <div class="p-body">
+        <div class="p-cat">Courses</div>
+        <div class="p-title">Raffaello 4 Pices 40G</div>
+        <div class="p-price-wrap">
+          <div class="p-price">129.60 DH</div>
+        </div>
+      </div>
+    </button>
+    <div class="p-actions">
+      <button class="btn btn-dark w-100 snipcart-add-item"
+        data-item-id="MEC-0092"
+        data-item-price="129.60"
+        data-item-url="/"
+        data-item-name="Raffaello 4 Pices 40G"
+        data-item-image="images/raffaello-4-pices-40g.png">
+        Ajouter
+      </button>
+    </div>
+  </article>
+</div>
+<div class="product-item" data-cat="Courses" data-title="ramune hatakosen ananas 200ml" data-promo="0">
+  <article class="product-card">
+    
+    <button class="product-open" type="button"
+      data-name="Ramune Hatakosen Ananas 200Ml"
+      data-desc="Ramune Hatakosen Ananas 200Ml — délicieux produit de la catégorie Courses. À savourer à tout moment !"
+      data-image="images/ramune-hatakosen-ananas-200ml.png"
+      data-stock="1">
+      <div class="img-wrap">
+        <img src="assets/images/ramune-hatakosen-ananas-200ml.png" alt="Ramune Hatakosen Ananas 200Ml" loading="lazy" width="320" height="320">
+      </div>
+      <div class="p-body">
+        <div class="p-cat">Courses</div>
+        <div class="p-title">Ramune Hatakosen Ananas 200Ml</div>
+        <div class="p-price-wrap">
+          <div class="p-price">130.90 DH</div>
+        </div>
+      </div>
+    </button>
+    <div class="p-actions">
+      <button class="btn btn-dark w-100 snipcart-add-item"
+        data-item-id="MEC-0093"
+        data-item-price="130.90"
+        data-item-url="/"
+        data-item-name="Ramune Hatakosen Ananas 200Ml"
+        data-item-image="images/ramune-hatakosen-ananas-200ml.png">
+        Ajouter
+      </button>
+    </div>
+  </article>
+</div>
+<div class="product-item" data-cat="Courses" data-title="ramune hatakosen fraise 200ml" data-promo="0">
+  <article class="product-card">
+    
+    <button class="product-open" type="button"
+      data-name="Ramune Hatakosen Fraise 200Ml"
+      data-desc="Ramune Hatakosen Fraise 200Ml — délicieux produit de la catégorie Courses. À savourer à tout moment !"
+      data-image="images/ramune-hatakosen-fraise-200ml.png"
+      data-stock="1">
+      <div class="img-wrap">
+        <img src="assets/images/ramune-hatakosen-fraise-200ml.png" alt="Ramune Hatakosen Fraise 200Ml" loading="lazy" width="320" height="320">
+      </div>
+      <div class="p-body">
+        <div class="p-cat">Courses</div>
+        <div class="p-title">Ramune Hatakosen Fraise 200Ml</div>
+        <div class="p-price-wrap">
+          <div class="p-price">132.20 DH</div>
+        </div>
+      </div>
+    </button>
+    <div class="p-actions">
+      <button class="btn btn-dark w-100 snipcart-add-item"
+        data-item-id="MEC-0094"
+        data-item-price="132.20"
+        data-item-url="/"
+        data-item-name="Ramune Hatakosen Fraise 200Ml"
+        data-item-image="images/ramune-hatakosen-fraise-200ml.png">
+        Ajouter
+      </button>
+    </div>
+  </article>
+</div>
+<div class="product-item" data-cat="Courses" data-title="ramune hatakosen melon 200ml" data-promo="1">
+  <article class="product-card">
+    <span class="badge-promo">-20%</span>
+    <button class="product-open" type="button"
+      data-name="Ramune Hatakosen Melon 200Ml"
+      data-desc="Ramune Hatakosen Melon 200Ml — délicieux produit de la catégorie Courses. À savourer à tout moment !"
+      data-image="images/ramune-hatakosen-melon-200ml.png"
+      data-stock="1">
+      <div class="img-wrap">
+        <img src="assets/images/ramune-hatakosen-melon-200ml.png" alt="Ramune Hatakosen Melon 200Ml" loading="lazy" width="320" height="320">
+      </div>
+      <div class="p-body">
+        <div class="p-cat">Courses</div>
+        <div class="p-title">Ramune Hatakosen Melon 200Ml</div>
+        <div class="p-price-wrap">
+          <span class="p-old-price">137.50 DH</span><div class="p-price">133.50 DH</div>
+        </div>
+      </div>
+    </button>
+    <div class="p-actions">
+      <button class="btn btn-dark w-100 snipcart-add-item"
+        data-item-id="MEC-0095"
+        data-item-price="133.50"
+        data-item-url="/"
+        data-item-name="Ramune Hatakosen Melon 200Ml"
+        data-item-image="images/ramune-hatakosen-melon-200ml.png">
+        Ajouter
+      </button>
+    </div>
+  </article>
+</div>
+<div class="product-item" data-cat="Courses" data-title="ramune hatakosen myrtille 200ml" data-promo="0">
+  <article class="product-card">
+    
+    <button class="product-open" type="button"
+      data-name="Ramune Hatakosen Myrtille 200Ml"
+      data-desc="Ramune Hatakosen Myrtille 200Ml — délicieux produit de la catégorie Courses. À savourer à tout moment !"
+      data-image="images/ramune-hatakosen-myrtille-200ml.png"
+      data-stock="1">
+      <div class="img-wrap">
+        <img src="assets/images/ramune-hatakosen-myrtille-200ml.png" alt="Ramune Hatakosen Myrtille 200Ml" loading="lazy" width="320" height="320">
+      </div>
+      <div class="p-body">
+        <div class="p-cat">Courses</div>
+        <div class="p-title">Ramune Hatakosen Myrtille 200Ml</div>
+        <div class="p-price-wrap">
+          <div class="p-price">134.80 DH</div>
+        </div>
+      </div>
+    </button>
+    <div class="p-actions">
+      <button class="btn btn-dark w-100 snipcart-add-item"
+        data-item-id="MEC-0096"
+        data-item-price="134.80"
+        data-item-url="/"
+        data-item-name="Ramune Hatakosen Myrtille 200Ml"
+        data-item-image="images/ramune-hatakosen-myrtille-200ml.png">
+        Ajouter
+      </button>
+    </div>
+  </article>
+</div>
+<div class="product-item" data-cat="Courses" data-title="ramune hatakosen orange 200ml" data-promo="0">
+  <article class="product-card">
+    
+    <button class="product-open" type="button"
+      data-name="Ramune Hatakosen Orange 200Ml"
+      data-desc="Ramune Hatakosen Orange 200Ml — délicieux produit de la catégorie Courses. À savourer à tout moment !"
+      data-image="images/ramune-hatakosen-orange-200ml.png"
+      data-stock="1">
+      <div class="img-wrap">
+        <img src="assets/images/ramune-hatakosen-orange-200ml.png" alt="Ramune Hatakosen Orange 200Ml" loading="lazy" width="320" height="320">
+      </div>
+      <div class="p-body">
+        <div class="p-cat">Courses</div>
+        <div class="p-title">Ramune Hatakosen Orange 200Ml</div>
+        <div class="p-price-wrap">
+          <div class="p-price">136.10 DH</div>
+        </div>
+      </div>
+    </button>
+    <div class="p-actions">
+      <button class="btn btn-dark w-100 snipcart-add-item"
+        data-item-id="MEC-0097"
+        data-item-price="136.10"
+        data-item-url="/"
+        data-item-name="Ramune Hatakosen Orange 200Ml"
+        data-item-image="images/ramune-hatakosen-orange-200ml.png">
+        Ajouter
+      </button>
+    </div>
+  </article>
+</div>
+<div class="product-item" data-cat="Courses" data-title="ramune hatakosen yaourt 200ml" data-promo="0">
+  <article class="product-card">
+    
+    <button class="product-open" type="button"
+      data-name="Ramune Hatakosen Yaourt 200Ml"
+      data-desc="Ramune Hatakosen Yaourt 200Ml — délicieux produit de la catégorie Courses. À savourer à tout moment !"
+      data-image="images/ramune-hatakosen-yaourt-200ml.png"
+      data-stock="1">
+      <div class="img-wrap">
+        <img src="assets/images/ramune-hatakosen-yaourt-200ml.png" alt="Ramune Hatakosen Yaourt 200Ml" loading="lazy" width="320" height="320">
+      </div>
+      <div class="p-body">
+        <div class="p-cat">Courses</div>
+        <div class="p-title">Ramune Hatakosen Yaourt 200Ml</div>
+        <div class="p-price-wrap">
+          <div class="p-price">137.40 DH</div>
+        </div>
+      </div>
+    </button>
+    <div class="p-actions">
+      <button class="btn btn-dark w-100 snipcart-add-item"
+        data-item-id="MEC-0098"
+        data-item-price="137.40"
+        data-item-url="/"
+        data-item-name="Ramune Hatakosen Yaourt 200Ml"
+        data-item-image="images/ramune-hatakosen-yaourt-200ml.png">
+        Ajouter
+      </button>
+    </div>
+  </article>
+</div>
+<div class="product-item" data-cat="Courses" data-title="red bull blue edition juneberry 250ml" data-promo="0">
+  <article class="product-card">
+    
+    <button class="product-open" type="button"
+      data-name="Red Bull Blue Edition Juneberry 250Ml"
+      data-desc="Red Bull Blue Edition Juneberry 250Ml — délicieux produit de la catégorie Courses. À savourer à tout moment !"
+      data-image="images/red-bull-blue-edition-juneberry-250ml.png"
+      data-stock="1">
+      <div class="img-wrap">
+        <img src="assets/images/red-bull-blue-edition-juneberry-250ml.png" alt="Red Bull Blue Edition Juneberry 250Ml" loading="lazy" width="320" height="320">
+      </div>
+      <div class="p-body">
+        <div class="p-cat">Courses</div>
+        <div class="p-title">Red Bull Blue Edition Juneberry 250Ml</div>
+        <div class="p-price-wrap">
+          <div class="p-price">138.70 DH</div>
+        </div>
+      </div>
+    </button>
+    <div class="p-actions">
+      <button class="btn btn-dark w-100 snipcart-add-item"
+        data-item-id="MEC-0099"
+        data-item-price="138.70"
+        data-item-url="/"
+        data-item-name="Red Bull Blue Edition Juneberry 250Ml"
+        data-item-image="images/red-bull-blue-edition-juneberry-250ml.png">
+        Ajouter
+      </button>
+    </div>
+  </article>
+</div>
+<div class="product-item" data-cat="Sucrées" data-title="red bull energy boisson nergisante ptillante saveur pomelo zro sucre 250ml" data-promo="1">
+  <article class="product-card">
+    <span class="badge-promo">-20%</span>
+    <button class="product-open" type="button"
+      data-name="Red Bull Energy Boisson Nergisante Ptillante Saveur Pomelo Zro Sucre 250Ml"
+      data-desc="Red Bull Energy Boisson Nergisante Ptillante Saveur Pomelo Zro Sucre 250Ml — délicieux produit de la catégorie Sucrées. À savourer à tout moment !"
+      data-image="images/red-bull-energy-boisson-nergisante-ptillante-saveur-pomelo-zro-sucre-250ml.png"
+      data-stock="1">
+      <div class="img-wrap">
+        <img src="assets/images/red-bull-energy-boisson-nergisante-ptillante-saveur-pomelo-zro-sucre-250ml.png" alt="Red Bull Energy Boisson Nergisante Ptillante Saveur Pomelo Zro Sucre 250Ml" loading="lazy" width="320" height="320">
+      </div>
+      <div class="p-body">
+        <div class="p-cat">Sucrées</div>
+        <div class="p-title">Red Bull Energy Boisson Nergisante Ptillante Saveur Pomelo Zro Sucre 250Ml</div>
+        <div class="p-price-wrap">
+          <span class="p-old-price">144.00 DH</span><div class="p-price">140.00 DH</div>
+        </div>
+      </div>
+    </button>
+    <div class="p-actions">
+      <button class="btn btn-dark w-100 snipcart-add-item"
+        data-item-id="MEC-0100"
+        data-item-price="140.00"
+        data-item-url="/"
+        data-item-name="Red Bull Energy Boisson Nergisante Ptillante Saveur Pomelo Zro Sucre 250Ml"
+        data-item-image="images/red-bull-energy-boisson-nergisante-ptillante-saveur-pomelo-zro-sucre-250ml.png">
+        Ajouter
+      </button>
+    </div>
+  </article>
+</div>
+<div class="product-item" data-cat="Courses" data-title="red bull energy boisson nergisante ptillante saveur pomme raisin muscat zro suc" data-promo="0">
+  <article class="product-card">
+    
+    <button class="product-open" type="button"
+      data-name="Red Bull Energy Boisson Nergisante Ptillante Saveur Pomme Raisin Muscat Zro Suc"
+      data-desc="Red Bull Energy Boisson Nergisante Ptillante Saveur Pomme Raisin Muscat Zro Suc — délicieux produit de la catégorie Courses. À savourer à tout moment !"
+      data-image="images/red-bull-energy-boisson-nergisante-ptillante-saveur-pomme-raisin-muscat-zro-suc.png"
+      data-stock="1">
+      <div class="img-wrap">
+        <img src="assets/images/red-bull-energy-boisson-nergisante-ptillante-saveur-pomme-raisin-muscat-zro-suc.png" alt="Red Bull Energy Boisson Nergisante Ptillante Saveur Pomme Raisin Muscat Zro Suc" loading="lazy" width="320" height="320">
+      </div>
+      <div class="p-body">
+        <div class="p-cat">Courses</div>
+        <div class="p-title">Red Bull Energy Boisson Nergisante Ptillante Saveur Pomme Raisin Muscat Zro Suc</div>
+        <div class="p-price-wrap">
+          <div class="p-price">141.30 DH</div>
+        </div>
+      </div>
+    </button>
+    <div class="p-actions">
+      <button class="btn btn-dark w-100 snipcart-add-item"
+        data-item-id="MEC-0101"
+        data-item-price="141.30"
+        data-item-url="/"
+        data-item-name="Red Bull Energy Boisson Nergisante Ptillante Saveur Pomme Raisin Muscat Zro Suc"
+        data-item-image="images/red-bull-energy-boisson-nergisante-ptillante-saveur-pomme-raisin-muscat-zro-suc.png">
+        Ajouter
+      </button>
+    </div>
+  </article>
+</div>
+<div class="product-item" data-cat="Courses" data-title="red bull fraise abricot 250ml" data-promo="0">
+  <article class="product-card">
+    
+    <button class="product-open" type="button"
+      data-name="Red Bull Fraise Abricot 250Ml"
+      data-desc="Red Bull Fraise Abricot 250Ml — délicieux produit de la catégorie Courses. À savourer à tout moment !"
+      data-image="images/red-bull-fraise-abricot-250ml.png"
+      data-stock="1">
+      <div class="img-wrap">
+        <img src="assets/images/red-bull-fraise-abricot-250ml.png" alt="Red Bull Fraise Abricot 250Ml" loading="lazy" width="320" height="320">
+      </div>
+      <div class="p-body">
+        <div class="p-cat">Courses</div>
+        <div class="p-title">Red Bull Fraise Abricot 250Ml</div>
+        <div class="p-price-wrap">
+          <div class="p-price">142.60 DH</div>
+        </div>
+      </div>
+    </button>
+    <div class="p-actions">
+      <button class="btn btn-dark w-100 snipcart-add-item"
+        data-item-id="MEC-0102"
+        data-item-price="142.60"
+        data-item-url="/"
+        data-item-name="Red Bull Fraise Abricot 250Ml"
+        data-item-image="images/red-bull-fraise-abricot-250ml.png">
+        Ajouter
+      </button>
+    </div>
+  </article>
+</div>
+<div class="product-item" data-cat="Sucrées" data-title="red bull sans sucre 250ml" data-promo="0">
+  <article class="product-card">
+    
+    <button class="product-open" type="button"
+      data-name="Red Bull Sans Sucre 250Ml"
+      data-desc="Red Bull Sans Sucre 250Ml — délicieux produit de la catégorie Sucrées. À savourer à tout moment !"
+      data-image="images/red-bull-sans-sucre-250ml.png"
+      data-stock="1">
+      <div class="img-wrap">
+        <img src="assets/images/red-bull-sans-sucre-250ml.png" alt="Red Bull Sans Sucre 250Ml" loading="lazy" width="320" height="320">
+      </div>
+      <div class="p-body">
+        <div class="p-cat">Sucrées</div>
+        <div class="p-title">Red Bull Sans Sucre 250Ml</div>
+        <div class="p-price-wrap">
+          <div class="p-price">143.90 DH</div>
+        </div>
+      </div>
+    </button>
+    <div class="p-actions">
+      <button class="btn btn-dark w-100 snipcart-add-item"
+        data-item-id="MEC-0103"
+        data-item-price="143.90"
+        data-item-url="/"
+        data-item-name="Red Bull Sans Sucre 250Ml"
+        data-item-image="images/red-bull-sans-sucre-250ml.png">
+        Ajouter
+      </button>
+    </div>
+  </article>
+</div>
+<div class="product-item" data-cat="Boissons" data-title="red bull the lime green edition caroube et fleur de sureau 250ml" data-promo="0">
+  <article class="product-card">
+    
+    <button class="product-open" type="button"
+      data-name="Red Bull The Lime Green Edition Caroube Et Fleur De Sureau 250Ml"
+      data-desc="Red Bull The Lime Green Edition Caroube Et Fleur De Sureau 250Ml — délicieux produit de la catégorie Boissons. À savourer à tout moment !"
+      data-image="images/red-bull-the-lime-green-edition-caroube-et-fleur-de-sureau-250ml.png"
+      data-stock="1">
+      <div class="img-wrap">
+        <img src="assets/images/red-bull-the-lime-green-edition-caroube-et-fleur-de-sureau-250ml.png" alt="Red Bull The Lime Green Edition Caroube Et Fleur De Sureau 250Ml" loading="lazy" width="320" height="320">
+      </div>
+      <div class="p-body">
+        <div class="p-cat">Boissons</div>
+        <div class="p-title">Red Bull The Lime Green Edition Caroube Et Fleur De Sureau 250Ml</div>
+        <div class="p-price-wrap">
+          <div class="p-price">145.20 DH</div>
+        </div>
+      </div>
+    </button>
+    <div class="p-actions">
+      <button class="btn btn-dark w-100 snipcart-add-item"
+        data-item-id="MEC-0104"
+        data-item-price="145.20"
+        data-item-url="/"
+        data-item-name="Red Bull The Lime Green Edition Caroube Et Fleur De Sureau 250Ml"
+        data-item-image="images/red-bull-the-lime-green-edition-caroube-et-fleur-de-sureau-250ml.png">
+        Ajouter
+      </button>
+    </div>
+  </article>
+</div>
+<div class="product-item" data-cat="Boissons" data-title="reeses international delight iced coffee 443ml" data-promo="1">
+  <article class="product-card">
+    <span class="badge-promo">-20%</span>
+    <button class="product-open" type="button"
+      data-name="Reeses International Delight Iced Coffee 443Ml"
+      data-desc="Reeses International Delight Iced Coffee 443Ml — délicieux produit de la catégorie Boissons. À savourer à tout moment !"
+      data-image="images/reeses-international-delight-iced-coffee-443ml.png"
+      data-stock="1">
+      <div class="img-wrap">
+        <img src="assets/images/reeses-international-delight-iced-coffee-443ml.png" alt="Reeses International Delight Iced Coffee 443Ml" loading="lazy" width="320" height="320">
+      </div>
+      <div class="p-body">
+        <div class="p-cat">Boissons</div>
+        <div class="p-title">Reeses International Delight Iced Coffee 443Ml</div>
+        <div class="p-price-wrap">
+          <span class="p-old-price">150.50 DH</span><div class="p-price">146.50 DH</div>
+        </div>
+      </div>
+    </button>
+    <div class="p-actions">
+      <button class="btn btn-dark w-100 snipcart-add-item"
+        data-item-id="MEC-0105"
+        data-item-price="146.50"
+        data-item-url="/"
+        data-item-name="Reeses International Delight Iced Coffee 443Ml"
+        data-item-image="images/reeses-international-delight-iced-coffee-443ml.png">
+        Ajouter
+      </button>
+    </div>
+  </article>
+</div>
+<div class="product-item" data-cat="Courses" data-title="royal cuajada 48g" data-promo="0">
+  <article class="product-card">
+    
+    <button class="product-open" type="button"
+      data-name="Royal Cuajada 48G"
+      data-desc="Royal Cuajada 48G — délicieux produit de la catégorie Courses. À savourer à tout moment !"
+      data-image="images/royal-cuajada-48g.png"
+      data-stock="1">
+      <div class="img-wrap">
+        <img src="assets/images/royal-cuajada-48g.png" alt="Royal Cuajada 48G" loading="lazy" width="320" height="320">
+      </div>
+      <div class="p-body">
+        <div class="p-cat">Courses</div>
+        <div class="p-title">Royal Cuajada 48G</div>
+        <div class="p-price-wrap">
+          <div class="p-price">147.80 DH</div>
+        </div>
+      </div>
+    </button>
+    <div class="p-actions">
+      <button class="btn btn-dark w-100 snipcart-add-item"
+        data-item-id="MEC-0106"
+        data-item-price="147.80"
+        data-item-url="/"
+        data-item-name="Royal Cuajada 48G"
+        data-item-image="images/royal-cuajada-48g.png">
+        Ajouter
+      </button>
+    </div>
+  </article>
+</div>
+<div class="product-item" data-cat="Courses" data-title="schweppes lemon 330ml" data-promo="0">
+  <article class="product-card">
+    
+    <button class="product-open" type="button"
+      data-name="Schweppes Lemon 330Ml"
+      data-desc="Schweppes Lemon 330Ml — délicieux produit de la catégorie Courses. À savourer à tout moment !"
+      data-image="images/schweppes-lemon-330ml.png"
+      data-stock="1">
+      <div class="img-wrap">
+        <img src="assets/images/schweppes-lemon-330ml.png" alt="Schweppes Lemon 330Ml" loading="lazy" width="320" height="320">
+      </div>
+      <div class="p-body">
+        <div class="p-cat">Courses</div>
+        <div class="p-title">Schweppes Lemon 330Ml</div>
+        <div class="p-price-wrap">
+          <div class="p-price">149.10 DH</div>
+        </div>
+      </div>
+    </button>
+    <div class="p-actions">
+      <button class="btn btn-dark w-100 snipcart-add-item"
+        data-item-id="MEC-0107"
+        data-item-price="149.10"
+        data-item-url="/"
+        data-item-name="Schweppes Lemon 330Ml"
+        data-item-image="images/schweppes-lemon-330ml.png">
+        Ajouter
+      </button>
+    </div>
+  </article>
+</div>
+<div class="product-item" data-cat="Courses" data-title="schweppes lemon zero 330ml" data-promo="0">
+  <article class="product-card">
+    
+    <button class="product-open" type="button"
+      data-name="Schweppes Lemon Zero 330Ml"
+      data-desc="Schweppes Lemon Zero 330Ml — délicieux produit de la catégorie Courses. À savourer à tout moment !"
+      data-image="images/schweppes-lemon-zero-330ml.png"
+      data-stock="1">
+      <div class="img-wrap">
+        <img src="assets/images/schweppes-lemon-zero-330ml.png" alt="Schweppes Lemon Zero 330Ml" loading="lazy" width="320" height="320">
+      </div>
+      <div class="p-body">
+        <div class="p-cat">Courses</div>
+        <div class="p-title">Schweppes Lemon Zero 330Ml</div>
+        <div class="p-price-wrap">
+          <div class="p-price">150.40 DH</div>
+        </div>
+      </div>
+    </button>
+    <div class="p-actions">
+      <button class="btn btn-dark w-100 snipcart-add-item"
+        data-item-id="MEC-0108"
+        data-item-price="150.40"
+        data-item-url="/"
+        data-item-name="Schweppes Lemon Zero 330Ml"
+        data-item-image="images/schweppes-lemon-zero-330ml.png">
+        Ajouter
+      </button>
+    </div>
+  </article>
+</div>
+<div class="product-item" data-cat="Courses" data-title="schweppes zero naranja 330ml" data-promo="0">
+  <article class="product-card">
+    
+    <button class="product-open" type="button"
+      data-name="Schweppes Zero Naranja 330Ml"
+      data-desc="Schweppes Zero Naranja 330Ml — délicieux produit de la catégorie Courses. À savourer à tout moment !"
+      data-image="images/schweppes-zero-naranja-330ml.png"
+      data-stock="1">
+      <div class="img-wrap">
+        <img src="assets/images/schweppes-zero-naranja-330ml.png" alt="Schweppes Zero Naranja 330Ml" loading="lazy" width="320" height="320">
+      </div>
+      <div class="p-body">
+        <div class="p-cat">Courses</div>
+        <div class="p-title">Schweppes Zero Naranja 330Ml</div>
+        <div class="p-price-wrap">
+          <div class="p-price">151.70 DH</div>
+        </div>
+      </div>
+    </button>
+    <div class="p-actions">
+      <button class="btn btn-dark w-100 snipcart-add-item"
+        data-item-id="MEC-0109"
+        data-item-price="151.70"
+        data-item-url="/"
+        data-item-name="Schweppes Zero Naranja 330Ml"
+        data-item-image="images/schweppes-zero-naranja-330ml.png">
+        Ajouter
+      </button>
+    </div>
+  </article>
+</div>
+<div class="product-item" data-cat="Sucrées" data-title="snickers barre 50g" data-promo="1">
+  <article class="product-card">
+    <span class="badge-promo">-20%</span>
+    <button class="product-open" type="button"
+      data-name="Snickers Barre 50G"
+      data-desc="Snickers Barre 50G — délicieux produit de la catégorie Sucrées. À savourer à tout moment !"
+      data-image="images/snickers-barre-50g.png"
+      data-stock="1">
+      <div class="img-wrap">
+        <img src="assets/images/snickers-barre-50g.png" alt="Snickers Barre 50G" loading="lazy" width="320" height="320">
+      </div>
+      <div class="p-body">
+        <div class="p-cat">Sucrées</div>
+        <div class="p-title">Snickers Barre 50G</div>
+        <div class="p-price-wrap">
+          <span class="p-old-price">157.00 DH</span><div class="p-price">153.00 DH</div>
+        </div>
+      </div>
+    </button>
+    <div class="p-actions">
+      <button class="btn btn-dark w-100 snipcart-add-item"
+        data-item-id="MEC-0110"
+        data-item-price="153.00"
+        data-item-url="/"
+        data-item-name="Snickers Barre 50G"
+        data-item-image="images/snickers-barre-50g.png">
+        Ajouter
+      </button>
+    </div>
+  </article>
+</div>
+<div class="product-item" data-cat="Boissons" data-title="suchard bombones au chocolat au lait avec cur crmeux 127g" data-promo="0">
+  <article class="product-card">
+    
+    <button class="product-open" type="button"
+      data-name="Suchard Bombones Au Chocolat Au Lait Avec Cur Crmeux 127G"
+      data-desc="Suchard Bombones Au Chocolat Au Lait Avec Cur Crmeux 127G — délicieux produit de la catégorie Boissons. À savourer à tout moment !"
+      data-image="images/suchard-bombones-au-chocolat-au-lait-avec-cur-crmeux-127g.png"
+      data-stock="1">
+      <div class="img-wrap">
+        <img src="assets/images/suchard-bombones-au-chocolat-au-lait-avec-cur-crmeux-127g.png" alt="Suchard Bombones Au Chocolat Au Lait Avec Cur Crmeux 127G" loading="lazy" width="320" height="320">
+      </div>
+      <div class="p-body">
+        <div class="p-cat">Boissons</div>
+        <div class="p-title">Suchard Bombones Au Chocolat Au Lait Avec Cur Crmeux 127G</div>
+        <div class="p-price-wrap">
+          <div class="p-price">154.30 DH</div>
+        </div>
+      </div>
+    </button>
+    <div class="p-actions">
+      <button class="btn btn-dark w-100 snipcart-add-item"
+        data-item-id="MEC-0111"
+        data-item-price="154.30"
+        data-item-url="/"
+        data-item-name="Suchard Bombones Au Chocolat Au Lait Avec Cur Crmeux 127G"
+        data-item-image="images/suchard-bombones-au-chocolat-au-lait-avec-cur-crmeux-127g.png">
+        Ajouter
+      </button>
+    </div>
+  </article>
+</div>
+<div class="product-item" data-cat="Boissons" data-title="suchard bombones au chocolat au lait avec cur crmeux 254g" data-promo="0">
+  <article class="product-card">
+    
+    <button class="product-open" type="button"
+      data-name="Suchard Bombones Au Chocolat Au Lait Avec Cur Crmeux 254G"
+      data-desc="Suchard Bombones Au Chocolat Au Lait Avec Cur Crmeux 254G — délicieux produit de la catégorie Boissons. À savourer à tout moment !"
+      data-image="images/suchard-bombones-au-chocolat-au-lait-avec-cur-crmeux-254g.png"
+      data-stock="1">
+      <div class="img-wrap">
+        <img src="assets/images/suchard-bombones-au-chocolat-au-lait-avec-cur-crmeux-254g.png" alt="Suchard Bombones Au Chocolat Au Lait Avec Cur Crmeux 254G" loading="lazy" width="320" height="320">
+      </div>
+      <div class="p-body">
+        <div class="p-cat">Boissons</div>
+        <div class="p-title">Suchard Bombones Au Chocolat Au Lait Avec Cur Crmeux 254G</div>
+        <div class="p-price-wrap">
+          <div class="p-price">155.60 DH</div>
+        </div>
+      </div>
+    </button>
+    <div class="p-actions">
+      <button class="btn btn-dark w-100 snipcart-add-item"
+        data-item-id="MEC-0112"
+        data-item-price="155.60"
+        data-item-url="/"
+        data-item-name="Suchard Bombones Au Chocolat Au Lait Avec Cur Crmeux 254G"
+        data-item-image="images/suchard-bombones-au-chocolat-au-lait-avec-cur-crmeux-254g.png">
+        Ajouter
+      </button>
+    </div>
+  </article>
+</div>
+<div class="product-item" data-cat="Courses" data-title="summer box dcouverte" data-promo="0">
+  <article class="product-card">
+    
+    <button class="product-open" type="button"
+      data-name="Summer Box Dcouverte"
+      data-desc="Summer Box Dcouverte — délicieux produit de la catégorie Courses. À savourer à tout moment !"
+      data-image="images/summer-box-dcouverte.png"
+      data-stock="1">
+      <div class="img-wrap">
+        <img src="assets/images/summer-box-dcouverte.png" alt="Summer Box Dcouverte" loading="lazy" width="320" height="320">
+      </div>
+      <div class="p-body">
+        <div class="p-cat">Courses</div>
+        <div class="p-title">Summer Box Dcouverte</div>
+        <div class="p-price-wrap">
+          <div class="p-price">156.90 DH</div>
+        </div>
+      </div>
+    </button>
+    <div class="p-actions">
+      <button class="btn btn-dark w-100 snipcart-add-item"
+        data-item-id="MEC-0113"
+        data-item-price="156.90"
+        data-item-url="/"
+        data-item-name="Summer Box Dcouverte"
+        data-item-image="images/summer-box-dcouverte.png">
+        Ajouter
+      </button>
+    </div>
+  </article>
+</div>
+<div class="product-item" data-cat="Courses" data-title="summer box first edition" data-promo="0">
+  <article class="product-card">
+    
+    <button class="product-open" type="button"
+      data-name="Summer Box First Edition"
+      data-desc="Summer Box First Edition — délicieux produit de la catégorie Courses. À savourer à tout moment !"
+      data-image="images/summer-box-first-edition.png"
+      data-stock="1">
+      <div class="img-wrap">
+        <img src="assets/images/summer-box-first-edition.png" alt="Summer Box First Edition" loading="lazy" width="320" height="320">
+      </div>
+      <div class="p-body">
+        <div class="p-cat">Courses</div>
+        <div class="p-title">Summer Box First Edition</div>
+        <div class="p-price-wrap">
+          <div class="p-price">158.20 DH</div>
+        </div>
+      </div>
+    </button>
+    <div class="p-actions">
+      <button class="btn btn-dark w-100 snipcart-add-item"
+        data-item-id="MEC-0114"
+        data-item-price="158.20"
+        data-item-url="/"
+        data-item-name="Summer Box First Edition"
+        data-item-image="images/summer-box-first-edition.png">
+        Ajouter
+      </button>
+    </div>
+  </article>
+</div>
+<div class="product-item" data-cat="Courses" data-title="summer box ultimate" data-promo="1">
+  <article class="product-card">
+    <span class="badge-promo">-20%</span>
+    <button class="product-open" type="button"
+      data-name="Summer Box Ultimate"
+      data-desc="Summer Box Ultimate — délicieux produit de la catégorie Courses. À savourer à tout moment !"
+      data-image="images/summer-box-ultimate.png"
+      data-stock="1">
+      <div class="img-wrap">
+        <img src="assets/images/summer-box-ultimate.png" alt="Summer Box Ultimate" loading="lazy" width="320" height="320">
+      </div>
+      <div class="p-body">
+        <div class="p-cat">Courses</div>
+        <div class="p-title">Summer Box Ultimate</div>
+        <div class="p-price-wrap">
+          <span class="p-old-price">163.50 DH</span><div class="p-price">159.50 DH</div>
+        </div>
+      </div>
+    </button>
+    <div class="p-actions">
+      <button class="btn btn-dark w-100 snipcart-add-item"
+        data-item-id="MEC-0115"
+        data-item-price="159.50"
+        data-item-url="/"
+        data-item-name="Summer Box Ultimate"
+        data-item-image="images/summer-box-ultimate.png">
+        Ajouter
+      </button>
+    </div>
+  </article>
+</div>
+<div class="product-item" data-cat="Boissons" data-title="tablette nestl extrafino au chocolat au lait avec gaufrette et crme galleta mara" data-promo="0">
+  <article class="product-card">
+    
+    <button class="product-open" type="button"
+      data-name="Tablette Nestl Extrafino Au Chocolat Au Lait Avec Gaufrette Et Crme Galleta Mara"
+      data-desc="Tablette Nestl Extrafino Au Chocolat Au Lait Avec Gaufrette Et Crme Galleta Mara — délicieux produit de la catégorie Boissons. À savourer à tout moment !"
+      data-image="images/tablette-nestl-extrafino-au-chocolat-au-lait-avec-gaufrette-et-crme-galleta-mara.png"
+      data-stock="1">
+      <div class="img-wrap">
+        <img src="assets/images/tablette-nestl-extrafino-au-chocolat-au-lait-avec-gaufrette-et-crme-galleta-mara.png" alt="Tablette Nestl Extrafino Au Chocolat Au Lait Avec Gaufrette Et Crme Galleta Mara" loading="lazy" width="320" height="320">
+      </div>
+      <div class="p-body">
+        <div class="p-cat">Boissons</div>
+        <div class="p-title">Tablette Nestl Extrafino Au Chocolat Au Lait Avec Gaufrette Et Crme Galleta Mara</div>
+        <div class="p-price-wrap">
+          <div class="p-price">160.80 DH</div>
+        </div>
+      </div>
+    </button>
+    <div class="p-actions">
+      <button class="btn btn-dark w-100 snipcart-add-item"
+        data-item-id="MEC-0116"
+        data-item-price="160.80"
+        data-item-url="/"
+        data-item-name="Tablette Nestl Extrafino Au Chocolat Au Lait Avec Gaufrette Et Crme Galleta Mara"
+        data-item-image="images/tablette-nestl-extrafino-au-chocolat-au-lait-avec-gaufrette-et-crme-galleta-mara.png">
+        Ajouter
+      </button>
+    </div>
+  </article>
+</div>
+<div class="product-item" data-cat="Boissons" data-title="toblerone chocolat au lait avec nougat au miel et aux amandes 100g" data-promo="0">
+  <article class="product-card">
+    
+    <button class="product-open" type="button"
+      data-name="Toblerone Chocolat Au Lait Avec Nougat Au Miel Et Aux Amandes 100G"
+      data-desc="Toblerone Chocolat Au Lait Avec Nougat Au Miel Et Aux Amandes 100G — délicieux produit de la catégorie Boissons. À savourer à tout moment !"
+      data-image="images/toblerone-chocolat-au-lait-avec-nougat-au-miel-et-aux-amandes-100g.png"
+      data-stock="1">
+      <div class="img-wrap">
+        <img src="assets/images/toblerone-chocolat-au-lait-avec-nougat-au-miel-et-aux-amandes-100g.png" alt="Toblerone Chocolat Au Lait Avec Nougat Au Miel Et Aux Amandes 100G" loading="lazy" width="320" height="320">
+      </div>
+      <div class="p-body">
+        <div class="p-cat">Boissons</div>
+        <div class="p-title">Toblerone Chocolat Au Lait Avec Nougat Au Miel Et Aux Amandes 100G</div>
+        <div class="p-price-wrap">
+          <div class="p-price">162.10 DH</div>
+        </div>
+      </div>
+    </button>
+    <div class="p-actions">
+      <button class="btn btn-dark w-100 snipcart-add-item"
+        data-item-id="MEC-0117"
+        data-item-price="162.10"
+        data-item-url="/"
+        data-item-name="Toblerone Chocolat Au Lait Avec Nougat Au Miel Et Aux Amandes 100G"
+        data-item-image="images/toblerone-chocolat-au-lait-avec-nougat-au-miel-et-aux-amandes-100g.png">
+        Ajouter
+      </button>
+    </div>
+  </article>
+</div>
+<div class="product-item" data-cat="Boissons" data-title="toffifee chocolat blanc 125g" data-promo="0">
+  <article class="product-card">
+    
+    <button class="product-open" type="button"
+      data-name="Toffifee Chocolat Blanc 125G"
+      data-desc="Toffifee Chocolat Blanc 125G — délicieux produit de la catégorie Boissons. À savourer à tout moment !"
+      data-image="images/toffifee-chocolat-blanc-125g.png"
+      data-stock="1">
+      <div class="img-wrap">
+        <img src="assets/images/toffifee-chocolat-blanc-125g.png" alt="Toffifee Chocolat Blanc 125G" loading="lazy" width="320" height="320">
+      </div>
+      <div class="p-body">
+        <div class="p-cat">Boissons</div>
+        <div class="p-title">Toffifee Chocolat Blanc 125G</div>
+        <div class="p-price-wrap">
+          <div class="p-price">163.40 DH</div>
+        </div>
+      </div>
+    </button>
+    <div class="p-actions">
+      <button class="btn btn-dark w-100 snipcart-add-item"
+        data-item-id="MEC-0118"
+        data-item-price="163.40"
+        data-item-url="/"
+        data-item-name="Toffifee Chocolat Blanc 125G"
+        data-item-image="images/toffifee-chocolat-blanc-125g.png">
+        Ajouter
+      </button>
+    </div>
+  </article>
+</div>
+<div class="product-item" data-cat="Boissons" data-title="toffifee les noisettes en caramel avec crme de nougat et chocolat 125g" data-promo="0">
+  <article class="product-card">
+    
+    <button class="product-open" type="button"
+      data-name="Toffifee Les Noisettes En Caramel Avec Crme De Nougat Et Chocolat 125G"
+      data-desc="Toffifee Les Noisettes En Caramel Avec Crme De Nougat Et Chocolat 125G — délicieux produit de la catégorie Boissons. À savourer à tout moment !"
+      data-image="images/toffifee-les-noisettes-en-caramel-avec-crme-de-nougat-et-chocolat-125g.png"
+      data-stock="1">
+      <div class="img-wrap">
+        <img src="assets/images/toffifee-les-noisettes-en-caramel-avec-crme-de-nougat-et-chocolat-125g.png" alt="Toffifee Les Noisettes En Caramel Avec Crme De Nougat Et Chocolat 125G" loading="lazy" width="320" height="320">
+      </div>
+      <div class="p-body">
+        <div class="p-cat">Boissons</div>
+        <div class="p-title">Toffifee Les Noisettes En Caramel Avec Crme De Nougat Et Chocolat 125G</div>
+        <div class="p-price-wrap">
+          <div class="p-price">164.70 DH</div>
+        </div>
+      </div>
+    </button>
+    <div class="p-actions">
+      <button class="btn btn-dark w-100 snipcart-add-item"
+        data-item-id="MEC-0119"
+        data-item-price="164.70"
+        data-item-url="/"
+        data-item-name="Toffifee Les Noisettes En Caramel Avec Crme De Nougat Et Chocolat 125G"
+        data-item-image="images/toffifee-les-noisettes-en-caramel-avec-crme-de-nougat-et-chocolat-125g.png">
+        Ajouter
+      </button>
+    </div>
+  </article>
+</div>
+<div class="product-item" data-cat="Boissons" data-title="twix boisson lait chocolate au caramel 350ml" data-promo="1">
+  <article class="product-card">
+    <span class="badge-promo">-20%</span>
+    <button class="product-open" type="button"
+      data-name="Twix Boisson Lait Chocolate Au Caramel 350Ml"
+      data-desc="Twix Boisson Lait Chocolate Au Caramel 350Ml — délicieux produit de la catégorie Boissons. À savourer à tout moment !"
+      data-image="images/twix-boisson-lait-chocolate-au-caramel-350ml.png"
+      data-stock="1">
+      <div class="img-wrap">
+        <img src="assets/images/twix-boisson-lait-chocolate-au-caramel-350ml.png" alt="Twix Boisson Lait Chocolate Au Caramel 350Ml" loading="lazy" width="320" height="320">
+      </div>
+      <div class="p-body">
+        <div class="p-cat">Boissons</div>
+        <div class="p-title">Twix Boisson Lait Chocolate Au Caramel 350Ml</div>
+        <div class="p-price-wrap">
+          <span class="p-old-price">170.00 DH</span><div class="p-price">166.00 DH</div>
+        </div>
+      </div>
+    </button>
+    <div class="p-actions">
+      <button class="btn btn-dark w-100 snipcart-add-item"
+        data-item-id="MEC-0120"
+        data-item-price="166.00"
+        data-item-url="/"
+        data-item-name="Twix Boisson Lait Chocolate Au Caramel 350Ml"
+        data-item-image="images/twix-boisson-lait-chocolate-au-caramel-350ml.png">
+        Ajouter
+      </button>
+    </div>
+  </article>
+</div>
+<div class="product-item" data-cat="Courses" data-title="twix caramel centres cookies 144g" data-promo="0">
+  <article class="product-card">
+    
+    <button class="product-open" type="button"
+      data-name="Twix Caramel Centres Cookies 144G"
+      data-desc="Twix Caramel Centres Cookies 144G — délicieux produit de la catégorie Courses. À savourer à tout moment !"
+      data-image="images/twix-caramel-centres-cookies-144g.png"
+      data-stock="1">
+      <div class="img-wrap">
+        <img src="assets/images/twix-caramel-centres-cookies-144g.png" alt="Twix Caramel Centres Cookies 144G" loading="lazy" width="320" height="320">
+      </div>
+      <div class="p-body">
+        <div class="p-cat">Courses</div>
+        <div class="p-title">Twix Caramel Centres Cookies 144G</div>
+        <div class="p-price-wrap">
+          <div class="p-price">167.30 DH</div>
+        </div>
+      </div>
+    </button>
+    <div class="p-actions">
+      <button class="btn btn-dark w-100 snipcart-add-item"
+        data-item-id="MEC-0121"
+        data-item-price="167.30"
+        data-item-url="/"
+        data-item-name="Twix Caramel Centres Cookies 144G"
+        data-item-image="images/twix-caramel-centres-cookies-144g.png">
+        Ajouter
+      </button>
+    </div>
+  </article>
+</div>
+<div class="product-item" data-cat="Courses" data-title="werthers original caramel popcorn classic140g" data-promo="0">
+  <article class="product-card">
+    
+    <button class="product-open" type="button"
+      data-name="Werthers Original Caramel Popcorn Classic140G"
+      data-desc="Werthers Original Caramel Popcorn Classic140G — délicieux produit de la catégorie Courses. À savourer à tout moment !"
+      data-image="images/werthers-original-caramel-popcorn-classic140g.png"
+      data-stock="1">
+      <div class="img-wrap">
+        <img src="assets/images/werthers-original-caramel-popcorn-classic140g.png" alt="Werthers Original Caramel Popcorn Classic140G" loading="lazy" width="320" height="320">
+      </div>
+      <div class="p-body">
+        <div class="p-cat">Courses</div>
+        <div class="p-title">Werthers Original Caramel Popcorn Classic140G</div>
+        <div class="p-price-wrap">
+          <div class="p-price">168.60 DH</div>
+        </div>
+      </div>
+    </button>
+    <div class="p-actions">
+      <button class="btn btn-dark w-100 snipcart-add-item"
+        data-item-id="MEC-0122"
+        data-item-price="168.60"
+        data-item-url="/"
+        data-item-name="Werthers Original Caramel Popcorn Classic140G"
+        data-item-image="images/werthers-original-caramel-popcorn-classic140g.png">
+        Ajouter
+      </button>
+    </div>
+  </article>
+</div>
+<div class="product-item" data-cat="Courses" data-title="woogie caramels au lait 250g" data-promo="0">
+  <article class="product-card">
+    
+    <button class="product-open" type="button"
+      data-name="Woogie Caramels Au Lait 250G"
+      data-desc="Woogie Caramels Au Lait 250G — délicieux produit de la catégorie Courses. À savourer à tout moment !"
+      data-image="images/woogie-caramels-au-lait-250g.png"
+      data-stock="1">
+      <div class="img-wrap">
+        <img src="assets/images/woogie-caramels-au-lait-250g.png" alt="Woogie Caramels Au Lait 250G" loading="lazy" width="320" height="320">
+      </div>
+      <div class="p-body">
+        <div class="p-cat">Courses</div>
+        <div class="p-title">Woogie Caramels Au Lait 250G</div>
+        <div class="p-price-wrap">
+          <div class="p-price">169.90 DH</div>
+        </div>
+      </div>
+    </button>
+    <div class="p-actions">
+      <button class="btn btn-dark w-100 snipcart-add-item"
+        data-item-id="MEC-0123"
+        data-item-price="169.90"
+        data-item-url="/"
+        data-item-name="Woogie Caramels Au Lait 250G"
+        data-item-image="images/woogie-caramels-au-lait-250g.png">
+        Ajouter
+      </button>
+    </div>
+  </article>
+</div>
+<div class="product-item" data-cat="Courses" data-title="woogie caramels au lait cacao 250g" data-promo="0">
+  <article class="product-card">
+    
+    <button class="product-open" type="button"
+      data-name="Woogie Caramels Au Lait Cacao 250G"
+      data-desc="Woogie Caramels Au Lait Cacao 250G — délicieux produit de la catégorie Courses. À savourer à tout moment !"
+      data-image="images/woogie-caramels-au-lait-cacao-250g.png"
+      data-stock="1">
+      <div class="img-wrap">
+        <img src="assets/images/woogie-caramels-au-lait-cacao-250g.png" alt="Woogie Caramels Au Lait Cacao 250G" loading="lazy" width="320" height="320">
+      </div>
+      <div class="p-body">
+        <div class="p-cat">Courses</div>
+        <div class="p-title">Woogie Caramels Au Lait Cacao 250G</div>
+        <div class="p-price-wrap">
+          <div class="p-price">171.20 DH</div>
+        </div>
+      </div>
+    </button>
+    <div class="p-actions">
+      <button class="btn btn-dark w-100 snipcart-add-item"
+        data-item-id="MEC-0124"
+        data-item-price="171.20"
+        data-item-url="/"
+        data-item-name="Woogie Caramels Au Lait Cacao 250G"
+        data-item-image="images/woogie-caramels-au-lait-cacao-250g.png">
+        Ajouter
+      </button>
+    </div>
+  </article>
+</div>
+<!-- PRODUCTS:END -->
+      </div>
+
+      <div id="emptyState" class="empty-state" hidden>
+        <div class="empty-emoji">🔎</div>
+        <h3 class="fw-bold">Aucun produit trouvé</h3>
+        <p class="text-muted mb-0">Essaie un autre mot-clé, enlève les filtres, ou change de catégorie.</p>
+      </div>
+    </section>
+
+    <footer class="site-footer">
+      <div class="container">
+        <div class="footer-grid">
+          <div>
+            <div class="d-flex align-items-center gap-2">
+              <span class="brand-mark" aria-hidden="true">M</span>
+              <div>
+                <div style="font-weight:1000; letter-spacing:.6px;">MECADO</div>
+                <div class="footer-sub">Snacks • Chocolat • Boissons • Courses</div>
+              </div>
+            </div>
+            <p class="footer-sub mt-2">Ton store est prêt. Ajoute tes images dans <code>source_images</code>.</p>
+          </div>
+
+          <div>
+            <div class="footer-h">Contact</div>
+            <a class="footer-link" href="tel:+212720498110"><i class="fa-solid fa-phone"></i> +212 720 498 110</a>
+            <a class="footer-link" href="mailto:mouaadarejdal@gmail.com"><i class="fa-solid fa-envelope"></i> mouaadarejdal@gmail.com</a>
+            <a class="footer-link" href="https://wa.me/212720498110" target="_blank"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>
+          </div>
+
+          <div>
+            <div class="footer-h">Infos</div>
+            <div class="footer-sub">Tri: prix/nom • Filtres: catégories + promos • Recherche instantanée</div>
+            <div class="footer-sub mt-2">© <span id="yearNow"></span> MECADO</div>
+          </div>
+        </div>
+
+        <div class="footer-bottom">
+          <span class="footer-sub">Made with ❤️ by Mouaad</span>
+          <span class="footer-sub">Astuce : <kbd>/</kbd> rechercher • <kbd>Esc</kbd> reset</span>
+        </div>
+      </div>
+    </footer>
+  </main>
+
+  <nav class="mobile-nav d-md-none">
+    <a href="index.html"><i class="fa-solid fa-house"></i><span>Accueil</span></a>
+    <a href="#" id="mobileSearchBtn"><i class="fa-solid fa-magnifying-glass"></i><span>Search</span></a>
+    <a href="#" class="snipcart-checkout"><i class="fa-solid fa-cart-shopping"></i><span>Panier</span></a>
+    <a href="https://wa.me/212720498110" target="_blank"><i class="fa-brands fa-whatsapp"></i><span>WhatsApp</span></a>
+  </nav>
+
+  <!-- Modal -->
+  <div class="modal fade" id="productModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content">
+        <div class="row g-0">
+          <div class="col-md-6 bg-light text-center p-4">
+            <img id="mImg" src="" class="img-fluid" alt="" style="max-height:320px" loading="lazy" width="320" height="320">
+          </div>
+          <div class="col-md-6 p-4">
+            <button type="button" class="btn-close float-end" data-bs-dismiss="modal"></button>
+
+            <div class="d-flex align-items-center gap-2 mb-2">
+              <span id="mCat" class="badge text-bg-light border"></span>
+              <span id="mPromo" class="badge text-bg-danger" hidden><i class="fa-solid fa-tag"></i> Promo</span>
+              <span id="mStock" class="badge text-bg-success"></span>
+            </div>
+
+            <h2 id="mTitle" class="fw-bold" style="line-height:1.1;"></h2>
+
+            <div class="d-flex align-items-baseline gap-2 my-3">
+              <div id="mPrice" style="font-size:26px;font-weight:1000;color:#b91c1c;"></div>
+              <div id="mOldPrice" style="text-decoration:line-through;color:#6b7280;font-weight:900;" hidden></div>
+            </div>
+
+            <p id="mDesc" class="text-muted mb-3"></p>
+
+            <ul id="mDetails" class="details-list mb-4" hidden></ul>
+
+            <div class="d-grid gap-2">
+              <button id="mBtn" class="btn btn-dark fw-bold rounded-pill snipcart-add-item">AJOUTER AU PANIER</button>
+              <a id="mWhatsapp" class="btn btn-outline-success fw-bold rounded-pill" target="_blank">
+                <i class="fa-brands fa-whatsapp"></i> Commander sur WhatsApp
+              </a>
+            </div>
+
+            <div class="footer-sub mt-3">Astuce : appuie sur <kbd>/</kbd> pour chercher plus vite.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Snipcart -->
+  <div hidden id="snipcart" data-api-key="YOUR_SNIPCART_KEY_HERE"></div>
+  <script async src="https://cdn.snipcart.com/themes/v3.7.2/default/snipcart.js"></script>
+
+  <script>
+  (() => {
+    const $ = (sel, root = document) => root.querySelector(sel);
+    const $$ = (sel, root = document) => Array.from(root.querySelectorAll(sel));
+
+    const productGrid = $("#productGrid");
+    const products = $$(".product-item", productGrid);
+
+    const els = {
+      catNav: $(".cat-nav"),
+      catBtns: $$(".cat-btn[data-cat]"),
+      promoToggle: $("#promoToggle"),
+      clearFilters: $("#clearFilters"),
+      sortSelect: $("#sortSelect"),
+      resultsCount: $("#resultsCount"),
+      activeFilters: $("#activeFilters"),
+      emptyState: $("#emptyState"),
+      searchDesktop: $("#searchInput"),
+      searchMobile: $("#searchMobile"),
+      yearNow: $("#yearNow"),
+      mobileSearchBtn: $("#mobileSearchBtn"),
+    };
+
+    const state = { cat: "all", promo: false, q: "", sort: "featured" };
+
+    const normalize = (s) => String(s||"").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").trim();
+
+    products.forEach((p, idx) => {
+      if (!p.dataset.idx) p.dataset.idx = String(idx);
+      p.classList.add("reveal");
+      const catEl = p.querySelector(".p-cat");
+      if (catEl && p.dataset.cat) catEl.textContent = String(p.dataset.cat).toUpperCase();
+    });
+
+    const getPrice = (p) => {
+      const btn = p.querySelector(".snipcart-add-item");
+      const v = btn?.dataset?.itemPrice ?? "";
+      const n = parseFloat(String(v).replace(",", "."));
+      return Number.isFinite(n) ? n : Infinity;
+    };
+
+    const getName = (p) => normalize(p.dataset.title || p.querySelector(".p-title")?.textContent || "");
+
+    const updateCounts = () => {
+      const counts = { all: products.length };
+      products.forEach((p) => {
+        const c = p.dataset.cat || "Autres";
+        counts[c] = (counts[c] || 0) + 1;
+      });
+      $$("[data-count-for]").forEach((span) => {
+        const key = span.getAttribute("data-count-for");
+        span.textContent = `(${counts[key] ?? 0})`;
+      });
+    };
+
+    const renderActiveFilters = () => {
+      const parts = [];
+      if (state.cat !== "all") parts.push(`Catégorie : ${state.cat}`);
+      if (state.promo) parts.push("Promos");
+      if (state.q) parts.push(`Recherche : “${state.q}”`);
+      els.activeFilters.textContent = parts.length ? parts.join(" • ") : "";
+    };
+
+    const setActiveCatBtn = () => {
+      els.catBtns.forEach((b) => b.classList.toggle("active", b.dataset.cat === state.cat));
+    };
+
+    const setPromoUI = () => {
+      els.promoToggle.classList.toggle("active", state.promo);
+      els.promoToggle.setAttribute("aria-pressed", state.promo ? "true" : "false");
+    };
+
+    const applyFiltersAndSort = () => {
+      const qn = normalize(state.q);
+
+      let visible = products.filter((p) => {
+        const catOk = state.cat === "all" || (p.dataset.cat || "") === state.cat;
+        const promoOk = !state.promo || String(p.dataset.promo || "0") === "1";
+        const qOk = !qn || normalize(p.dataset.title || "").includes(qn);
+        return catOk && promoOk && qOk;
+      });
+
+      const sorters = {
+        featured: (a,b)=>Number(a.dataset.idx)-Number(b.dataset.idx),
+        "price-asc": (a,b)=>getPrice(a)-getPrice(b),
+        "price-desc": (a,b)=>getPrice(b)-getPrice(a),
+        "name-asc": (a,b)=>getName(a)>getName(b)?1:-1,
+        "name-desc": (a,b)=>getName(a)<getName(b)?1:-1,
+      };
+
+      visible.sort(sorters[state.sort] || sorters.featured);
+
+      const visibleSet = new Set(visible);
+      products.forEach((p) => (p.hidden = !visibleSet.has(p)));
+
+      const frag = document.createDocumentFragment();
+      visible.forEach((p) => frag.appendChild(p));
+      productGrid.appendChild(frag);
+
+      const n = visible.length;
+      els.resultsCount.textContent = `${n} produit${n>1?"s":""}`;
+      els.emptyState.hidden = n !== 0;
+
+      renderActiveFilters();
+    };
+
+    const debounce = (fn, ms=140) => {
+      let t;
+      return (...args)=>{ clearTimeout(t); t=setTimeout(()=>fn(...args), ms); };
+    };
+
+    els.catNav.addEventListener("click", (e) => {
+      const btn = e.target.closest("button");
+      if (!btn) return;
+
+      if (btn.id === "promoToggle") {
+        state.promo = !state.promo;
+        setPromoUI();
+        applyFiltersAndSort();
+        return;
+      }
+
+      const cat = btn.dataset.cat;
+      if (!cat) return;
+      state.cat = cat;
+      setActiveCatBtn();
+      applyFiltersAndSort();
+    });
+
+    const onSearch = debounce((v)=>{ state.q=v||""; applyFiltersAndSort(); });
+    els.searchDesktop?.addEventListener("input", e=>onSearch(e.target.value));
+    els.searchMobile?.addEventListener("input", e=>onSearch(e.target.value));
+
+    els.sortSelect.addEventListener("change", (e)=>{ state.sort=e.target.value; applyFiltersAndSort(); });
+
+    els.clearFilters.addEventListener("click", ()=>{
+      state.cat="all"; state.promo=false; state.q=""; state.sort="featured";
+      els.sortSelect.value="featured";
+      setActiveCatBtn(); setPromoUI();
+      if (els.searchDesktop) els.searchDesktop.value="";
+      if (els.searchMobile) els.searchMobile.value="";
+      applyFiltersAndSort();
+    });
+
+    window.addEventListener("keydown", (e)=>{
+      if (e.key==="/" && !e.ctrlKey && !e.metaKey) { e.preventDefault(); (els.searchDesktop||els.searchMobile)?.focus(); }
+      if (e.key==="Escape") { if (state.q||state.cat!=="all"||state.promo) els.clearFilters.click(); }
+    });
+
+    els.mobileSearchBtn?.addEventListener("click", (e)=>{
+      e.preventDefault();
+      els.searchMobile?.focus();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+
+    const productModal = new bootstrap.Modal($("#productModal"));
+    const modal = {
+      img: $("#mImg"), title: $("#mTitle"), price: $("#mPrice"), oldPrice: $("#mOldPrice"),
+      desc: $("#mDesc"), cat: $("#mCat"), promo: $("#mPromo"), stock: $("#mStock"),
+      details: $("#mDetails"), btn: $("#mBtn"), wa: $("#mWhatsapp"),
+    };
+
+    const copySnipcartData = (fromBtn, toBtn) => {
+      Array.from(fromBtn.attributes).forEach((attr)=>{
+        if(attr.name.startsWith("data-item-")) toBtn.setAttribute(attr.name, attr.value);
+      });
+      toBtn.setAttribute("data-item-url", window.location.href.split("#")[0]);
+    };
+
+    productGrid.addEventListener("click", (e)=>{
+      const openBtn = e.target.closest(".product-open");
+      if(!openBtn) return;
+
+      const item = e.target.closest(".product-item");
+      const addBtn = item.querySelector(".snipcart-add-item");
+
+      const name = openBtn.dataset.name || "Produit";
+      const desc = openBtn.dataset.desc || "Description à compléter.";
+      const img = openBtn.dataset.image || "";
+      const cat = item.dataset.cat || "Autres";
+      const promo = String(item.dataset.promo||"0")==="1";
+      const stock = openBtn.dataset.stock || "En stock";
+
+      modal.img.src = img;
+      modal.img.alt = name;
+      modal.title.textContent = name;
+      modal.desc.textContent = desc;
+      modal.cat.textContent = cat;
+      modal.stock.textContent = stock;
+      modal.promo.hidden = !promo;
+
+      modal.price.textContent = addBtn?.dataset?.itemPrice ? `${addBtn.dataset.itemPrice} DH` : "—";
+
+      const old = item.querySelector(".p-old-price")?.textContent;
+      if(old && promo){ modal.oldPrice.hidden=false; modal.oldPrice.textContent=old; }
+      else { modal.oldPrice.hidden=true; }
+
+      const details = [];
+      if(addBtn?.dataset?.itemId) details.push(["Référence", addBtn.dataset.itemId]);
+      if(openBtn.dataset.brand) details.push(["Marque", openBtn.dataset.brand]);
+      if(openBtn.dataset.size) details.push(["Format", openBtn.dataset.size]);
+      if(openBtn.dataset.origin) details.push(["Origine", openBtn.dataset.origin]);
+
+      if(details.length){
+        modal.details.hidden=false;
+        modal.details.innerHTML = details.map(([k,v])=>`<li><span>${k}</span><strong>${v}</strong></li>`).join("");
+      } else {
+        modal.details.hidden=true;
+      }
+
+      copySnipcartData(addBtn, modal.btn);
+
+      modal.wa.href = `https://wa.me/212720498110?text=${encodeURIComponent("Bonjour, je veux commander : "+name+" ("+cat+")")}`;
+
+      productModal.show();
+    });
+
+    const io = new IntersectionObserver((entries)=>entries.forEach(en=>en.isIntersecting && en.target.classList.add("in")), {threshold:0.15});
+    products.forEach(p=>io.observe(p));
+
+    document.addEventListener("snipcart.ready", ()=>{
+      document.addEventListener("snipcart.events.item.added", ()=>{ try{ Snipcart.api.cart.open(); }catch{} });
+    });
+
+    els.yearNow.textContent = new Date().getFullYear();
+
+    updateCounts();
+    setPromoUI();
+    setActiveCatBtn();
+    applyFiltersAndSort();
+  })();
+  </script>
+
+</body>
+</html>
+
